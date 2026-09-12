@@ -1,0 +1,27 @@
+<svg viewBox="0 0 600 375" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="bg4" cx="50%" cy="40%" r="75%">
+    <stop offset="0%" stop-color="#2C2117"/><stop offset="100%" stop-color="#1C140E"/>
+  </radialGradient>
+  <linearGradient id="meat4" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#8A4A28"/>
+    <stop offset="55%" stop-color="#5E3018"/>
+    <stop offset="100%" stop-color="#3A1B0D"/>
+  </linearGradient>
+</defs>
+<rect width="600" height="375" fill="url(#bg4)"/>
+<!-- seared beef chunks -->
+<g fill="url(#meat4)">
+  <rect x="190" y="140" width="90" height="70" rx="14" transform="rotate(-8 235 175)"/>
+  <rect x="290" y="130" width="85" height="75" rx="14" transform="rotate(6 332 167)"/>
+  <rect x="230" y="210" width="95" height="70" rx="14" transform="rotate(3 277 245)"/>
+  <rect x="330" y="200" width="80" height="65" rx="14" transform="rotate(-10 370 232)"/>
+</g>
+<g fill="#B8703E" opacity="0.35">
+  <rect x="200" y="150" width="60" height="20" rx="8" transform="rotate(-8 230 160)"/>
+  <rect x="300" y="140" width="55" height="18" rx="8" transform="rotate(6 327 149)"/>
+</g>
+<g fill="#5C6B4F" opacity="0.8">
+  <circle cx="250" cy="230" r="3"/><circle cx="320" cy="160" r="3"/><circle cx="360" cy="230" r="3"/>
+</g>
+</svg>

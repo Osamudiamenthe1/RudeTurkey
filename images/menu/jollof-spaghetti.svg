@@ -1,0 +1,56 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="plateShade2" cx="50%" cy="42%" r="60%">
+    <stop offset="0%" stop-color="#FBF3E2"/>
+    <stop offset="100%" stop-color="#E7D8BC"/>
+  </radialGradient>
+  <radialGradient id="bgGlow2" cx="50%" cy="30%" r="70%">
+    <stop offset="0%" stop-color="#2C2117"/>
+    <stop offset="100%" stop-color="#1C140E"/>
+  </radialGradient>
+  <linearGradient id="strand" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#E8752E"/>
+    <stop offset="100%" stop-color="#C1442D"/>
+  </linearGradient>
+</defs>
+
+<rect width="800" height="600" fill="url(#bgGlow2)"/>
+
+<!-- plate -->
+<ellipse cx="400" cy="330" rx="330" ry="205" fill="#1a130d" opacity="0.35"/>
+<ellipse cx="400" cy="318" rx="325" ry="200" fill="url(#plateShade2)"/>
+<ellipse cx="400" cy="318" rx="325" ry="200" fill="none" stroke="#D8C7A2" stroke-width="3" opacity="0.6"/>
+<ellipse cx="400" cy="318" rx="255" ry="158" fill="none" stroke="#D8C7A2" stroke-width="2" opacity="0.5"/>
+
+<!-- spaghetti swirl -->
+<ellipse cx="400" cy="330" rx="220" ry="125" fill="#B23A2E" opacity="0.5"/>
+<g fill="none" stroke="url(#strand)" stroke-width="9" stroke-linecap="round" opacity="0.92">
+  <path d="M230 340 C 280 260, 380 250, 420 300 C 450 340, 400 380, 350 360 C 310 345, 330 300, 380 300"/>
+  <path d="M250 300 C 310 230, 420 220, 470 280 C 500 320, 460 360, 400 350"/>
+  <path d="M270 380 C 330 400, 420 400, 470 360 C 500 335, 480 300, 440 310"/>
+  <path d="M320 260 C 380 240, 460 260, 500 310 C 520 340, 500 370, 460 375"/>
+  <path d="M240 320 C 260 380, 330 400, 390 390"/>
+  <path d="M480 300 C 540 300, 560 340, 530 370"/>
+</g>
+
+<!-- pepper flecks -->
+<g fill="#7A2A1E">
+  <circle cx="330" cy="300" r="4"/>
+  <circle cx="420" cy="290" r="4.5"/>
+  <circle cx="380" cy="360" r="4"/>
+  <circle cx="460" cy="330" r="3.5"/>
+  <circle cx="300" cy="350" r="3.5"/>
+</g>
+
+<!-- green garnish -->
+<g stroke="#5C6B4F" stroke-width="6" stroke-linecap="round" opacity="0.85">
+  <line x1="380" y1="270" x2="365" y2="240"/>
+  <line x1="410" y1="265" x2="422" y2="232"/>
+</g>
+
+<!-- steam -->
+<g stroke="#F4E9D6" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.35">
+  <path d="M360 190 C 350 160, 375 150, 365 120" />
+  <path d="M420 195 C 430 165, 408 155, 418 125" />
+</g>
+</svg>

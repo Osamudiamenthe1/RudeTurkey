@@ -1,0 +1,37 @@
+<svg viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="heroGlow" cx="50%" cy="38%" r="65%">
+    <stop offset="0%" stop-color="#D8481F" stop-opacity="0.55"/>
+    <stop offset="45%" stop-color="#3A2213" stop-opacity="0.5"/>
+    <stop offset="100%" stop-color="#191310" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="plateGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#F4E9D6" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#F4E9D6" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="riceGlow" cx="45%" cy="40%" r="60%">
+    <stop offset="0%" stop-color="#E8752E"/>
+    <stop offset="100%" stop-color="#A8340F"/>
+  </radialGradient>
+</defs>
+<rect width="1600" height="1000" fill="#191310"/>
+<rect width="1600" height="1000" fill="url(#heroGlow)"/>
+
+<!-- soft plate glow silhouette, off-center -->
+<ellipse cx="820" cy="560" rx="420" ry="260" fill="url(#plateGlow)" opacity="0.35"/>
+<ellipse cx="820" cy="560" rx="270" ry="165" fill="url(#riceGlow)" opacity="0.55"/>
+
+<!-- scattered grain-like flecks for texture -->
+<g fill="#E7A72E" opacity="0.35">
+  <circle cx="700" cy="520" r="5"/><circle cx="760" cy="480" r="5"/><circle cx="860" cy="470" r="5"/>
+  <circle cx="920" cy="510" r="5"/><circle cx="950" cy="580" r="5"/><circle cx="880" cy="630" r="5"/>
+  <circle cx="780" cy="620" r="5"/><circle cx="720" cy="580" r="5"/>
+</g>
+
+<!-- ambient smoke wisps (static art layer, JS/CSS adds the animated ones on top) -->
+<g fill="none" stroke="#F4E9D6" stroke-width="6" stroke-linecap="round" opacity="0.12">
+  <path d="M600 300 C 580 220, 630 190, 610 110"/>
+  <path d="M1000 320 C 1020 240, 970 210, 990 130"/>
+  <path d="M820 200 C 800 140, 850 120, 830 60"/>
+</g>
+</svg>
