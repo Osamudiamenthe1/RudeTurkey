@@ -25,7 +25,7 @@
       rel="stylesheet"
     />
     <link rel="preload" as="image" href="images/extras/header-art.jpg" />
-    <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg">
+    <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg" />
 
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -104,10 +104,10 @@
         <a href="#builder" class="btn btn--primary">Build Your Plate ↓</a>
       </div>
 
-      <div class="hero__scroll" aria-hidden="true">
+      <a href="#mains" class="hero__scroll">
         <span></span>
         <p>Scroll</p>
-      </div>
+      </a>
     </section>
 
     <!-- ============================================= -->
@@ -125,142 +125,147 @@
         </p>
       </div>
 
-      <div class="mains__grid">
-        <!-- MAIN 1 -->
-        <article
-          class="main-card reveal"
-          data-base="Jollof Spaghetti"
-          data-price="4500"
-        >
-          <div class="main-card__img" data-label="jollof-spaghetti.jpg">
-            <img
-              src="images/menu/jollof-menu.jpg"
-              alt="Stir-fried Jollof Spaghetti"
-              loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')"
-            />
-            <div class="main-card__stamp">ADDED</div>
-          </div>
-          <div class="main-card__body">
-            <h3>Jollof Spaghetti</h3>
-            <p>
-              Pan stir-fried, not boiled and drowned — every strand carries its
-              own share of ehiẹn 🌶️.
-            </p>
-            <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button
-                class="btn btn--ghost btn--add"
-                data-base="Jollof Spaghetti"
-              >
-                Add to Tray
-              </button>
+      <div class="mains__grid-wrap">
+        <div class="mains__grid">
+          <!-- MAIN 1 -->
+          <article
+            class="main-card reveal"
+            data-base="Jollof Spaghetti"
+            data-price="4500"
+          >
+            <div class="main-card__img" data-label="jollof-spaghetti.jpg">
+              <img
+                src="images/menu/jollof-menu.jpg"
+                alt="Stir-fried Jollof Spaghetti"
+                loading="lazy"
+                onerror="this.parentElement.classList.add('img-missing')"
+              />
+              <div class="main-card__stamp">ADDED</div>
             </div>
-          </div>
-        </article>
+            <div class="main-card__body">
+              <h3>Jollof Spaghetti</h3>
+              <p>
+                Pan stir-fried, not boiled and drowned — every strand carries
+                its own share of ehiẹn 🌶️.
+              </p>
+              <div class="main-card__foot">
+                <span class="price">₦----</span>
+                <button
+                  class="btn btn--ghost btn--add"
+                  data-base="Jollof Spaghetti"
+                >
+                  Add to Tray
+                </button>
+              </div>
+            </div>
+          </article>
 
-        <!-- MAIN 2 -->
-        <article
-          class="main-card reveal"
-          data-base="Native Jollof Spaghetti"
-          data-price="4500"
-        >
-          <div class="main-card__img" data-label="native-jollof-spaghetti.jpg">
-            <img
-              src="images/menu/native-jollof-menu.jpg"
-              alt="Native-style Jollof Spaghetti"
-              loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')"
-            />
-            <div class="main-card__stamp">ADDED</div>
-          </div>
-          <div class="main-card__body">
-            <h3>Native Jollof Spaghetti</h3>
-            <p>
-              The village twist — palm oil, native spice blend, and cray fish
-              undertones stirred through every strand.
-            </p>
-            <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button
-                class="btn btn--ghost btn--add"
-                data-base="Native Jollof Spaghetti"
-              >
-                Add to Tray
-              </button>
+          <!-- MAIN 2 -->
+          <article
+            class="main-card reveal"
+            data-base="Native Jollof Spaghetti"
+            data-price="4500"
+          >
+            <div
+              class="main-card__img"
+              data-label="native-jollof-spaghetti.jpg"
+            >
+              <img
+                src="images/menu/native-jollof-menu.jpg"
+                alt="Native-style Jollof Spaghetti"
+                loading="lazy"
+                onerror="this.parentElement.classList.add('img-missing')"
+              />
+              <div class="main-card__stamp">ADDED</div>
             </div>
-          </div>
-        </article>
+            <div class="main-card__body">
+              <h3>Native Jollof Spaghetti</h3>
+              <p>
+                The village twist — palm oil, native spice blend, and cray fish
+                undertones stirred through every strand.
+              </p>
+              <div class="main-card__foot">
+                <span class="price">₦----</span>
+                <button
+                  class="btn btn--ghost btn--add"
+                  data-base="Native Jollof Spaghetti"
+                >
+                  Add to Tray
+                </button>
+              </div>
+            </div>
+          </article>
 
-        <!-- MAIN 3 -->
-        <article
-          class="main-card reveal"
-          data-base="Jollof Rice"
-          data-price="4500"
-        >
-          <div class="main-card__img" data-label="jollof-rice.jpg">
-            <img
-              src="images/menu/rice-menu.jpg"
-              alt="Smoky party-style Jollof Rice"
-              loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')"
-            />
-            <div class="main-card__stamp">ADDED</div>
-          </div>
-          <div class="main-card__body">
-            <h3>Jollof Rice</h3>
-            <p>
-              Smoky & red enough to argue about! Recommended with fried plantain
-              on the side.
-            </p>
-            <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button class="btn btn--ghost btn--add" data-base="Jollof Rice">
-                Add to Tray
-              </button>
+          <!-- MAIN 3 -->
+          <article
+            class="main-card reveal"
+            data-base="Jollof Rice"
+            data-price="4500"
+          >
+            <div class="main-card__img" data-label="jollof-rice.jpg">
+              <img
+                src="images/menu/rice-menu.jpg"
+                alt="Smoky party-style Jollof Rice"
+                loading="lazy"
+                onerror="this.parentElement.classList.add('img-missing')"
+              />
+              <div class="main-card__stamp">ADDED</div>
             </div>
-          </div>
-        </article>
+            <div class="main-card__body">
+              <h3>Jollof Rice</h3>
+              <p>
+                Smoky & red enough to argue about! Recommended with fried
+                plantain on the side.
+              </p>
+              <div class="main-card__foot">
+                <span class="price">₦----</span>
+                <button class="btn btn--ghost btn--add" data-base="Jollof Rice">
+                  Add to Tray
+                </button>
+              </div>
+            </div>
+          </article>
 
-        <!-- MAIN 4 – NEW BEEF CHEESE BURGER (Coming Soon) -->
-        <article
-          class="main-card reveal main-card--soon"
-          data-base="Beef Cheese Burger"
-          data-price="5000"
-          data-coming-soon
-        >
-          <div class="main-card__img" data-label="beef-cheese-burger.jpg">
-            <img
-              src="images/menu/beef-burger-menu.jpg"
-              alt="Beef Cheese Burger"
-              loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')"
-            />
-            <div class="main-card__stamp">ADDED</div>
-            <div class="coming-soon-stamp">Coming<br />Soon</div>
-          </div>
-          <div class="main-card__body">
-            <h3>Beef Cheese Burger</h3>
-            <p>
-              Juicy beef patty + melted cheese enveloped inna soft bun – our
-              cheeky little rebellion. Try it out.
-            </p>
-            <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button
-                class="btn btn--ghost btn--add"
-                data-base="Beef Cheese Burger"
-                disabled
-              >
-                Add to Tray
-              </button>
+          <!-- MAIN 4 – NEW BEEF CHEESE BURGER (Coming Soon) -->
+          <article
+            class="main-card reveal main-card--soon"
+            data-base="Beef Cheese Burger"
+            data-price="5000"
+            data-coming-soon
+          >
+            <div class="main-card__img" data-label="beef-cheese-burger.jpg">
+              <img
+                src="images/menu/beef-burger-menu.jpg"
+                alt="Beef Cheese Burger"
+                loading="lazy"
+                onerror="this.parentElement.classList.add('img-missing')"
+              />
+              <div class="main-card__stamp">ADDED</div>
+              <div class="coming-soon-stamp">Coming<br />Soon</div>
             </div>
-          </div>
-        </article>
-      </div>
-      <div class="mains__scroll-hint" id="mainsScrollHint" aria-hidden="true">
-        <span class="mains__scroll-hint__arrow">←</span>
-        <span class="mains__scroll-hint__line"></span>
+            <div class="main-card__body">
+              <h3>Beef Cheese Burger</h3>
+              <p>
+                Juicy beef patty + melted cheese enveloped inna soft bun – our
+                cheeky little rebellion. Try it out.
+              </p>
+              <div class="main-card__foot">
+                <span class="price">₦----</span>
+                <button
+                  class="btn btn--ghost btn--add"
+                  data-base="Beef Cheese Burger"
+                  disabled
+                >
+                  Add to Tray
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="mains__scroll-hint" id="mainsScrollHint" aria-hidden="true">
+          <span class="mains__scroll-hint__arrow" aria-hidden="true"></span>
+          <span class="mains__scroll-hint__line"></span>
+        </div>
       </div>
       <div class="mains__progress" id="mainsProgress" aria-hidden="true">
         <div class="mains__progress-thumb" id="mainsProgressThumb"></div>
@@ -541,7 +546,7 @@
             <div class="form-grid">
               <label>
                 Name
-                <input type="text" id="custName" placeholder="Rudy😡" />
+                <input type="text" id="custName" placeholder="Rudy 😡" />
                 <span class="field-error" id="custNameError"
                   >Please enter your name.</span
                 >
