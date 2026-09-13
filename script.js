@@ -663,7 +663,8 @@ if (heroBg && heroSection && !prefersReducedMotion) {
 /* ---- Scroll to mains when hero scroll indicator is clicked ---- */
 const heroScroll = document.querySelector(".hero__scroll");
 if (heroScroll) {
-  heroScroll.addEventListener("click", () => {
+  heroScroll.addEventListener("click", (e) => {
+    e.preventDefault();
     const mains = document.getElementById("mains");
     if (mains) {
       mains.scrollIntoView({ behavior: "smooth" });
@@ -690,7 +691,7 @@ if (heroScroll) {
      Add as many as you want, make them as long as you want —
      every phrase renders at the same size, right → left, no clipping.
      ================================================================ */
-  const PHRASES = ["RUDE TURKEY", "Patronize us lahor oo, we nor rude🥺🙏🏽"];
+  const PHRASES = ["RUDE TURKEY", "Patronize us lahor oo, we nor rude 🥺"];
 
   const SAMPLE_THRESHOLD = 128;
   const CURSOR_RADIUS = 85;
