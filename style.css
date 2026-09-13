@@ -735,6 +735,7 @@ input {
   opacity: .6;
   z-index: 2;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hero__scroll span {
@@ -886,6 +887,10 @@ input {
     position: relative;
   }
 
+  .mains__grid-wrap {
+    position: relative;
+  }
+
   .mains::after {
     content: "";
     position: absolute;
@@ -925,14 +930,14 @@ input {
   .mains__scroll-hint {
     display: flex;
     position: absolute;
-    top: 50%;
+    top: calc(201px + 0.15rem);
     right: .7rem;
     transform: translateY(-50%);
     align-items: center;
     gap: .5rem;
     z-index: 3;
     pointer-events: none;
-    opacity: .85;
+    opacity: .5;
     transition: opacity .25s var(--ease);
   }
 
@@ -941,12 +946,13 @@ input {
   }
 
   .mains__scroll-hint__arrow {
-    font-family: var(--mono);
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--jollof);
-    line-height: 1;
-    text-shadow: 0 0 10px rgba(216, 72, 31, .5);
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 7px solid var(--jollof);
+    filter: drop-shadow(0 0 6px rgba(216, 72, 31, .5));
     animation: scrollHintPulse 1.8s ease-in-out infinite;
   }
 
