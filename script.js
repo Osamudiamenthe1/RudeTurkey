@@ -9,64 +9,72 @@
    ------------------------------------------------------------- */
 const WHATSAPP_NUMBER = "2347069159473";
 
-document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 
 /* -------------------------------------------------------------
    2. Scroll reveal animations
    ------------------------------------------------------------- */
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('is-visible'), i * 60);
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-revealEls.forEach(el => revealObserver.observe(el));
+const revealEls = document.querySelectorAll(".reveal");
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add("is-visible"), i * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 },
+);
+revealEls.forEach((el) => revealObserver.observe(el));
 
 /* -------------------------------------------------------------
    3. Sticky nav condense on scroll
    ------------------------------------------------------------- */
-const nav = document.getElementById('siteNav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('is-condensed', window.scrollY > 40);
-}, { passive: true });
+const nav = document.getElementById("siteNav");
+window.addEventListener(
+  "scroll",
+  () => {
+    nav.classList.toggle("is-condensed", window.scrollY > 40);
+  },
+  { passive: true },
+);
 
 /* -------------------------------------------------------------
    4. Mobile burger menu – close on outside tap + escape key
    ------------------------------------------------------------- */
-const burger = document.getElementById('navBurger');
-const mobileMenu = document.getElementById('mobileMenu');
+const burger = document.getElementById("navBurger");
+const mobileMenu = document.getElementById("mobileMenu");
 
 function closeMobileMenu() {
-  burger.classList.remove('is-open');
-  mobileMenu.classList.remove('is-open');
-  burger.setAttribute('aria-expanded', 'false');
+  burger.classList.remove("is-open");
+  mobileMenu.classList.remove("is-open");
+  burger.setAttribute("aria-expanded", "false");
 }
 
 function openMobileMenu() {
-  burger.classList.add('is-open');
-  mobileMenu.classList.add('is-open');
-  burger.setAttribute('aria-expanded', 'true');
+  burger.classList.add("is-open");
+  mobileMenu.classList.add("is-open");
+  burger.setAttribute("aria-expanded", "true");
 }
 
-burger.addEventListener('click', () => {
-  if (mobileMenu.classList.contains('is-open')) {
+burger.addEventListener("click", () => {
+  if (mobileMenu.classList.contains("is-open")) {
     closeMobileMenu();
   } else {
     openMobileMenu();
   }
 });
 
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', closeMobileMenu);
+mobileMenu.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeMobileMenu);
 });
 
 // Close when tapping outside
-document.addEventListener('click', (e) => {
-  if (mobileMenu.classList.contains('is-open')) {
-    const isClickInside = mobileMenu.contains(e.target) || burger.contains(e.target);
+document.addEventListener("click", (e) => {
+  if (mobileMenu.classList.contains("is-open")) {
+    const isClickInside =
+      mobileMenu.contains(e.target) || burger.contains(e.target);
     if (!isClickInside) {
       closeMobileMenu();
     }
@@ -74,8 +82,8 @@ document.addEventListener('click', (e) => {
 });
 
 // Close on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && mobileMenu.classList.contains("is-open")) {
     closeMobileMenu();
   }
 });
@@ -83,92 +91,160 @@ document.addEventListener('keydown', (e) => {
 /* -------------------------------------------------------------
    5. Active nav section highlighting (includes footer)
    ------------------------------------------------------------- */
-const sections = document.querySelectorAll('section[id], footer[id]');
-const navLinks = document.querySelectorAll('.nav__links a, .mobile-menu a:not(.btn)');
+const sections = document.querySelectorAll("section[id], footer[id]");
+const navLinks = document.querySelectorAll(
+  ".nav__links a, .mobile-menu a:not(.btn)",
+);
 
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navLinks.forEach(link => {
-        link.classList.remove('is-active');
-        if (link.getAttribute('href') === `#${id}`) {
-          link.classList.add('is-active');
-        }
-      });
-    }
-  });
-}, { threshold: 0.3 });
-
-sections.forEach(section => sectionObserver.observe(section));
-
-// Hero highlight
-const heroSection = document.querySelector('.hero');
-if (heroSection) {
-  const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        navLinks.forEach(link => {
-          link.classList.remove('is-active');
-          if (link.getAttribute('href') === '#top') {
-            link.classList.add('is-active');
+        const id = entry.target.id;
+        navLinks.forEach((link) => {
+          link.classList.remove("is-active");
+          if (link.getAttribute("href") === `#${id}`) {
+            link.classList.add("is-active");
           }
         });
       }
     });
-  }, { threshold: 0.5 });
+  },
+  { threshold: 0.3 },
+);
+
+sections.forEach((section) => sectionObserver.observe(section));
+
+// Hero highlight
+const heroSection = document.querySelector(".hero");
+if (heroSection) {
+  const heroObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((link) => {
+            link.classList.remove("is-active");
+            if (link.getAttribute("href") === "#top") {
+              link.classList.add("is-active");
+            }
+          });
+        }
+      });
+    },
+    { threshold: 0.5 },
+  );
   heroObserver.observe(heroSection);
 }
 
 /* -------------------------------------------------------------
    6. Cart button (floating CTA) – badge + hides at footer
    ------------------------------------------------------------- */
-const cartCta = document.getElementById('cartCta');
-const cartBadge = document.getElementById('cartBadge');
+const cartCta = document.getElementById("cartCta");
+const cartBadge = document.getElementById("cartBadge");
 let hasScrolledPastHero = false;
 let isFooterVisible = false;
 
-const heroEl = document.querySelector('.hero');
+const heroEl = document.querySelector(".hero");
 if (heroEl) {
-  const heroObserver2 = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      hasScrolledPastHero = !entry.isIntersecting;
-      updateCartVisibility();
-    });
-  }, { threshold: 0.2 });
+  const heroObserver2 = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        hasScrolledPastHero = !entry.isIntersecting;
+        updateCartVisibility();
+      });
+    },
+    { threshold: 0.2 },
+  );
   heroObserver2.observe(heroEl);
 }
 
-const footerEl = document.querySelector('footer');
+const footerEl = document.querySelector("footer");
 if (footerEl) {
-  const footerObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      isFooterVisible = entry.isIntersecting;
-      updateCartVisibility();
-    });
-  }, { threshold: 0.05 });
+  const footerObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        isFooterVisible = entry.isIntersecting;
+        updateCartVisibility();
+      });
+    },
+    { threshold: 0.05 },
+  );
   footerObserver.observe(footerEl);
 }
 
 function updateCartVisibility() {
   const totalItems = getTotalItems();
 
-  const wrap = document.querySelector('.float-cta-wrap');
+  const wrap = document.querySelector(".float-cta-wrap");
   if (totalItems > 0) {
-    wrap.classList.add('has-items');
+    wrap.classList.add("has-items");
   } else {
-    wrap.classList.remove('has-items');
+    wrap.classList.remove("has-items");
   }
-  
+
   if (totalItems === 0) {
-    cartBadge.style.display = 'none';
+    cartBadge.style.display = "none";
   } else {
-    cartBadge.style.display = 'flex';
+    cartBadge.style.display = "flex";
     cartBadge.textContent = totalItems;
   }
-  
-  const shouldShow = ((totalItems > 0) || hasScrolledPastHero) && !isFooterVisible;
-  cartCta.classList.toggle('is-visible', shouldShow);
+
+  const shouldShow =
+    (totalItems > 0 || hasScrolledPastHero) && !isFooterVisible;
+  cartCta.classList.toggle("is-visible", shouldShow);
+}
+
+/* -------------------------------------------------------------
+   6b. Mains horizontal carousel — edge fades + progress indicator
+   ------------------------------------------------------------- */
+const mainsGrid = document.querySelector('.mains__grid');
+const mainsSection = document.querySelector('.mains');
+const mainsProgress = document.getElementById('mainsProgress');
+const mainsProgressThumb = document.getElementById('mainsProgressThumb');
+
+if (mainsGrid && mainsSection) {
+  let progressHideTimer = null;
+
+  function updateMainsFade() {
+    const atEnd = mainsGrid.scrollLeft + mainsGrid.clientWidth >= mainsGrid.scrollWidth - 4;
+    const atStart = mainsGrid.scrollLeft <= 4;
+    mainsSection.classList.toggle('is-end', atEnd);
+    mainsSection.classList.toggle('is-scrolled', !atStart);
+  }
+
+  function updateMainsProgress() {
+    if (!mainsProgress || !mainsProgressThumb) return;
+
+    const trackWidth = mainsProgress.clientWidth;
+    const visibleRatio = mainsGrid.clientWidth / mainsGrid.scrollWidth;
+    const thumbWidth = Math.max(trackWidth * visibleRatio, 18);
+
+    const maxScroll = mainsGrid.scrollWidth - mainsGrid.clientWidth;
+    const scrollRatio = maxScroll > 0 ? mainsGrid.scrollLeft / maxScroll : 0;
+    const maxThumbTravel = trackWidth - thumbWidth;
+
+    mainsProgressThumb.style.width = `${thumbWidth}px`;
+    mainsProgressThumb.style.transform = `translateX(${scrollRatio * maxThumbTravel}px)`;
+
+    mainsProgress.classList.add('is-visible');
+    clearTimeout(progressHideTimer);
+    progressHideTimer = setTimeout(() => {
+      mainsProgress.classList.remove('is-visible');
+    }, 1400);
+  }
+
+  mainsGrid.addEventListener('scroll', () => {
+    updateMainsFade();
+    updateMainsProgress();
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    updateMainsFade();
+    updateMainsProgress();
+  }, { passive: true });
+
+  updateMainsFade();
+  updateMainsProgress();
 }
 
 /* -------------------------------------------------------------
@@ -177,26 +253,26 @@ function updateCartVisibility() {
 const state = {
   bases: [],
   proteins: [],
-  extras: []
+  extras: [],
 };
 
 function getTotalItems() {
   let count = 0;
-  state.bases.forEach(b => count += b.quantity || 1);
-  state.proteins.forEach(p => count += p.quantity || 1);
-  state.extras.forEach(e => count += e.quantity || 1);
+  state.bases.forEach((b) => (count += b.quantity || 1));
+  state.proteins.forEach((p) => (count += p.quantity || 1));
+  state.extras.forEach((e) => (count += e.quantity || 1));
   return count;
 }
 
 function toggleArrayItem(arr, name, price, button) {
-  const existing = arr.find(item => item.name === name);
+  const existing = arr.find((item) => item.name === name);
   if (existing) {
     const idx = arr.indexOf(existing);
     arr.splice(idx, 1);
-    button.classList.remove('is-selected');
+    button.classList.remove("is-selected");
   } else {
     arr.push({ name, price, quantity: 1 });
-    button.classList.add('is-selected');
+    button.classList.add("is-selected");
   }
 }
 
@@ -205,80 +281,84 @@ function selectOption(button) {
   const name = button.dataset.name;
   const price = Number(button.dataset.price);
 
-  if (group === 'extra') {
+  if (group === "extra") {
     toggleArrayItem(state.extras, name, price, button);
-  } else if (group === 'base') {
+  } else if (group === "base") {
     toggleArrayItem(state.bases, name, price, button);
-  } else if (group === 'protein') {
+  } else if (group === "protein") {
     toggleArrayItem(state.proteins, name, price, button);
   }
 
-  if (group === 'base' || group === 'protein') {
-    setStepError('baseStep', 'baseStepError', state.bases.length === 0);
-    setStepError('proteinStep', 'proteinStepError', state.proteins.length === 0);
+  if (group === "base" || group === "protein") {
+    setStepError("baseStep", "baseStepError", state.bases.length === 0);
+    setStepError(
+      "proteinStep",
+      "proteinStepError",
+      state.proteins.length === 0,
+    );
   }
 
   renderTicket();
 }
 
-document.querySelectorAll('.option-card').forEach(btn => {
-  btn.addEventListener('click', () => selectOption(btn));
+document.querySelectorAll(".option-card").forEach((btn) => {
+  btn.addEventListener("click", () => selectOption(btn));
 });
 
 /* -------------------------------------------------------------
    8. Render the live order ticket + main card stamps
    ------------------------------------------------------------- */
 function renderTicket() {
-  const list = document.getElementById('ticketList');
-  const totalEl = document.getElementById('ticketTotal');
-  const noteEl = document.getElementById('ticketNote');
+  const list = document.getElementById("ticketList");
+  const totalEl = document.getElementById("ticketTotal");
+  const noteEl = document.getElementById("ticketNote");
 
   const items = [];
-  state.bases.forEach(b => items.push({ ...b, type: 'base', ref: b }));
-  state.proteins.forEach(p => items.push({ ...p, type: 'protein', ref: p }));
-  state.extras.forEach(e => items.push({ ...e, type: 'extra', ref: e }));
+  state.bases.forEach((b) => items.push({ ...b, type: "base", ref: b }));
+  state.proteins.forEach((p) => items.push({ ...p, type: "protein", ref: p }));
+  state.extras.forEach((e) => items.push({ ...e, type: "extra", ref: e }));
 
-  list.innerHTML = '';
+  list.innerHTML = "";
 
   if (items.length === 0) {
     list.innerHTML = '<li class="ticket__empty">Nothing on plate yet.</li>';
   } else {
     items.forEach((item) => {
-      const li = document.createElement('li');
-      li.className = 'ticket__item';
-      
-      const nameSpan = document.createElement('span');
-      nameSpan.className = 'ticket__item-name';
+      const li = document.createElement("li");
+      li.className = "ticket__item";
+
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "ticket__item-name";
       nameSpan.textContent = item.name;
-      
-      const controls = document.createElement('div');
-      controls.className = 'ticket__item-controls';
-      
-      const minusBtn = document.createElement('button');
-      minusBtn.className = 'ticket__qty-btn ticket__qty-btn--minus';
-      minusBtn.textContent = '−';
-      
-      const qtySpan = document.createElement('span');
-      qtySpan.className = 'ticket__qty';
+
+      const controls = document.createElement("div");
+      controls.className = "ticket__item-controls";
+
+      const minusBtn = document.createElement("button");
+      minusBtn.className = "ticket__qty-btn ticket__qty-btn--minus";
+      minusBtn.textContent = "−";
+
+      const qtySpan = document.createElement("span");
+      qtySpan.className = "ticket__qty";
       qtySpan.textContent = item.quantity || 1;
-      
-      const plusBtn = document.createElement('button');
-      plusBtn.className = 'ticket__qty-btn';
-      plusBtn.textContent = '+';
-      
+
+      const plusBtn = document.createElement("button");
+      plusBtn.className = "ticket__qty-btn";
+      plusBtn.textContent = "+";
+
       controls.appendChild(minusBtn);
       controls.appendChild(qtySpan);
       controls.appendChild(plusBtn);
-      
-      const priceSpan = document.createElement('span');
-      priceSpan.style.display = 'none';
-      priceSpan.textContent = '----';
-      
+
+      const priceSpan = document.createElement("span");
+      priceSpan.style.display = "none";
+      priceSpan.textContent = "----";
+
       li.appendChild(nameSpan);
       li.appendChild(controls);
       li.appendChild(priceSpan);
-      
-      plusBtn.addEventListener('click', (e) => {
+
+      plusBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         const ref = item.ref;
         if (ref) {
@@ -286,86 +366,113 @@ function renderTicket() {
           renderTicket();
         }
       });
-      
-      minusBtn.addEventListener('click', (e) => {
+
+      minusBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         const ref = item.ref;
         if (!ref) return;
         const currentQty = ref.quantity || 1;
         if (currentQty <= 1) {
           const group = item.type;
-          if (group === 'base') {
+          if (group === "base") {
             const idx = state.bases.indexOf(ref);
             if (idx > -1) state.bases.splice(idx, 1);
-            document.querySelector(`#baseOptions .option-card[data-name="${item.name}"]`)?.classList.remove('is-selected');
-          } else if (group === 'protein') {
+            document
+              .querySelector(
+                `#baseOptions .option-card[data-name="${item.name}"]`,
+              )
+              ?.classList.remove("is-selected");
+          } else if (group === "protein") {
             const idx = state.proteins.indexOf(ref);
             if (idx > -1) state.proteins.splice(idx, 1);
-            document.querySelector(`#proteinOptions .option-card[data-name="${item.name}"]`)?.classList.remove('is-selected');
-          } else if (group === 'extra') {
+            document
+              .querySelector(
+                `#proteinOptions .option-card[data-name="${item.name}"]`,
+              )
+              ?.classList.remove("is-selected");
+          } else if (group === "extra") {
             const idx = state.extras.indexOf(ref);
             if (idx > -1) state.extras.splice(idx, 1);
-            document.querySelector(`#extraOptions .option-card[data-name="${item.name}"]`)?.classList.remove('is-selected');
+            document
+              .querySelector(
+                `#extraOptions .option-card[data-name="${item.name}"]`,
+              )
+              ?.classList.remove("is-selected");
           }
-          if (group === 'base' || group === 'protein') {
-            setStepError('baseStep', 'baseStepError', state.bases.length === 0);
-            setStepError('proteinStep', 'proteinStepError', state.proteins.length === 0);
+          if (group === "base" || group === "protein") {
+            setStepError("baseStep", "baseStepError", state.bases.length === 0);
+            setStepError(
+              "proteinStep",
+              "proteinStepError",
+              state.proteins.length === 0,
+            );
           }
         } else {
           ref.quantity = currentQty - 1;
         }
         renderTicket();
       });
-      
+
       list.appendChild(li);
     });
   }
 
   const allItems = [];
-  state.bases.forEach(b => allItems.push({ ...b, quantity: b.quantity || 1 }));
-  state.proteins.forEach(p => allItems.push({ ...p, quantity: p.quantity || 1 }));
-  state.extras.forEach(e => allItems.push({ ...e, quantity: e.quantity || 1 }));
+  state.bases.forEach((b) =>
+    allItems.push({ ...b, quantity: b.quantity || 1 }),
+  );
+  state.proteins.forEach((p) =>
+    allItems.push({ ...p, quantity: p.quantity || 1 }),
+  );
+  state.extras.forEach((e) =>
+    allItems.push({ ...e, quantity: e.quantity || 1 }),
+  );
 
-  const total = allItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
-  totalEl.textContent = '----';
+  const total = allItems.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0,
+  );
+  totalEl.textContent = "----";
 
   const ready = state.bases.length > 0 && state.proteins.length > 0;
   noteEl.textContent = ready
-    ? 'Fill in your details above, then send it in.'
-    : 'Pick at least one base and one protein to get started.';
+    ? "Fill in your details above, then send it in."
+    : "Pick at least one base and one protein to get started.";
 
   updateCartVisibility();
-  updateMainCardStamps();  // sync stamps with cart
+  updateMainCardStamps(); // sync stamps with cart
 }
 
 /* -------------------------------------------------------------
    9. Main card stamp updater
    ------------------------------------------------------------- */
 function updateMainCardStamps() {
-  document.querySelectorAll('.main-card').forEach(card => {
+  document.querySelectorAll(".main-card").forEach((card) => {
     const baseName = card.dataset.base;
-    const stamp = card.querySelector('.main-card__stamp');
-    const isAdded = state.bases.some(b => b.name === baseName);
-    
+    const stamp = card.querySelector(".main-card__stamp");
+    const isAdded = state.bases.some((b) => b.name === baseName);
+
     if (stamp) {
-      stamp.classList.toggle('is-visible', isAdded);
+      stamp.classList.toggle("is-visible", isAdded);
     }
-    card.classList.toggle('has-added', isAdded);
+    card.classList.toggle("has-added", isAdded);
   });
 }
 
 /* -------------------------------------------------------------
    10. Main card "Add to Plate" button handler (only button toggles)
    ------------------------------------------------------------- */
-document.querySelectorAll('.btn--add').forEach(btn => {
-  btn.addEventListener('click', (e) => {
+document.querySelectorAll(".btn--add").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
     e.stopPropagation(); // prevent any parent click (none)
     const baseName = btn.dataset.base;
-    const matchingCard = document.querySelector(`#baseOptions .option-card[data-name="${baseName}"]`);
+    const matchingCard = document.querySelector(
+      `#baseOptions .option-card[data-name="${baseName}"]`,
+    );
     if (matchingCard) {
       selectOption(matchingCard);
     }
-    document.getElementById('builder').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("builder").scrollIntoView({ behavior: "smooth" });
   });
 });
 
@@ -381,21 +488,21 @@ updateMainCardStamps();
 function setStepError(stepId, errorId, hasError) {
   const grid = document.getElementById(stepId);
   const msg = document.getElementById(errorId);
-  if (grid) grid.classList.toggle('is-error', hasError);
-  if (msg) msg.classList.toggle('is-shown', hasError);
+  if (grid) grid.classList.toggle("is-error", hasError);
+  if (msg) msg.classList.toggle("is-shown", hasError);
 }
 
 function setFieldError(inputId, errorId, hasError) {
   const input = document.getElementById(inputId);
   const msg = document.getElementById(errorId);
-  if (input) input.classList.toggle('is-error', hasError);
-  if (msg) msg.classList.toggle('is-shown', hasError);
+  if (input) input.classList.toggle("is-error", hasError);
+  if (msg) msg.classList.toggle("is-shown", hasError);
 }
 
 function validateOrder() {
-  const name = document.getElementById('custName').value.trim();
-  const phone = document.getElementById('custPhone').value.trim();
-  const address = document.getElementById('custAddress').value.trim();
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
 
   const baseMissing = state.bases.length === 0;
   const proteinMissing = state.proteins.length === 0;
@@ -403,59 +510,73 @@ function validateOrder() {
   const phoneMissing = !phone;
   const addressMissing = !address;
 
-  setStepError('baseStep', 'baseStepError', baseMissing);
-  setStepError('proteinStep', 'proteinStepError', proteinMissing);
-  setFieldError('custName', 'custNameError', nameMissing);
-  setFieldError('custPhone', 'custPhoneError', phoneMissing);
-  setFieldError('custAddress', 'custAddressError', addressMissing);
+  setStepError("baseStep", "baseStepError", baseMissing);
+  setStepError("proteinStep", "proteinStepError", proteinMissing);
+  setFieldError("custName", "custNameError", nameMissing);
+  setFieldError("custPhone", "custPhoneError", phoneMissing);
+  setFieldError("custAddress", "custAddressError", addressMissing);
 
-  const firstInvalid = baseMissing ? document.getElementById('baseStep')
-    : proteinMissing ? document.getElementById('proteinStep')
-    : nameMissing ? document.getElementById('custName')
-    : phoneMissing ? document.getElementById('custPhone')
-    : addressMissing ? document.getElementById('custAddress')
-    : null;
+  const firstInvalid = baseMissing
+    ? document.getElementById("baseStep")
+    : proteinMissing
+      ? document.getElementById("proteinStep")
+      : nameMissing
+        ? document.getElementById("custName")
+        : phoneMissing
+          ? document.getElementById("custPhone")
+          : addressMissing
+            ? document.getElementById("custAddress")
+            : null;
 
   if (firstInvalid) {
-    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    document.getElementById('ticketNote').textContent =
-      'A few things are missing — check the highlighted sections above.';
+    firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+    document.getElementById("ticketNote").textContent =
+      "A few things are missing — check the highlighted sections above.";
     return { valid: false };
   }
 
   return { valid: true, name, phone, address };
 }
 
-document.getElementById('custName').addEventListener('input', (e) => {
-  setFieldError('custName', 'custNameError', !e.target.value.trim());
+document.getElementById("custName").addEventListener("input", (e) => {
+  setFieldError("custName", "custNameError", !e.target.value.trim());
 });
-document.getElementById('custPhone').addEventListener('input', (e) => {
-  setFieldError('custPhone', 'custPhoneError', !e.target.value.trim());
+document.getElementById("custPhone").addEventListener("input", (e) => {
+  setFieldError("custPhone", "custPhoneError", !e.target.value.trim());
 });
-document.getElementById('custAddress').addEventListener('input', (e) => {
-  setFieldError('custAddress', 'custAddressError', !e.target.value.trim());
+document.getElementById("custAddress").addEventListener("input", (e) => {
+  setFieldError("custAddress", "custAddressError", !e.target.value.trim());
 });
 
 /* -------------------------------------------------------------
    12. Send order to WhatsApp
    ------------------------------------------------------------- */
-document.getElementById('sendOrder').addEventListener('click', () => {
+document.getElementById("sendOrder").addEventListener("click", () => {
   const result = validateOrder();
   if (!result.valid) return;
 
   const { name, phone, address } = result;
-  const notes = document.getElementById('custNotes').value.trim();
+  const notes = document.getElementById("custNotes").value.trim();
 
   const allItems = [];
-  state.bases.forEach(b => allItems.push({ ...b, quantity: b.quantity || 1 }));
-  state.proteins.forEach(p => allItems.push({ ...p, quantity: p.quantity || 1 }));
-  state.extras.forEach(e => allItems.push({ ...e, quantity: e.quantity || 1 }));
+  state.bases.forEach((b) =>
+    allItems.push({ ...b, quantity: b.quantity || 1 }),
+  );
+  state.proteins.forEach((p) =>
+    allItems.push({ ...p, quantity: p.quantity || 1 }),
+  );
+  state.extras.forEach((e) =>
+    allItems.push({ ...e, quantity: e.quantity || 1 }),
+  );
 
-  const total = allItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  const total = allItems.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0,
+  );
 
   let message = `*New order — Rude Turkey*%0A%0A`;
   message += `*Plate:*%0A`;
-  allItems.forEach(item => {
+  allItems.forEach((item) => {
     const qty = item.quantity || 1;
     const displayName = qty > 1 ? `${item.name} x${qty}` : item.name;
     message += `- ${displayName} (----)%0A`;
@@ -468,32 +589,34 @@ document.getElementById('sendOrder').addEventListener('click', () => {
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 
-  const stamp = document.getElementById('ticketStamp');
-  stamp.classList.add('is-shown');
-  setTimeout(() => stamp.classList.remove('is-shown'), 1400);
+  const stamp = document.getElementById("ticketStamp");
+  stamp.classList.add("is-shown");
+  setTimeout(() => stamp.classList.remove("is-shown"), 1400);
 
-  window.open(url, '_blank');
+  window.open(url, "_blank");
 });
 
 /* -------------------------------------------------------------
    13. Scroll ticket to center when CTA is clicked
    ------------------------------------------------------------- */
-document.getElementById('cartCta')?.addEventListener('click', (e) => {
+document.getElementById("cartCta")?.addEventListener("click", (e) => {
   e.preventDefault();
-  const ticket = document.getElementById('ticket');
+  const ticket = document.getElementById("ticket");
   if (ticket) {
-    ticket.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    ticket.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 });
 
 /* ---- Scroll ticket to center when "Order Now" buttons are clicked ---- */
-const orderNowButtons = document.querySelectorAll('.nav__cta, .mobile-menu .btn--primary');
-orderNowButtons.forEach(btn => {
-  btn.addEventListener('click', (e) => {
+const orderNowButtons = document.querySelectorAll(
+  ".nav__cta, .mobile-menu .btn--primary",
+);
+orderNowButtons.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
     e.preventDefault(); // prevent the default "#builder" anchor jump
-    const ticket = document.getElementById('ticket');
+    const ticket = document.getElementById("ticket");
     if (ticket) {
-      ticket.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      ticket.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   });
 });
@@ -504,8 +627,10 @@ orderNowButtons.forEach(btn => {
    fixed, because iOS Safari ignores that property entirely.
    This works identically across all browsers.
    ------------------------------------------------------------- */
-const heroBg = document.querySelector('.hero__bg');
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const heroBg = document.querySelector(".hero__bg");
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+).matches;
 
 if (heroBg && heroSection && !prefersReducedMotion) {
   let ticking = false;
@@ -519,25 +644,29 @@ if (heroBg && heroSection && !prefersReducedMotion) {
     ticking = false;
   }
 
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(pinHeroBg);
-      ticking = true;
-    }
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(pinHeroBg);
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
 
-  window.addEventListener('resize', pinHeroBg, { passive: true });
+  window.addEventListener("resize", pinHeroBg, { passive: true });
 
   pinHeroBg();
 }
 
 /* ---- Scroll to mains when hero scroll indicator is clicked ---- */
-const heroScroll = document.querySelector('.hero__scroll');
+const heroScroll = document.querySelector(".hero__scroll");
 if (heroScroll) {
-  heroScroll.addEventListener('click', () => {
-    const mains = document.getElementById('mains');
+  heroScroll.addEventListener("click", () => {
+    const mains = document.getElementById("mains");
     if (mains) {
-      mains.scrollIntoView({ behavior: 'smooth' });
+      mains.scrollIntoView({ behavior: "smooth" });
     }
   });
 }
@@ -546,13 +675,13 @@ if (heroScroll) {
    FOOTER POOL TEXT — alternating phrases + colored emoji overlay
    ============================================================= */
 (function () {
-  const canvas = document.getElementById('footerCanvas');
+  const canvas = document.getElementById("footerCanvas");
   if (!canvas) return;
-  const footer = canvas.closest('.footer');
+  const footer = canvas.closest(".footer");
   if (!footer) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   /* ================================================================
      ✏️  EDIT YOUR PHRASES HERE
@@ -561,32 +690,31 @@ if (heroScroll) {
      Add as many as you want, make them as long as you want —
      every phrase renders at the same size, right → left, no clipping.
      ================================================================ */
-  const PHRASES = [
-    'RUDE TURKEY',
-    'Patronize us lahor oo, we nor rude🥹🙏🏽'
-  ];
+  const PHRASES = ["RUDE TURKEY", "Patronize us lahor oo, we nor rude🥺🙏🏽"];
 
   const SAMPLE_THRESHOLD = 128;
-  const CURSOR_RADIUS    = 85;
-  const PULSE_AMPLITUDE  = 0.35;
-  const COL_JOLLOF       = '#D8481F';
-  const COL_TURMERIC     = '#E7A72E';
+  const CURSOR_RADIUS = 85;
+  const PULSE_AMPLITUDE = 0.35;
+  const COL_JOLLOF = "#D8481F";
+  const COL_TURMERIC = "#E7A72E";
 
-  const EMOJI_FONT = '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", sans-serif';
+  const EMOJI_FONT =
+    '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", sans-serif';
 
-  let W = 0, H = 0;
-  let DOT_RADIUS  = 2.0;
+  let W = 0,
+    H = 0;
+  let DOT_RADIUS = 2.0;
   let DOT_SPACING = 8;
-  let FLOW_SPEED  = 60;
-  let FONT_SIZE   = 100;
-  let cullMargin  = 20;
+  let FLOW_SPEED = 60;
+  let FONT_SIZE = 100;
+  let cullMargin = 20;
 
-  let phraseIndex   = 0;
-  let phraseWidth   = 0;
-  let LINE_STEP     = 0;
-  let maxLines      = 1;
-  let lineIndex     = 0;
-  let flowOffset    = 0;
+  let phraseIndex = 0;
+  let phraseWidth = 0;
+  let LINE_STEP = 0;
+  let maxLines = 1;
+  let lineIndex = 0;
+  let flowOffset = 0;
   let descentOffset = 0;
 
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -598,7 +726,8 @@ if (heroScroll) {
   /* ============================================================
      EMOJI DETECTION
      ============================================================ */
-  const EMOJI_REGEX = /(?:\p{Emoji_Presentation}|\p{Extended_Pictographic})\p{Emoji_Modifier}?(?:\u200D(?:\p{Emoji_Presentation}|\p{Extended_Pictographic})\p{Emoji_Modifier}?)*/gu;
+  const EMOJI_REGEX =
+    /(?:\p{Emoji_Presentation}|\p{Extended_Pictographic})\p{Emoji_Modifier}?(?:\u200D(?:\p{Emoji_Presentation}|\p{Extended_Pictographic})\p{Emoji_Modifier}?)*/gu;
 
   function findEmojiRanges(text) {
     const ranges = [];
@@ -614,15 +743,15 @@ if (heroScroll) {
      TWINKLE SPRITE
      ============================================================ */
   const twinkleSprite = (() => {
-    const c = document.createElement('canvas');
+    const c = document.createElement("canvas");
     c.width = c.height = 96;
-    const cx = c.getContext('2d');
+    const cx = c.getContext("2d");
     const g = cx.createRadialGradient(48, 48, 0, 48, 48, 48);
-    g.addColorStop(0,    'rgba(255, 252, 245, 1)');
-    g.addColorStop(0.10, 'rgba(235, 232, 225, 0.92)');
-    g.addColorStop(0.28, 'rgba(231, 167, 46, 0.55)');
-    g.addColorStop(0.55, 'rgba(200, 198, 205, 0.20)');
-    g.addColorStop(1,    'rgba(180, 178, 190, 0)');
+    g.addColorStop(0, "rgba(255, 252, 245, 1)");
+    g.addColorStop(0.1, "rgba(235, 232, 225, 0.92)");
+    g.addColorStop(0.28, "rgba(231, 167, 46, 0.55)");
+    g.addColorStop(0.55, "rgba(200, 198, 205, 0.20)");
+    g.addColorStop(1, "rgba(180, 178, 190, 0)");
     cx.fillStyle = g;
     cx.fillRect(0, 0, 96, 96);
     return c;
@@ -633,15 +762,15 @@ if (heroScroll) {
      ============================================================ */
   function computeFontSize() {
     const isMobile = W < 600;
-    const widthFraction  = isMobile ? 1.98 : 0.98;
+    const widthFraction = isMobile ? 1.98 : 0.98;
     const heightFraction = isMobile ? 0.38 : 0.8;
 
     const BASE = 200;
-    const mc = document.createElement('canvas').getContext('2d');
+    const mc = document.createElement("canvas").getContext("2d");
     mc.font = `900 ${BASE}px Anton, "Work Sans", sans-serif`;
     const refWidth = mc.measureText(PHRASES[0]).width;
 
-    const byWidth  = (W * widthFraction / refWidth) * BASE;
+    const byWidth = ((W * widthFraction) / refWidth) * BASE;
     const byHeight = H * heightFraction;
     FONT_SIZE = Math.min(byWidth, byHeight);
   }
@@ -650,18 +779,18 @@ if (heroScroll) {
      LINE STEP
      ============================================================ */
   function computeMetrics() {
-    const mc = document.createElement('canvas').getContext('2d');
+    const mc = document.createElement("canvas").getContext("2d");
     mc.font = `900 ${FONT_SIZE}px Anton, "Work Sans", sans-serif`;
 
     let maxH = 0;
     for (const p of PHRASES) {
       const m = mc.measureText(p);
-      const asc  = m.actualBoundingBoxAscent  || FONT_SIZE * 0.80;
-      const desc = m.actualBoundingBoxDescent || FONT_SIZE * 0.20;
+      const asc = m.actualBoundingBoxAscent || FONT_SIZE * 0.8;
+      const desc = m.actualBoundingBoxDescent || FONT_SIZE * 0.2;
       maxH = Math.max(maxH, asc + desc);
     }
     LINE_STEP = Math.ceil(maxH) + 12;
-    maxLines  = Math.max(1, Math.floor((H - 8) / LINE_STEP));
+    maxLines = Math.max(1, Math.floor((H - 8) / LINE_STEP));
   }
 
   /* ============================================================
@@ -674,26 +803,26 @@ if (heroScroll) {
 
     DOT_SPACING = isMobile ? 6 : 7;
     FLOW_SPEED = isMobile ? 90 : 120;
-    DOT_RADIUS  = isMobile ? 2.8 : 2.0;
+    DOT_RADIUS = isMobile ? 2.8 : 2.0;
 
     const phrase = PHRASES[phraseIndex];
 
-    const measure = document.createElement('canvas').getContext('2d');
+    const measure = document.createElement("canvas").getContext("2d");
     measure.font = `900 ${FONT_SIZE}px Anton, "Work Sans", sans-serif`;
     const naturalWidth = measure.measureText(phrase).width;
 
     const localFontSize = FONT_SIZE;
     const phrasePxWidth = Math.ceil(naturalWidth) + 40;
 
-    const off = document.createElement('canvas');
-    off.width  = phrasePxWidth;
+    const off = document.createElement("canvas");
+    off.width = phrasePxWidth;
     off.height = H;
-    const octx = off.getContext('2d');
+    const octx = off.getContext("2d");
 
     octx.font = `900 ${localFontSize}px Anton, "Work Sans", sans-serif`;
-    octx.textAlign = 'left';
-    octx.textBaseline = 'middle';
-    octx.fillStyle = '#fff';
+    octx.textAlign = "left";
+    octx.textBaseline = "middle";
+    octx.fillStyle = "#fff";
     octx.fillText(phrase, 20, H / 2);
 
     /* detect emoji and store their positions */
@@ -704,14 +833,17 @@ if (heroScroll) {
         baseX: 20 + prefixW,
         baseY: H / 2,
         char: r.char,
-        size: localFontSize
+        size: localFontSize,
       });
     }
 
     const img = octx.getImageData(0, 0, off.width, H).data;
 
     const sampled = [];
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    let minX = Infinity,
+      maxX = -Infinity,
+      minY = Infinity,
+      maxY = -Infinity;
     for (let y = 0; y < H; y += DOT_SPACING) {
       for (let x = 0; x < off.width; x += DOT_SPACING) {
         const i = (y * off.width + x) * 4;
@@ -746,7 +878,8 @@ if (heroScroll) {
         homeY: by,
         hoverX: 0,
         hoverY: 0,
-        r: DOT_RADIUS, homeR: DOT_RADIUS,
+        r: DOT_RADIUS,
+        homeR: DOT_RADIUS,
         phase: Math.random() * Math.PI * 2,
         color: Math.random() < 0.18 ? COL_TURMERIC : COL_JOLLOF,
         hoverIntensity: 0,
@@ -767,12 +900,13 @@ if (heroScroll) {
 
   function resize() {
     const rect = footer.getBoundingClientRect();
-    W = rect.width; H = rect.height;
+    W = rect.width;
+    H = rect.height;
     if (!W || !H) return;
-    canvas.width  = Math.floor(W * DPR);
+    canvas.width = Math.floor(W * DPR);
     canvas.height = Math.floor(H * DPR);
-    canvas.style.width  = W + 'px';
-    canvas.style.height = H + 'px';
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
     computeFontSize();
@@ -882,9 +1016,9 @@ if (heroScroll) {
 
     /* colored emoji overlay */
     if (emojis.length) {
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = '#fff';
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#fff";
       for (const e of emojis) {
         const ex = e.baseX + flowOffset;
         const ey = e.baseY + descentOffset;
@@ -906,13 +1040,13 @@ if (heroScroll) {
   /* ============================================================
      HOVER (mouse only — no click handlers)
      ============================================================ */
-  footer.addEventListener('mousemove', (e) => {
+  footer.addEventListener("mousemove", (e) => {
     const r = footer.getBoundingClientRect();
     mouse.x = e.clientX - r.left;
     mouse.y = e.clientY - r.top;
     mouse.active = true;
   });
-  footer.addEventListener('mouseleave', () => {
+  footer.addEventListener("mouseleave", () => {
     mouse.active = false;
     mouse.x = -9999;
     mouse.y = -9999;
