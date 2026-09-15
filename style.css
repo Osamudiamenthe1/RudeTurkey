@@ -946,12 +946,12 @@ input {
   }
 
   .mains__scroll-hint__arrow {
-    width: 22px;
-    height: 22px;
+    width: 0;
+    height: 0;
     flex-shrink: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-right: 7px solid var(--jollof);
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 14px solid var(--jollof);
     filter: drop-shadow(0 0 6px rgba(216, 72, 31, .5));
     animation: scrollHintPulse 1.8s ease-in-out infinite;
   }
@@ -1396,6 +1396,7 @@ input {
     right: 1.5rem;
   }
 }
+
 
 /* =============================================================
    BUILDER
@@ -2407,4 +2408,120 @@ input {
 .mobile-menu a.btn--primary:hover::before,
 .mobile-menu a.btn--primary:active::before {
   transform: translateX(130%);
+}
+
+/* ---- Hero "Build Your Plate" — glass styling to match header CTA ---- */
+.hero .btn.btn--primary {
+  position: relative;
+  overflow: hidden;
+  color: var(--bone);
+  background:
+    linear-gradient(160deg, rgba(244, 233, 214, .18), rgba(244, 233, 214, .02) 45%),
+    rgba(216, 72, 31, .92);
+  border: 1.5px solid rgba(244, 233, 214, .3);
+  box-shadow:
+    inset 0 1px 0 rgba(244, 233, 214, .35),
+    inset 0 -1px 0 rgba(0, 0, 0, .25),
+    0 6px 14px -6px rgba(0, 0, 0, .3);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.hero .btn.btn--primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(115deg,
+      transparent 30%, rgba(244, 233, 214, .35) 45%,
+      rgba(244, 233, 214, .55) 50%, rgba(244, 233, 214, .35) 55%,
+      transparent 70%);
+  transform: translateX(-130%);
+  transition: transform .9s ease;
+  pointer-events: none;
+}
+
+.hero .btn.btn--primary:hover,
+.hero .btn.btn--primary:active {
+  background:
+    linear-gradient(160deg, rgba(244, 233, 214, .18), rgba(244, 233, 214, .02) 45%),
+    rgba(216, 72, 31, .92);
+  transform: translateZ(0) translateY(-1px);
+  border-color: rgba(231, 167, 46, .8);
+  box-shadow:
+    inset 0 1px 0 rgba(244, 233, 214, .35),
+    inset 0 -1px 0 rgba(0, 0, 0, .25),
+    0 6px 14px -6px rgba(216, 72, 31, .5);
+}
+
+.hero .btn.btn--primary:hover::before,
+.hero .btn.btn--primary:active::before {
+  transform: translateX(130%);
+}
+
+/* ---- Ticket "PLACE Order" — glass styling to match header CTA ---- */
+.ticket .btn.btn--primary {
+  position: relative;
+  overflow: hidden;
+  color: var(--bone);
+  background:
+    linear-gradient(160deg, rgba(244, 233, 214, .18), rgba(244, 233, 214, .02) 45%),
+    rgba(216, 72, 31, .92);
+  border: 1.5px solid rgba(244, 233, 214, .3);
+  box-shadow:
+    inset 0 1px 0 rgba(244, 233, 214, .35),
+    inset 0 -1px 0 rgba(0, 0, 0, .25),
+    0 6px 14px -6px rgba(0, 0, 0, .3);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.ticket .btn.btn--primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(115deg,
+    transparent 30%, rgba(244, 233, 214, .35) 45%,
+    rgba(244, 233, 214, .55) 50%, rgba(244, 233, 214, .35) 55%,
+    transparent 70%);
+  transform: translateX(-130%);
+  transition: transform .9s ease;
+  pointer-events: none;
+}
+
+.ticket .btn.btn--primary:hover,
+.ticket .btn.btn--primary:active {
+  background:
+    linear-gradient(160deg, rgba(244, 233, 214, .18), rgba(244, 233, 214, .02) 45%),
+    rgba(216, 72, 31, .92);
+  transform: translateZ(0) translateY(-1px);
+  border-color: rgba(231, 167, 46, .8);
+  box-shadow:
+    inset 0 1px 0 rgba(244, 233, 214, .35),
+    inset 0 -1px 0 rgba(0, 0, 0, .25),
+    0 6px 14px -6px rgba(216, 72, 31, .5);
+}
+
+.ticket .btn.btn--primary:hover::before,
+.ticket .btn.btn--primary:active::before {
+  transform: translateX(130%);
+}
+
+/* ---- Disabled state — keep the glass shape but dim it ---- */
+.ticket .btn.btn--primary:disabled {
+  background:
+    linear-gradient(160deg, rgba(244, 233, 214, .1), rgba(244, 233, 214, .01) 45%),
+    #a89a86;
+  border-color: rgba(244, 233, 214, .2);
+  box-shadow:
+    inset 0 1px 0 rgba(244, 233, 214, .2),
+    inset 0 -1px 0 rgba(0, 0, 0, .2);
+  transform: none;
 }
