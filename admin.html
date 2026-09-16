@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Rude Turkey — Admin</title>
+    <link rel="icon" type="image/png" href="images/rude-turks-new.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* ---- Admin-only styles ---- */
+      .admin-body {
+        padding-top: 0;
+        min-height: 100vh;
+        background: var(--char);
+        color: var(--bone);
+        position: relative;
+      }
+
+      /* ---- Glass overlay layer with doodle — same recipe as hero ---- */
+      .admin-body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.1),
+            rgba(244, 233, 214, 0) 45%
+          ),
+          linear-gradient(rgba(25, 19, 16, 0.88), rgba(25, 19, 16, 0.88)),
+          url("images/extras/header-art.jpg"),
+          linear-gradient(
+            180deg,
+            rgba(25, 19, 16, 0.35) 0%,
+            rgba(25, 19, 16, 0.78) 65%,
+            var(--char) 100%
+          );
+        background-size:
+          auto,
+          auto,
+          300px auto,
+          auto;
+        background-position:
+          center,
+          center,
+          top left,
+          center;
+        background-repeat: no-repeat, no-repeat, repeat, no-repeat;
+
+        box-shadow:
+          inset 0 1px 0 rgba(244, 233, 214, 0.18),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+          inset 1px 0 0 rgba(244, 233, 214, 0.06),
+          inset -1px 0 0 rgba(244, 233, 214, 0.06);
+      }
+
+      /* ---- Lift both views above the overlay ---- */
+      .admin__view--login,
+      .admin__view--dash {
+        position: relative;
+        z-index: 1;
+      }
+      .admin__view[hidden] {
+        display: none;
+      }
+
+      /* --- Login view --- */
+      .admin__view--login {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+
+      .admin__card {
+        position: relative;
+        width: 100%;
+        max-width: 380px;
+        padding: 2rem 1.6rem;
+        border-radius: 16px;
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.03),
+            rgba(244, 233, 214, 0) 45%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(25, 19, 16, 0.85) 0%,
+            rgba(25, 19, 16, 0.95) 100%
+          );
+        backdrop-filter: blur(18px) saturate(160%);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        border: 1.5px solid rgba(244, 233, 214, 0.1);
+        box-shadow:
+          inset 0 1px 0 rgba(244, 233, 214, 0.1),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+          0 20px 50px -18px rgba(0, 0, 0, 0.75);
+      }
+      .admin__title {
+        font-family: var(--display);
+        font-size: 1.6rem;
+        letter-spacing: 0.02em;
+        margin-bottom: 0.2rem;
+        text-align: center;
+      }
+      .admin__title span {
+        color: var(--turmeric);
+      }
+
+      .admin__subtitle {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(244, 233, 214, 0.55);
+        text-align: center;
+        margin-bottom: 1.6rem;
+      }
+
+      .admin__form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .admin__field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(244, 233, 214, 0.65);
+      }
+
+      .admin__field input,
+      .admin__field select,
+      .admin__field textarea {
+        background: rgba(36, 26, 20, 0.6);
+        border: 1.5px solid rgba(244, 233, 214, 0.15);
+        border-radius: 6px;
+        padding: 0.8rem 0.9rem;
+        min-height: var(--touch-min);
+        color: var(--bone);
+        font-size: 1rem;
+        font-family: var(--body);
+        text-transform: none;
+        letter-spacing: 0;
+        transition: border-color 0.2s;
+        width: 100%;
+      }
+      .admin__field textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+      .admin__field select {
+        cursor: pointer;
+      }
+      .admin__field input:focus,
+      .admin__field select:focus,
+      .admin__field textarea:focus {
+        outline: none;
+        border-color: var(--turmeric);
+      }
+      .admin__field input:disabled,
+      .admin__field select:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .admin__checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(244, 233, 214, 0.65);
+        cursor: pointer;
+        user-select: none;
+      }
+      .admin__checkbox input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--jollof);
+        cursor: pointer;
+      }
+
+      .admin__error {
+        display: none;
+        margin-top: 0.8rem;
+        padding: 0.7rem 0.9rem;
+        border-radius: 6px;
+        background: rgba(216, 72, 31, 0.12);
+        border: 1px solid rgba(216, 72, 31, 0.4);
+        color: #ff9d7a;
+        font-size: 0.82rem;
+        font-family: var(--body);
+        text-transform: none;
+        letter-spacing: 0;
+        line-height: 1.4;
+      }
+      .admin__error.is-shown {
+        display: block;
+      }
+
+      /* --- Dashboard view --- */
+      .admin__view--dash {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+      }
+
+      .admin__view--dash::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: rgba(25, 19, 16, 0.6);
+      }
+
+      .admin__header,
+      .admin__main {
+        position: relative;
+        z-index: 1;
+      }
+
+      .admin__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem 1.25rem;
+        background: rgba(25, 19, 16, 0.92);
+        border-bottom: 1px solid rgba(244, 233, 214, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(8px);
+        flex-wrap: wrap;
+      }
+
+      .admin__brand {
+        font-family: var(--display);
+        font-size: 1.1rem;
+        letter-spacing: 0.02em;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+      }
+      .admin__brand span {
+        color: var(--turmeric);
+      }
+      .admin__brand small {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(244, 233, 214, 0.5);
+      }
+
+      .admin__header-right {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+
+      .admin__email {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: rgba(244, 233, 214, 0.6);
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .admin__logout {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--bone);
+        border: 1.5px solid rgba(244, 233, 214, 0.25);
+        border-radius: 6px;
+        padding: 0.45rem 0.85rem;
+        background: transparent;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .admin__logout:hover,
+      .admin__logout:focus-visible {
+        background: rgba(216, 72, 31, 0.15);
+        border-color: rgba(216, 72, 31, 0.6);
+        outline: none;
+      }
+
+      .admin__main {
+        flex: 1;
+        padding: 2rem 1.25rem 4rem;
+        max-width: 1100px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .admin__greeting {
+        font-family: var(--display);
+        font-size: clamp(1.4rem, 4vw, 2rem);
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+      .admin__greeting-sub {
+        font-size: 0.92rem;
+        color: rgba(244, 233, 214, 0.65);
+        margin-bottom: 2rem;
+      }
+
+      .admin__section {
+        padding: 1.4rem 1.4rem 1.6rem;
+        border-radius: 12px;
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.05),
+            rgba(244, 233, 214, 0) 45%
+          ),
+          rgba(36, 26, 20, 0.55);
+        border: 1.5px solid rgba(244, 233, 214, 0.12);
+        margin-bottom: 1.2rem;
+      }
+
+      .admin__section h2 {
+        font-family: var(--display);
+        font-size: 1.15rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+
+      .admin__placeholder {
+        font-size: 0.9rem;
+        color: rgba(244, 233, 214, 0.55);
+        font-style: italic;
+      }
+
+      /* ---- Sign-in button — glass styling to match main site ---- */
+      #login-btn {
+        position: relative;
+        overflow: hidden;
+        color: var(--bone);
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.18),
+            rgba(244, 233, 214, 0.02) 45%
+          ),
+          rgba(216, 72, 31, 0.92);
+        border: 1.5px solid rgba(244, 233, 214, 0.3);
+        box-shadow:
+          inset 0 1px 0 rgba(244, 233, 214, 0.35),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+          0 6px 14px -6px rgba(0, 0, 0, 0.3);
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+        transition:
+          transform 0.25s var(--ease),
+          border-color 0.25s var(--ease),
+          box-shadow 0.25s var(--ease);
+      }
+
+      #login-btn::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius);
+        background: linear-gradient(
+          115deg,
+          transparent 30%,
+          rgba(244, 233, 214, 0.35) 45%,
+          rgba(244, 233, 214, 0.55) 50%,
+          rgba(244, 233, 214, 0.35) 55%,
+          transparent 70%
+        );
+        transform: translateX(-130%);
+        transition: transform 0.9s ease;
+        pointer-events: none;
+      }
+
+      #login-btn:hover:not(:disabled),
+      #login-btn:focus-visible:not(:disabled) {
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.18),
+            rgba(244, 233, 214, 0.02) 45%
+          ),
+          rgba(216, 72, 31, 0.92);
+        transform: translateZ(0) translateY(-1px);
+        border-color: rgba(231, 167, 46, 0.8);
+        box-shadow:
+          inset 0 1px 0 rgba(244, 233, 214, 0.35),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+          0 6px 14px -6px rgba(216, 72, 31, 0.5);
+      }
+
+      #login-btn:hover:not(:disabled)::before,
+      #login-btn:focus-visible:not(:disabled)::before {
+        transform: translateX(130%);
+      }
+
+      #login-btn:disabled {
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.1),
+            rgba(244, 233, 214, 0.01) 45%
+          ),
+          rgba(216, 72, 31, 0.55);
+        border-color: rgba(244, 233, 214, 0.18);
+        box-shadow:
+          inset 0 1px 0 rgba(244, 233, 214, 0.18),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+        transform: none;
+        cursor: wait;
+      }
+
+      /* ============================================================
+         STAGE 3 — MENU CRUD
+         ============================================================ */
+
+      /* ---- Section header row ---- */
+      .admin__section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+      .admin__section-head h2 {
+        margin-bottom: 0;
+      }
+
+      .admin__btn {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--bone);
+        border: 1.5px solid rgba(244, 233, 214, 0.25);
+        border-radius: 6px;
+        padding: 0.55rem 1rem;
+        background: transparent;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+        min-height: 38px;
+      }
+      .admin__btn:hover,
+      .admin__btn:focus-visible {
+        background: rgba(216, 72, 31, 0.15);
+        border-color: rgba(216, 72, 31, 0.6);
+        outline: none;
+      }
+      .admin__btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .admin__btn--primary {
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.18),
+            rgba(244, 233, 214, 0.02) 45%
+          ),
+          rgba(216, 72, 31, 0.92);
+        border-color: rgba(244, 233, 214, 0.3);
+        box-shadow:
+          inset 0 1px 0 rgba(244, 233, 214, 0.35),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+          0 6px 14px -6px rgba(0, 0, 0, 0.3);
+      }
+      .admin__btn--primary:hover,
+      .admin__btn--primary:focus-visible {
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.18),
+            rgba(244, 233, 214, 0.02) 45%
+          ),
+          rgba(216, 72, 31, 0.92);
+        border-color: rgba(231, 167, 46, 0.8);
+        transform: translateY(-1px);
+      }
+
+      .admin__btn--danger {
+        border-color: rgba(216, 72, 31, 0.4);
+      }
+      .admin__btn--danger:hover,
+      .admin__btn--danger:focus-visible {
+        background: rgba(216, 72, 31, 0.3);
+        border-color: var(--jollof);
+      }
+
+      /* ---- Menu list ---- */
+      .menu-group {
+        margin-bottom: 1.8rem;
+      }
+      .menu-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .menu-group__heading {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--turmeric);
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid rgba(231, 167, 46, 0.2);
+      }
+
+      .menu-row {
+        display: grid;
+        grid-template-columns: 64px 1fr auto;
+        gap: 0.9rem;
+        align-items: center;
+        padding: 0.7rem 0;
+        border-bottom: 1px solid rgba(244, 233, 214, 0.08);
+      }
+      .menu-row:last-child {
+        border-bottom: none;
+      }
+
+      .menu-row__img {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        background-color: #2c2117;
+        background-size: cover;
+        background-position: center;
+        border: 1px solid rgba(244, 233, 214, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mono);
+        font-size: 0.55rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(244, 233, 214, 0.35);
+        text-align: center;
+        padding: 0.2rem;
+        flex-shrink: 0;
+      }
+
+      .menu-row__info h4 {
+        font-family: "Bricolage Grotesque", var(--body);
+        font-size: 1rem;
+        text-transform: none;
+        letter-spacing: 0;
+        margin-bottom: 0.2rem;
+        color: var(--bone);
+      }
+      .menu-row__info p {
+        font-size: 0.82rem;
+        color: rgba(244, 233, 214, 0.55);
+        margin-bottom: 0.3rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .menu-row__meta {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--turmeric);
+        letter-spacing: 0.03em;
+      }
+
+      .menu-row__actions {
+        display: flex;
+        gap: 0.4rem;
+        flex-shrink: 0;
+      }
+      .menu-row__actions .admin__btn {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.65rem;
+        min-height: 32px;
+      }
+
+      @media (max-width: 480px) {
+        .menu-row {
+          grid-template-columns: 56px 1fr;
+        }
+        .menu-row__actions {
+          grid-column: 1 / -1;
+          justify-content: flex-end;
+        }
+        .menu-row__img {
+          width: 56px;
+          height: 56px;
+        }
+      }
+
+      /* ---- Modal ---- */
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+        overflow-y: auto;
+        background: rgba(15, 11, 9, 0.8);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      .modal.is-open {
+        display: flex;
+      }
+
+      .modal__panel {
+        width: 100%;
+        max-width: 520px;
+        border-radius: 16px;
+        padding: 1.6rem 1.4rem 1.4rem;
+        background:
+          linear-gradient(
+            160deg,
+            rgba(244, 233, 214, 0.06),
+            rgba(244, 233, 214, 0) 45%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(25, 19, 16, 0.96) 0%,
+            rgba(25, 19, 16, 0.98) 100%
+          );
+        border: 1.5px solid rgba(244, 233, 214, 0.14);
+        box-shadow:
+          inset 0 1px 0 rgba(244, 233, 214, 0.12),
+          0 24px 60px -20px rgba(0, 0, 0, 0.9);
+        margin: auto;
+      }
+
+      .modal__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.2rem;
+        gap: 1rem;
+      }
+      .modal__title {
+        font-family: var(--display);
+        font-size: 1.15rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+      .modal__close {
+        background: transparent;
+        border: none;
+        color: rgba(244, 233, 214, 0.6);
+        font-size: 1.6rem;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0.2rem 0.5rem;
+        transition: color 0.2s;
+      }
+      .modal__close:hover,
+      .modal__close:focus-visible {
+        color: var(--bone);
+        outline: none;
+      }
+
+      .modal__form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      @media (min-width: 520px) {
+        .modal__form {
+          grid-template-columns: 1fr 1fr;
+        }
+        .modal__form .span-2 {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .modal__img-preview {
+        width: 100%;
+        aspect-ratio: 16/10;
+        border-radius: 8px;
+        background-color: #2c2117;
+        background-size: cover;
+        background-position: center;
+        border: 1.5px dashed rgba(244, 233, 214, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(244, 233, 214, 0.4);
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background-color 0.2s;
+        overflow: hidden;
+        position: relative;
+      }
+      .modal__img-preview:hover {
+        border-color: rgba(231, 167, 46, 0.5);
+      }
+      .modal__img-preview input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .modal__actions {
+        display: flex;
+        gap: 0.6rem;
+        justify-content: flex-end;
+        margin-top: 1.4rem;
+        padding-top: 1.2rem;
+        border-top: 1px solid rgba(244, 233, 214, 0.1);
+        grid-column: 1 / -1;
+      }
+
+      /* ---- Toast ---- */
+      .toast {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        z-index: 200;
+        padding: 0.8rem 1.2rem;
+        border-radius: 8px;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.03em;
+        max-width: 90vw;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(244, 233, 214, 0.15);
+        background: rgba(25, 19, 16, 0.96);
+        color: var(--bone);
+      }
+      .toast.is-shown {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .toast--error {
+        border-color: rgba(216, 72, 31, 0.5);
+        color: #ff9d7a;
+      }
+      .toast--success {
+        border-color: rgba(231, 167, 46, 0.5);
+        color: var(--turmeric);
+      }
+    </style>
+  </head>
+  <body class="admin-body">
+    <!-- ============================================= -->
+    <!-- LOGIN VIEW -->
+    <!-- ============================================= -->
+    <div class="admin__view admin__view--login" id="login-view">
+      <div class="admin__card">
+        <h1 class="admin__title">RUDE<span>TURKEY</span></h1>
+        <p class="admin__subtitle">Admin Access</p>
+
+        <form class="admin__form" id="login-form" novalidate>
+          <label class="admin__field">
+            Email
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              autocomplete="email"
+              required
+              spellcheck="false"
+              autocapitalize="none"
+            />
+          </label>
+
+          <label class="admin__field">
+            Password
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+
+          <button
+            type="submit"
+            class="btn btn--primary btn--full"
+            id="login-btn"
+          >
+            Sign in
+          </button>
+
+          <p
+            class="admin__error"
+            id="login-error"
+            role="alert"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- DASHBOARD VIEW -->
+    <!-- ============================================= -->
+    <div class="admin__view admin__view--dash" id="dashboard-view" hidden>
+      <header class="admin__header">
+        <div class="admin__brand">
+          RUDE<span>TURKEY</span> <small>Admin</small>
+        </div>
+        <div class="admin__header-right">
+          <span class="admin__email" id="user-email"></span>
+          <button class="admin__logout" id="logout-btn" type="button">
+            Log out
+          </button>
+        </div>
+      </header>
+
+      <main class="admin__main">
+        <h1 class="admin__greeting">Welcome back</h1>
+        <p class="admin__greeting-sub">
+          Manage your menu below. Changes go live on the public site.
+        </p>
+
+        <section class="admin__section">
+          <div class="admin__section-head">
+            <h2>Menu Items</h2>
+            <button
+              class="admin__btn admin__btn--primary"
+              id="new-item-btn"
+              type="button"
+            >
+              + Add item
+            </button>
+          </div>
+
+          <div id="menu-list">
+            <p class="admin__placeholder">Loading…</p>
+          </div>
+        </section>
+
+        <section class="admin__section">
+          <h2>Site Settings</h2>
+          <p class="admin__placeholder">
+            Stage 4 lands here: WhatsApp number, tagline, opening hours, and
+            location.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- EDITOR MODAL -->
+    <!-- ============================================= -->
+    <div
+      class="modal"
+      id="editor-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="editor-title"
+    >
+      <div class="modal__panel">
+        <div class="modal__head">
+          <h2 class="modal__title" id="editor-title">New item</h2>
+          <button
+            class="modal__close"
+            id="editor-close"
+            type="button"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+
+        <form class="modal__form" id="editor-form" novalidate>
+          <label class="admin__field span-2">
+            Image
+            <div class="modal__img-preview" id="img-preview">
+              <span id="img-preview-text">Tap to upload</span>
+              <input
+                type="file"
+                id="img-input"
+                accept="image/jpeg,image/png,image/webp"
+              />
+            </div>
+          </label>
+
+          <label class="admin__field">
+            Section
+            <select id="field-section" required>
+              <option value="mains">Mains</option>
+              <option value="base">Base</option>
+              <option value="protein">Protein</option>
+              <option value="extra">Extras</option>
+            </select>
+          </label>
+
+          <label class="admin__field">
+            Display order
+            <input type="number" id="field-order" min="0" step="1" value="0" />
+          </label>
+
+          <label class="admin__field span-2">
+            Name
+            <input type="text" id="field-name" required maxlength="80" />
+          </label>
+
+          <label class="admin__field span-2">
+            Description
+            <textarea id="field-description" maxlength="300"></textarea>
+          </label>
+
+          <label class="admin__field">
+            Price (₦)
+            <input type="number" id="field-price" min="0" step="50" required />
+          </label>
+
+          <label class="admin__field">
+            Category (optional)
+            <input
+              type="text"
+              id="field-category"
+              maxlength="40"
+              placeholder="e.g. Jollof"
+            />
+          </label>
+
+          <label class="admin__field span-2">
+            Image alt text
+            <input
+              type="text"
+              id="field-image-alt"
+              maxlength="120"
+              placeholder="Describe the image for screen readers"
+            />
+          </label>
+
+          <label class="admin__field">
+            Spicy level (0-3)
+            <input
+              type="number"
+              id="field-spicy"
+              min="0"
+              max="3"
+              step="1"
+              value="0"
+            />
+          </label>
+
+          <label class="admin__checkbox">
+            <input type="checkbox" id="field-available" checked />
+            Available
+          </label>
+
+          <label class="admin__checkbox span-2">
+            <input type="checkbox" id="field-featured" />
+            Featured (highlight on home)
+          </label>
+
+          <div class="modal__actions">
+            <button type="button" class="admin__btn" id="editor-cancel">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="admin__btn admin__btn--primary"
+              id="editor-save"
+            >
+              Save
+            </button>
+          </div>
+
+          <p
+            class="admin__error span-2"
+            id="editor-error"
+            role="alert"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="admin.js"></script>
+  </body>
+</html>
