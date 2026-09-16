@@ -79,6 +79,7 @@ const fieldCategory = document.getElementById("field-category");
 const fieldAlt = document.getElementById("field-image-alt");
 const fieldSpicy = document.getElementById("field-spicy");
 const fieldAvailable = document.getElementById("field-available");
+const fieldComingSoon = document.getElementById("field-coming-soon");
 const fieldFeatured = document.getElementById("field-featured");
 
 const toastEl = document.getElementById("toast");
@@ -336,6 +337,7 @@ function buildItemRow(item) {
   const naira = (item.price / 100).toLocaleString("en-NG");
   const flags = [];
   if (!item.is_available) flags.push("Hidden");
+  else if (item.is_coming_soon) flags.push("Coming Soon");
   if (item.is_featured) flags.push("Featured");
   meta.textContent = `₦${naira} · Order ${item.display_order}${
     flags.length ? " · " + flags.join(" · ") : ""
@@ -378,6 +380,7 @@ function resetEditorForm() {
   fieldAlt.value = "";
   fieldSpicy.value = 0;
   fieldAvailable.checked = true;
+  fieldComingSoon.checked = false;
   fieldFeatured.checked = false;
 
   pendingFile = null;
@@ -407,6 +410,7 @@ function openEditor(id = null) {
     fieldAlt.value = item.image_alt || "";
     fieldSpicy.value = item.spicy_level || 0;
     fieldAvailable.checked = item.is_available;
+    fieldComingSoon.checked = item.is_coming_soon || false;
     fieldFeatured.checked = item.is_featured;
 
     if (item.image_url) {
@@ -531,6 +535,7 @@ editorForm.addEventListener("submit", async (e) => {
       image_alt: fieldAlt.value.trim() || null,
       category: fieldCategory.value.trim() || null,
       is_available: fieldAvailable.checked,
+      is_coming_soon: fieldComingSoon.checked,
       is_featured: fieldFeatured.checked,
       display_order: Number(fieldOrder.value) || 0,
       spicy_level: Math.max(0, Math.min(3, Number(fieldSpicy.value) || 0)),
@@ -583,3 +588,127 @@ async function handleDelete(item) {
   showToast("Item deleted", "success");
   await loadMenuItems();
 }
+
+/* ============================================================
+   IDLE LOGOUT
+   - Auto sign-out after 30 minutes of no interaction
+   - Also triggers if the tab was closed for longer than the limit
+   - Uses localStorage so the timer survives a page close
+   ============================================================ */
+(function setupIdleLogout() {
+  const IDLE_LIMIT_MS = 30 * 60 * 1000; // 30 minutes
+  const STORAGE_KEY = "rt_admin_last_activity";
+  const WRITE_THROTTLE_MS = 5000; // max localStorage writes per 5s
+  const EVENT_THROTTLE_MS = 1000; // handle events at most once per second
+
+  let idleTimer = null;
+  let lastWrite = 0;
+  let lastEventRun = 0;
+  let isSignedIn = false;
+
+  function stampActivity() {
+    const now = Date.now();
+    if (now - lastWrite < WRITE_THROTTLE_MS) return;
+    lastWrite = now;
+    try {
+      localStorage.setItem(STORAGE_KEY, String(now));
+    } catch (_) {
+      /* localStorage blocked (private mode etc.) — in-memory only */
+    }
+  }
+
+  function readActivity() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const n = raw ? Number(raw) : NaN;
+      return Number.isFinite(n) ? n : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function clearActivity() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (_) {}
+  }
+
+  function armTimer(remainingMs) {
+    clearTimeout(idleTimer);
+    if (!isSignedIn) return;
+    const delay = typeof remainingMs === "number" ? remainingMs : IDLE_LIMIT_MS;
+    idleTimer = setTimeout(() => {
+      forceSignOut("Signed out after 30 minutes of inactivity.");
+    }, Math.max(0, delay));
+  }
+
+  async function forceSignOut(reason) {
+    if (!isSignedIn) return;
+    isSignedIn = false;
+    clearTimeout(idleTimer);
+    idleTimer = null;
+    clearActivity();
+    await supabase.auth.signOut();
+    if (typeof showToast === "function") showToast(reason, "error");
+  }
+
+  function handleActivity() {
+    if (!isSignedIn) return;
+    const now = Date.now();
+    if (now - lastEventRun < EVENT_THROTTLE_MS) return;
+    lastEventRun = now;
+    stampActivity();
+    armTimer();
+  }
+
+  ["click", "keydown", "mousemove", "scroll", "touchstart"].forEach((evt) => {
+    document.addEventListener(evt, handleActivity, { passive: true });
+  });
+
+  function evaluateSession() {
+    if (!isSignedIn) return;
+    const last = readActivity();
+    if (last === null) {
+      stampActivity();
+      armTimer();
+      return;
+    }
+    const elapsed = Date.now() - last;
+    if (elapsed >= IDLE_LIMIT_MS) {
+      forceSignOut("Signed out after 30 minutes of inactivity.");
+    } else {
+      armTimer(IDLE_LIMIT_MS - elapsed);
+    }
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") evaluateSession();
+  });
+  window.addEventListener("pageshow", evaluateSession);
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    const signedIn = !!(session && session.user);
+
+    if (signedIn && !isSignedIn) {
+      isSignedIn = true;
+      if (event === "INITIAL_SESSION") {
+        // Page loaded with an existing session — check how long it's been
+        evaluateSession();
+      } else {
+        // Fresh login — start the clock from now
+        lastWrite = 0;
+        stampActivity();
+        armTimer();
+      }
+      return;
+    }
+
+    if (!signedIn && isSignedIn) {
+      // Signed out (manual or forced)
+      isSignedIn = false;
+      clearTimeout(idleTimer);
+      idleTimer = null;
+      clearActivity();
+    }
+  });
+})();
