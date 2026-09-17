@@ -118,6 +118,7 @@ function showDashboard(email) {
   dashView.hidden = false;
   userEmailEl.textContent = email || "";
   loadMenuItems();
+  loadSettings();
 }
 
 /* Map raw Supabase errors to human-friendly text */
@@ -481,13 +482,11 @@ async function uploadImage(file) {
   const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
   const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
-  const { error } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, file, {
-      cacheControl: "31536000",
-      upsert: false,
-      contentType: file.type,
-    });
+  const { error } = await supabase.storage.from(BUCKET).upload(path, file, {
+    cacheControl: "31536000",
+    upsert: false,
+    contentType: file.type,
+  });
 
   if (error) throw error;
 
@@ -637,9 +636,12 @@ async function handleDelete(item) {
     clearTimeout(idleTimer);
     if (!isSignedIn) return;
     const delay = typeof remainingMs === "number" ? remainingMs : IDLE_LIMIT_MS;
-    idleTimer = setTimeout(() => {
-      forceSignOut("Signed out after 30 minutes of inactivity.");
-    }, Math.max(0, delay));
+    idleTimer = setTimeout(
+      () => {
+        forceSignOut("Signed out after 30 minutes of inactivity.");
+      },
+      Math.max(0, delay),
+    );
   }
 
   async function forceSignOut(reason) {
@@ -712,3 +714,157 @@ async function handleDelete(item) {
     }
   });
 })();
+
+/* =============================================================
+   STAGE 4 — SITE SETTINGS
+   ============================================================= */
+
+const SETTINGS_FIELDS = [
+  {
+    key: "whatsapp_number",
+    elId: "setting-whatsapp",
+    label: "WhatsApp number",
+  },
+  { key: "tagline", elId: "setting-tagline", label: "Tagline" },
+  { key: "opening_hours", elId: "setting-hours", label: "Opening hours" },
+  { key: "location", elId: "setting-location", label: "Location" },
+  { key: "footer_motd", elId: "setting-footer-motd", label: "Footer MOTD" },
+];
+
+let settingsCache = {};
+
+async function loadSettings() {
+  const { data, error } = await supabase
+    .from("site_settings")
+    .select("key, value");
+
+  if (error) {
+    showToast(friendlyError(error), "error");
+    return;
+  }
+
+  settingsCache = {};
+  for (const row of data || []) {
+    settingsCache[row.key] = row.value ?? "";
+  }
+
+  for (const field of SETTINGS_FIELDS) {
+    const el = document.getElementById(field.elId);
+    if (!el) continue;
+    el.value = settingsCache[field.key] ?? "";
+  }
+
+  setSettingsEditable(false);
+}
+
+async function saveSettings(e) {
+  e.preventDefault();
+
+  const btn = document.getElementById("save-settings-btn");
+  if (!btn || btn.disabled) return;
+
+  const updates = [];
+
+  for (const field of SETTINGS_FIELDS) {
+    const el = document.getElementById(field.elId);
+    if (!el) continue;
+
+    let value = el.value.trim();
+
+    if (field.key === "whatsapp_number") {
+      value = value.replace(/\D/g, "");
+      if (!value) {
+        showToast("WhatsApp number can't be empty.", "error");
+        el.focus();
+        return;
+      }
+      if (value.length < 10) {
+        showToast("WhatsApp number looks too short.", "error");
+        el.focus();
+        return;
+      }
+      el.value = value;
+    }
+
+    if (field.key === "footer_motd") {
+      const phrases = value
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      if (!phrases.length) {
+        showToast("Footer MOTD can't be empty.", "error");
+        el.focus();
+        return;
+      }
+      value = phrases.join("\n");
+      el.value = value;
+    }
+
+    updates.push({ key: field.key, value });
+  }
+
+  btn.disabled = true;
+  const original = btn.textContent;
+  btn.textContent = "Saving…";
+
+  try {
+    const { error } = await supabase
+      .from("site_settings")
+      .upsert(updates, { onConflict: "key" });
+
+    if (error) throw error;
+
+    for (const u of updates) settingsCache[u.key] = u.value;
+    showToast("Settings saved", "success");
+    setSettingsEditable(false);
+  } catch (err) {
+    showToast(friendlyError(err), "error");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+}
+
+document
+  .getElementById("settings-form")
+  ?.addEventListener("submit", saveSettings);
+
+/* ---- Edit-lock: fields start disabled until Edit is clicked ---- */
+const editSettingsBtn = document.getElementById("edit-settings-btn");
+const cancelSettingsBtn = document.getElementById("cancel-settings-btn");
+const saveSettingsBtn = document.getElementById("save-settings-btn");
+
+function setSettingsEditable(isEditable) {
+  for (const field of SETTINGS_FIELDS) {
+    const el = document.getElementById(field.elId);
+    if (!el) continue;
+    el.disabled = !isEditable;
+  }
+  if (editSettingsBtn) editSettingsBtn.hidden = isEditable;
+  if (cancelSettingsBtn) cancelSettingsBtn.hidden = !isEditable;
+  if (saveSettingsBtn) saveSettingsBtn.hidden = !isEditable;
+}
+
+editSettingsBtn?.addEventListener("click", () => {
+  setSettingsEditable(true);
+  document
+    .getElementById("settings-section")
+    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const first = document.getElementById(SETTINGS_FIELDS[0].elId);
+  first?.focus({ preventScroll: true });
+});
+
+cancelSettingsBtn?.addEventListener("click", () => {
+  // If the settings haven't loaded yet, just refetch instead of
+  // blanking out fields with an empty cache.
+  if (!Object.keys(settingsCache).length) {
+    loadSettings();
+    return;
+  }
+  for (const field of SETTINGS_FIELDS) {
+    const el = document.getElementById(field.elId);
+    if (!el) continue;
+    el.value = settingsCache[field.key] ?? "";
+  }
+  setSettingsEditable(false);
+});
