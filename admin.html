@@ -789,6 +789,52 @@
         border-color: rgba(231, 167, 46, 0.5);
         color: var(--turmeric);
       }
+
+      /* ============================================================
+         STAGE 4 — SITE SETTINGS
+         ============================================================ */
+      .settings-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin-top: 0.4rem;
+      }
+
+      @media (min-width: 720px) {
+        .settings-form {
+          grid-template-columns: 1fr 1fr;
+        }
+        .settings-form .settings-full {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .settings-hint {
+        font-family: var(--body);
+        font-size: 0.72rem;
+        letter-spacing: 0;
+        text-transform: none;
+        color: rgba(244, 233, 214, 0.4);
+        margin-top: 0.15rem;
+        line-height: 1.4;
+      }
+
+      .settings-form .admin__field input:disabled,
+      .settings-form .admin__field textarea:disabled,
+      .settings-form .admin__field select:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .settings-actions {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.6rem;
+        margin-top: 0.4rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(244, 233, 214, 0.08);
+      }
     </style>
   </head>
   <body class="admin-body">
@@ -882,12 +928,99 @@
           </div>
         </section>
 
-        <section class="admin__section">
-          <h2>Site Settings</h2>
-          <p class="admin__placeholder">
-            Stage 4 lands here: WhatsApp number, tagline, opening hours, and
-            location.
-          </p>
+        <section class="admin__section" id="settings-section">
+          <div class="admin__section-head">
+            <h2>Site Settings</h2>
+          </div>
+
+          <form class="settings-form" id="settings-form" novalidate>
+            <label class="admin__field">
+              WhatsApp number
+              <input
+                type="tel"
+                id="setting-whatsapp"
+                inputmode="numeric"
+                maxlength="16"
+                autocomplete="off"
+                disabled
+              />
+              <small class="settings-hint"
+                >Digits only, with country code — e.g. 2347069159473</small
+              >
+            </label>
+
+            <label class="admin__field settings-full">
+              Footer MOTD (message of the day)
+              <textarea
+                id="setting-footer-motd"
+                rows="4"
+                maxlength="500"
+                placeholder="One phrase per line.&#10;These scroll in the footer animation."
+                disabled
+              ></textarea>
+              <small class="settings-hint"
+                >One phrase per line. They alternate in the footer pool-text
+                animation, right to left. Max 500 characters total.</small
+              >
+            </label>
+
+            <label class="admin__field">
+              Tagline
+              <input
+                type="text"
+                id="setting-tagline"
+                maxlength="120"
+                disabled
+              />
+              <small class="settings-hint"
+                >The bold line under the hero subtitle.</small
+              >
+            </label>
+
+            <label class="admin__field">
+              Opening hours
+              <input type="text" id="setting-hours" maxlength="120" disabled />
+              <small class="settings-hint"
+                >Shown in the footer — e.g. Tue &amp; Thu, 11am – 2:30pm</small
+              >
+            </label>
+
+            <label class="admin__field settings-full">
+              Location
+              <input
+                type="text"
+                id="setting-location"
+                maxlength="160"
+                disabled
+              />
+              <small class="settings-hint"
+                >Shown in the footer — e.g. Uniben/Ugbowo axis, Benin
+                City.</small
+              >
+            </label>
+
+            <div class="settings-actions">
+              <button type="button" class="admin__btn" id="edit-settings-btn">
+                Edit settings
+              </button>
+              <button
+                type="button"
+                class="admin__btn"
+                id="cancel-settings-btn"
+                hidden
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="admin__btn admin__btn--primary"
+                id="save-settings-btn"
+                hidden
+              >
+                Save changes
+              </button>
+            </div>
+          </form>
         </section>
       </main>
     </div>
