@@ -7,14 +7,30 @@
    country code first, no "+", no spaces, no dashes.
    Example for a Nigerian number 0803 123 4567 -> "2348031234567"
    ------------------------------------------------------------- */
-const WHATSAPP_NUMBER = "2347069159473";
+let WHATSAPP_NUMBER = window.RT_DATA?.whatsappNumber || "2348134600671";
+
+/* If site.js is still fetching when this module runs, pick up the
+   admin-configured number as soon as it arrives. */
+window.addEventListener("rt:data-ready", (e) => {
+  const fresh = e.detail?.whatsappNumber;
+  if (fresh) WHATSAPP_NUMBER = fresh;
+});
+window.addEventListener("load", () => {
+  const fresh = window.RT_DATA?.whatsappNumber;
+  if (fresh) WHATSAPP_NUMBER = fresh;
+});
+/* ---- Price formatter: Supabase stores prices in kobo ---- */
+function formatNaira(kobo) {
+  const n = Number(kobo) || 0;
+  if (n <= 0) return "₦----";
+  return "₦" + (n / 100).toLocaleString("en-NG", { maximumFractionDigits: 0 });
+}
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
 /* -------------------------------------------------------------
    2. Scroll reveal animations
    ------------------------------------------------------------- */
-const revealEls = document.querySelectorAll(".reveal");
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry, i) => {
@@ -26,7 +42,29 @@ const revealObserver = new IntersectionObserver(
   },
   { threshold: 0.15 },
 );
-revealEls.forEach((el) => revealObserver.observe(el));
+
+function observeReveal(el) {
+  if (el.classList.contains("is-visible")) return;
+  revealObserver.observe(el);
+}
+
+/* Observe everything currently in the DOM */
+document.querySelectorAll(".reveal").forEach(observeReveal);
+
+/* And anything added later (site.js-created cards, etc.) */
+const revealMutationObserver = new MutationObserver((mutations) => {
+  for (const m of mutations) {
+    for (const node of m.addedNodes) {
+      if (node.nodeType !== 1) continue;
+      if (node.classList.contains("reveal")) observeReveal(node);
+      node.querySelectorAll?.(".reveal").forEach(observeReveal);
+    }
+  }
+});
+revealMutationObserver.observe(document.body, {
+  childList: true,
+  subtree: true,
+});
 
 /* -------------------------------------------------------------
    3. Sticky nav condense on scroll
@@ -197,19 +235,20 @@ function updateCartVisibility() {
 /* -------------------------------------------------------------
    6b. Mains horizontal carousel — edge fades + progress indicator
    ------------------------------------------------------------- */
-const mainsGrid = document.querySelector('.mains__grid');
-const mainsSection = document.querySelector('.mains');
-const mainsProgress = document.getElementById('mainsProgress');
-const mainsProgressThumb = document.getElementById('mainsProgressThumb');
+const mainsGrid = document.querySelector(".mains__grid");
+const mainsSection = document.querySelector(".mains");
+const mainsProgress = document.getElementById("mainsProgress");
+const mainsProgressThumb = document.getElementById("mainsProgressThumb");
 
 if (mainsGrid && mainsSection) {
   let progressHideTimer = null;
 
   function updateMainsFade() {
-    const atEnd = mainsGrid.scrollLeft + mainsGrid.clientWidth >= mainsGrid.scrollWidth - 4;
+    const atEnd =
+      mainsGrid.scrollLeft + mainsGrid.clientWidth >= mainsGrid.scrollWidth - 4;
     const atStart = mainsGrid.scrollLeft <= 4;
-    mainsSection.classList.toggle('is-end', atEnd);
-    mainsSection.classList.toggle('is-scrolled', !atStart);
+    mainsSection.classList.toggle("is-end", atEnd);
+    mainsSection.classList.toggle("is-scrolled", !atStart);
   }
 
   function updateMainsProgress() {
@@ -226,22 +265,30 @@ if (mainsGrid && mainsSection) {
     mainsProgressThumb.style.width = `${thumbWidth}px`;
     mainsProgressThumb.style.transform = `translateX(${scrollRatio * maxThumbTravel}px)`;
 
-    mainsProgress.classList.add('is-visible');
+    mainsProgress.classList.add("is-visible");
     clearTimeout(progressHideTimer);
     progressHideTimer = setTimeout(() => {
-      mainsProgress.classList.remove('is-visible');
+      mainsProgress.classList.remove("is-visible");
     }, 1400);
   }
 
-  mainsGrid.addEventListener('scroll', () => {
-    updateMainsFade();
-    updateMainsProgress();
-  }, { passive: true });
+  mainsGrid.addEventListener(
+    "scroll",
+    () => {
+      updateMainsFade();
+      updateMainsProgress();
+    },
+    { passive: true },
+  );
 
-  window.addEventListener('resize', () => {
-    updateMainsFade();
-    updateMainsProgress();
-  }, { passive: true });
+  window.addEventListener(
+    "resize",
+    () => {
+      updateMainsFade();
+      updateMainsProgress();
+    },
+    { passive: true },
+  );
 
   updateMainsFade();
   updateMainsProgress();
@@ -301,8 +348,11 @@ function selectOption(button) {
   renderTicket();
 }
 
-document.querySelectorAll(".option-card").forEach((btn) => {
-  btn.addEventListener("click", () => selectOption(btn));
+document.addEventListener("click", (e) => {
+  const card = e.target.closest(".option-card");
+  if (!card) return;
+  if (card.classList.contains("option-card--soon")) return;
+  selectOption(card);
 });
 
 /* -------------------------------------------------------------
@@ -351,8 +401,10 @@ function renderTicket() {
       controls.appendChild(plusBtn);
 
       const priceSpan = document.createElement("span");
-      priceSpan.style.display = "none";
-      priceSpan.textContent = "----";
+      priceSpan.className = "ticket__item-price";
+      priceSpan.textContent = formatNaira(
+        Number(item.price) * (item.quantity || 1),
+      );
 
       li.appendChild(nameSpan);
       li.appendChild(controls);
@@ -429,10 +481,10 @@ function renderTicket() {
   );
 
   const total = allItems.reduce(
-    (sum, item) => sum + item.price * (item.quantity || 1),
+    (sum, item) => sum + Number(item.price) * (item.quantity || 1),
     0,
   );
-  totalEl.textContent = "----";
+  totalEl.textContent = formatNaira(total);
 
   const ready = state.bases.length > 0 && state.proteins.length > 0;
   noteEl.textContent = ready
@@ -462,20 +514,19 @@ function updateMainCardStamps() {
 /* -------------------------------------------------------------
    10. Main card "Add to Plate" button handler (only button toggles)
    ------------------------------------------------------------- */
-document.querySelectorAll(".btn--add").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation(); // prevent any parent click (none)
-    const baseName = btn.dataset.base;
-    const matchingCard = document.querySelector(
-      `#baseOptions .option-card[data-name="${baseName}"]`,
-    );
-    if (matchingCard) {
-      selectOption(matchingCard);
-    }
-    document.getElementById("builder").scrollIntoView({ behavior: "smooth" });
-  });
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn--add");
+  if (!btn || btn.disabled) return;
+  e.stopPropagation();
+  const baseName = btn.dataset.base;
+  const matchingCard = document.querySelector(
+    `#baseOptions .option-card[data-name="${baseName}"]`,
+  );
+  if (matchingCard) {
+    selectOption(matchingCard);
+  }
+  document.getElementById("builder").scrollIntoView({ behavior: "smooth" });
 });
-
 // There is NO card click handler – only the button triggers selection
 
 // Initial render
@@ -578,10 +629,11 @@ document.getElementById("sendOrder").addEventListener("click", () => {
   message += `*Plate:*%0A`;
   allItems.forEach((item) => {
     const qty = item.quantity || 1;
+    const lineTotal = Number(item.price) * qty;
     const displayName = qty > 1 ? `${item.name} x${qty}` : item.name;
-    message += `- ${displayName} (----)%0A`;
+    message += `- ${displayName} — ${formatNaira(lineTotal)}%0A`;
   });
-  message += `%0A*Total: ----*%0A%0A`;
+  message += `%0A*Total: ${formatNaira(total)}*%0A%0A`;
   message += `*Name:* ${name}%0A`;
   message += `*Phone:* ${phone}%0A`;
   message += `*Delivery address:* ${address}%0A`;
@@ -684,6 +736,19 @@ if (heroScroll) {
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+  /* ---- Live MOTD refresh — site.js fires this after its fetch ---- */
+  window.addEventListener("rt:data-ready", (e) => {
+    const fresh = e.detail?.phrases;
+    if (!fresh?.length) return;
+    PHRASES = fresh;
+    phraseIndex = 0;
+    lineIndex = 0;
+    descentOffset = 0;
+    buildDots();
+    flowOffset = W;
+    layoutDots();
+  });
+
   /* ================================================================
      ✏️  EDIT YOUR PHRASES HERE
 
@@ -691,7 +756,20 @@ if (heroScroll) {
      Add as many as you want, make them as long as you want —
      every phrase renders at the same size, right → left, no clipping.
      ================================================================ */
-  const PHRASES = ["RUDE TURKEY", "Patronize us lahor oo, we nor rude 🥺"];
+  let PHRASES =
+    window.RT_DATA?.phrases?.length > 0
+      ? window.RT_DATA.phrases
+      : ["RUDE TURKEY", "Patronize us lahor oo, we nor rude 🥺"];
+
+  /* If site.js is still fetching, pick up the real phrases later */
+  window.addEventListener("load", () => {
+    const fresh = window.RT_DATA?.phrases;
+    if (fresh?.length && fresh.join("|") !== PHRASES.join("|")) {
+      PHRASES = fresh;
+      phraseIndex = 0;
+      if (typeof resize === "function") resize();
+    }
+  });
 
   const SAMPLE_THRESHOLD = 128;
   const CURSOR_RADIUS = 85;
@@ -769,7 +847,12 @@ if (heroScroll) {
     const BASE = 200;
     const mc = document.createElement("canvas").getContext("2d");
     mc.font = `900 ${BASE}px Anton, "Work Sans", sans-serif`;
-    const refWidth = mc.measureText(PHRASES[0]).width;
+
+    /* Fixed reference — keeps the dot size identical to what the
+       footer looked like when "RUDE TURKEY" was the first phrase.
+       Long MOTD phrases scroll at this size instead of shrinking. */
+    const REFERENCE_PHRASE = "RUDE TURKEY";
+    const refWidth = mc.measureText(REFERENCE_PHRASE).width;
 
     const byWidth = ((W * widthFraction) / refWidth) * BASE;
     const byHeight = H * heightFraction;
