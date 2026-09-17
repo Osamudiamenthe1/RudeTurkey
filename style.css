@@ -2160,6 +2160,15 @@ input {
   text-align: left;
 }
 
+.ticket__item-price {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--turmeric);
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .ticket__item-controls {
   display: flex;
   align-items: center;
@@ -2488,9 +2497,9 @@ input {
   inset: 0;
   border-radius: var(--radius);
   background: linear-gradient(115deg,
-    transparent 30%, rgba(244, 233, 214, .35) 45%,
-    rgba(244, 233, 214, .55) 50%, rgba(244, 233, 214, .35) 55%,
-    transparent 70%);
+      transparent 30%, rgba(244, 233, 214, .35) 45%,
+      rgba(244, 233, 214, .55) 50%, rgba(244, 233, 214, .35) 55%,
+      transparent 70%);
   transform: translateX(-130%);
   transition: transform .9s ease;
   pointer-events: none;
