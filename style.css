@@ -1473,10 +1473,16 @@ input {
 
 .option-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 180px);
-  grid-auto-rows: 1fr;      /* ← every row is the same height */
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: .9rem;
-  justify-content: start;
+  max-width: 100%;
+  grid-auto-rows: 1fr;
+}
+
+@media (max-width: 599px) {
+  .option-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .option-card {
