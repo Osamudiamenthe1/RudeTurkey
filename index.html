@@ -2,12 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="msvalidate.01" content="F21648B84D6A86526645D4A9635FF472" />
-    <meta
-      name="google-site-verification"
-      content="H9mHUszn8nnFhQdvDAPIzbPO03Xh7YzGWSy4o8gRWjM"
-    />
-    <meta name="google-site-verification" content="-bjwGFHKGrvCttZxJqs4U05qfAUGLkJpqj3Lf6BAjMY" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rude Turkey — Jollof, Done Right</title>
     <meta
@@ -15,21 +9,59 @@
       content="Jollof Rice, Jollof Spaghetti and turkey done properly. Build your plate and order straight to WhatsApp."
     />
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rudeturkey.pages.dev/" />
+
+    <!-- Open Graph — WhatsApp, Facebook, LinkedIn previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rudeturkey.pages.dev/" />
+    <meta property="og:title" content="Rude Turkey — Jollof Done Right" />
+    <meta
+      property="og:description"
+      content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp."
+    />
+    <meta
+      property="og:image"
+      content="https://rudeturkey.pages.dev/images/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Rude Turkey — Jollof, Spaghetti, Peppered Turkey"
+    />
+    <meta property="og:site_name" content="Rude Turkey" />
+    <meta property="og:locale" content="en_NG" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rude Turkey — Jollof Done Right" />
+    <meta
+      name="twitter:description"
+      content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp."
+    />
+    <meta
+      name="twitter:image"
+      content="https://rudeturkey.pages.dev/images/og-image.jpg"
+    />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/rude-turks-new.png" />
     <link rel="apple-touch-icon" href="images/rude-turks-new.png" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="preconnect" href="https://zsuewjxuvrnsrxighgqy.supabase.co" crossorigin />
-    <link rel="dns-prefetch" href="https://zsuewjxuvrnsrxighgqy.supabase.co" />
-    <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg" fetchpriority="high" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="preload" as="image" href="images/extras/header-art.jpg" />
+    <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg" />
 
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -44,7 +76,12 @@
         style="background-image: url(&quot;images/extras/header-art.jpg&quot;)"
       ></div>
       <a href="#top" class="nav__brand">
-        <img src="images/rude-turks-new.png" alt="Rude Turkey" class="nav__mark" fetchpriority="high" decoding="async" />
+        <img
+          src="images/rude-turks-new.png"
+          alt="Rude Turkey"
+          class="nav__mark"
+          loading="lazy"
+        />
         <span class="nav__logo">RUDE<span>TURKEY</span></span>
       </a>
 
@@ -676,52 +713,5 @@
 
     <script type="module" src="site.js"></script>
     <script type="module" src="script.js"></script>
-
-    <!-- Cloudflare Web Analytics -->
-    <script
-      type="module"
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "2ae9ac11dbc34c728055480dab69a078"}'
-    ></script>
-    <!-- End Cloudflare Web Analytics -->
-
-    <!-- Structured Data — Restaurant -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Restaurant",
-        "name": "Rude Turkey",
-        "alternateName": "Rude Turkey Benin",
-        "description": "Benin's authentic smoky jollof rice, pan-fried jollof spaghetti, and peppered turkey. Order straight to WhatsApp.",
-        "image": "https://rudeturkey.pages.dev/images/og-image.jpg",
-        "url": "https://rudeturkey.pages.dev/",
-        "telephone": "+2348134600671",
-        "priceRange": "₦₦",
-        "servesCuisine": ["Nigerian", "West African", "Jollof"],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Uniben/Ugbowo axis",
-          "addressLocality": "Benin City",
-          "addressRegion": "Edo State",
-          "addressCountry": "NG"
-        },
-        "areaServed": {
-          "@type": "City",
-          "name": "Benin City"
-        },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Tuesday", "Thursday"],
-            "opens": "11:00",
-            "closes": "14:30"
-          }
-        ],
-        "hasMenu": "https://rudeturkey.pages.dev/#builder",
-        "acceptsReservations": "False",
-        "paymentAccepted": "Cash, Bank Transfer",
-        "currenciesAccepted": "NGN"
-      }
-    </script>
   </body>
 </html>
