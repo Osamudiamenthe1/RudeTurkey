@@ -1473,9 +1473,10 @@ input {
 
 .option-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, 180px);
+  grid-auto-rows: 1fr;      /* ← every row is the same height */
   gap: .9rem;
-  max-width: 100%;
+  justify-content: start;
 }
 
 .option-card {
