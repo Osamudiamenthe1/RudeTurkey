@@ -1141,10 +1141,25 @@ if (heroScroll) {
      ============================================================ */
   const ro = new ResizeObserver(resize);
   ro.observe(footer);
-  resize();
-  requestAnimationFrame(loop);
+
+  let footerStarted = false;
+  const footerCanvasObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !footerStarted) {
+          footerStarted = true;
+          resize();
+          requestAnimationFrame(loop);
+        }
+      });
+    },
+    { threshold: 0 },
+  );
+  footerCanvasObserver.observe(footer);
 
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => setTimeout(resize, 200));
+    document.fonts.ready.then(() => {
+      if (footerStarted) setTimeout(resize, 200);
+    });
   }
 })();
