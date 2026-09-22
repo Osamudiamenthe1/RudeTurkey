@@ -1,717 +1,498 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rude Turkey — Jollof, Done Right</title>
-    <meta
-      name="description"
-      content="Jollof Rice, Jollof Spaghetti and turkey done properly. Build your plate and order straight to WhatsApp."
-    />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://rudeturkey.pages.dev/" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RudeTurkey — Jollof, Done Right</title>
+  <meta name="description"
+    content="Jollof Rice, Jollof Spaghetti and turkey done properly. Build your plate and order straight to WhatsApp." />
 
-    <!-- Open Graph — WhatsApp, Facebook, LinkedIn previews -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://rudeturkey.pages.dev/" />
-    <meta property="og:title" content="Rude Turkey — Jollof Done Right" />
-    <meta
-      property="og:description"
-      content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp."
-    />
-    <meta
-      property="og:image"
-      content="https://rudeturkey.pages.dev/images/og-image.jpg"
-    />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="Rude Turkey — Jollof, Spaghetti, Peppered Turkey"
-    />
-    <meta property="og:site_name" content="Rude Turkey" />
-    <meta property="og:locale" content="en_NG" />
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://rudeturkey.pages.dev/" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Rude Turkey — Jollof Done Right" />
-    <meta
-      name="twitter:description"
-      content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp."
-    />
-    <meta
-      name="twitter:image"
-      content="https://rudeturkey.pages.dev/images/og-image.jpg"
-    />
+  <!-- Open Graph — WhatsApp, Facebook, LinkedIn previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rudeturkey.pages.dev/" />
+  <meta property="og:title" content="Rude Turkey — Jollof Done Right" />
+  <meta property="og:description"
+    content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp." />
+  <meta property="og:image" content="https://rudeturkey.pages.dev/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Rude Turkey — Jollof, Spaghetti, Peppered Turkey" />
+  <meta property="og:site_name" content="RudeTurkey" />
+  <meta property="og:locale" content="en_NG" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/rude-turks-new.png" />
-    <link rel="apple-touch-icon" href="images/rude-turks-new.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rude Turkey — Jollof Done Right" />
+  <meta name="twitter:description"
+    content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp." />
+  <meta name="twitter:image" content="https://rudeturkey.pages.dev/images/og-image.jpg" />
 
-    <!-- Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preload" as="image" href="images/extras/header-art.jpg" />
-    <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/rude-turks-new.png" />
+  <link rel="apple-touch-icon" href="images/rude-turks-new.png" />
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="preload" as="image" href="images/extras/header-art.jpg" />
+  <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg" />
 
-  <body>
-    <!-- ============================================= -->
-    <!-- NAV -->
-    <!-- ============================================= -->
-    <header class="nav" id="siteNav">
-      <div
-        class="nav__bg"
-        style="background-image: url(&quot;images/extras/header-art.jpg&quot;)"
-      ></div>
-      <a href="#top" class="nav__brand">
-        <img
-          src="images/rude-turks-new.png"
-          alt="Rude Turkey"
-          class="nav__mark"
-          loading="lazy"
-        />
-        <span class="nav__logo">RUDE<span>TURKEY</span></span>
-      </a>
+  <link rel="stylesheet" href="style.css" />
 
-      <div class="nav__right">
-        <nav class="nav__links">
-          <a href="#mains">The Mains</a>
-          <a href="#builder">Build Your Plate</a>
-          <a href="#location">Location</a>
-        </nav>
-        <a href="#builder" class="nav__cta">Order Now</a>
-        <button
-          class="nav__burger"
-          id="navBurger"
-          aria-label="Open menu"
-          aria-expanded="false"
-        >
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </header>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "RudeTurkey",
+  "url": "https://rudeturkey.pages.dev/",
+  "alternateName": ["RudeTurkey", "RudeTurkey Jollof", "RudeTurkey Benin"]
+}
+</script>
+</head>
 
-    <!-- mobile menu panel -->
-    <div class="mobile-menu" id="mobileMenu">
-      <div
-        class="mobile-menu__bg"
-        style="background-image: url(&quot;images/extras/header-art.jpg&quot;)"
-      ></div>
-      <a href="#mains">The Mains</a>
-      <a href="#builder">Build Your Plate</a>
-      <a href="#location">Location</a>
-      <a href="#builder" class="btn btn--primary">Order Now</a>
-    </div>
+<body>
+  <!-- ============================================= -->
+  <!-- NAV -->
+  <!-- ============================================= -->
+  <header class="nav" id="siteNav">
+    <div class="nav__bg" style="background-image: url(&quot;images/extras/header-art.jpg&quot;)"></div>
+    <a href="#top" class="nav__brand">
+      <img src="images/rude-turks-new.png" alt="Rude Turkey" class="nav__mark" loading="lazy" />
+      <span class="nav__logo">RUDE<span>TURKEY</span></span>
+    </a>
 
-    <!-- ============================================= -->
-    <!-- HERO (no glass) -->
-    <!-- ============================================= -->
-    <section class="hero" id="top">
-      <div
-        class="hero__bg"
-        style="background-image: url(&quot;images/hero/spag-turkey-2.jpg&quot;)"
-      ></div>
-      <div class="hero__overlay"></div>
-
-      <div class="hero__smoke" aria-hidden="true">
+    <div class="nav__right">
+      <nav class="nav__links">
+        <a href="#mains">The Mains</a>
+        <a href="#builder">Build Your Plate</a>
+        <a href="#location">Location</a>
+      </nav>
+      <a href="#builder" class="nav__cta">Order Now</a>
+      <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
-      </div>
+      </button>
+    </div>
+  </header>
 
-      <div class="hero__content">
-        <h1 class="hero__title">
-          <span class="stamp">RUDE<span>TURKEY</span></span>
-        </h1>
-        <p class="hero__eyebrow">
-          Benin's Authentic Smoky Jollof &amp; Peppered Turkey
-        </p>
-        <p class="hero__tagline">Bold flavours. Wicked Turks.</p>
-        <a href="#builder" class="btn btn--primary">Build Your Plate ↓</a>
-      </div>
+  <!-- mobile menu panel -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu__bg" style="background-image: url(&quot;images/extras/header-art.jpg&quot;)"></div>
+    <a href="#mains">The Mains</a>
+    <a href="#builder">Build Your Plate</a>
+    <a href="#location">Location</a>
+    <a href="#builder" class="btn btn--primary">Order Now</a>
+  </div>
 
-      <a href="#mains" class="hero__scroll">
-        <span></span>
-        <p>Scroll</p>
-      </a>
-    </section>
+  <!-- ============================================= -->
+  <!-- HERO (no glass) -->
+  <!-- ============================================= -->
+  <section class="hero" id="top">
+    <div class="hero__bg" style="background-image: url(&quot;images/hero/spag-turkey-2.jpg&quot;)"></div>
+    <div class="hero__overlay"></div>
 
-    <!-- ============================================= -->
-    <!-- MAINS -->
-    <!-- ============================================= -->
-    <section class="mains" id="mains">
-      <div class="section-head reveal">
-        <p class="eyebrow">The Mains</p>
-        <h2>Four plates. Zero compromise.</h2>
-        <p class="section-lede">
-          Everything on this menu is built to mesh
-          <strong>"pro-pro pra-pra"</strong> with our well seasoned
-          <span class="text-jollof">♨️ mean turkey</span>. Pick your base below,
-          then head to the builder and make it yours!
-        </p>
-      </div>
-
-      <div class="mains__grid-wrap">
-        <div class="mains__grid">
-          <!-- MAIN 1 -->
-          <article
-            class="main-card reveal"
-            data-base="Jollof Spaghetti"
-            data-price="4500"
-          >
-            <div class="main-card__img" data-label="jollof-spaghetti.jpg">
-              <img
-                src="images/menu/jollof-menu.jpg"
-                alt="Stir-fried Jollof Spaghetti"
-                loading="lazy"
-                onerror="this.parentElement.classList.add('img-missing')"
-              />
-              <div class="main-card__stamp">ADDED</div>
-            </div>
-            <div class="main-card__body">
-              <h3>Jollof Spaghetti</h3>
-              <p>
-                Pan stir-fried, not boiled and drowned — every strand carries
-                its own share of ehiẹn 🌶️.
-              </p>
-              <div class="main-card__foot">
-                <span class="price">₦----</span>
-                <button
-                  class="btn btn--ghost btn--add"
-                  data-base="Jollof Spaghetti"
-                >
-                  Add to Tray
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- MAIN 2 -->
-          <article
-            class="main-card reveal"
-            data-base="Native Jollof Spaghetti"
-            data-price="4500"
-          >
-            <div
-              class="main-card__img"
-              data-label="native-jollof-spaghetti.jpg"
-            >
-              <img
-                src="images/menu/native-jollof-menu.jpg"
-                alt="Native-style Jollof Spaghetti"
-                loading="lazy"
-                onerror="this.parentElement.classList.add('img-missing')"
-              />
-              <div class="main-card__stamp">ADDED</div>
-            </div>
-            <div class="main-card__body">
-              <h3>Native Jollof Spaghetti</h3>
-              <p>
-                The village twist — palm oil, native spice blend, and cray fish
-                undertones stirred through every strand.
-              </p>
-              <div class="main-card__foot">
-                <span class="price">₦----</span>
-                <button
-                  class="btn btn--ghost btn--add"
-                  data-base="Native Jollof Spaghetti"
-                >
-                  Add to Tray
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- MAIN 3 -->
-          <article
-            class="main-card reveal"
-            data-base="Jollof Rice"
-            data-price="4500"
-          >
-            <div class="main-card__img" data-label="jollof-rice.jpg">
-              <img
-                src="images/menu/rice-menu.jpg"
-                alt="Smoky party-style Jollof Rice"
-                loading="lazy"
-                onerror="this.parentElement.classList.add('img-missing')"
-              />
-              <div class="main-card__stamp">ADDED</div>
-            </div>
-            <div class="main-card__body">
-              <h3>Jollof Rice</h3>
-              <p>
-                Smoky & red enough to argue about! Recommended with fried
-                plantain on the side.
-              </p>
-              <div class="main-card__foot">
-                <span class="price">₦----</span>
-                <button class="btn btn--ghost btn--add" data-base="Jollof Rice">
-                  Add to Tray
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- MAIN 4 – NEW BEEF CHEESE BURGER (Coming Soon) -->
-          <article
-            class="main-card reveal main-card--soon"
-            data-base="Beef Cheese Burger"
-            data-price="5000"
-            data-coming-soon
-          >
-            <div class="main-card__img" data-label="beef-cheese-burger.jpg">
-              <img
-                src="images/menu/beef-burger-menu.jpg"
-                alt="Beef Cheese Burger"
-                loading="lazy"
-                onerror="this.parentElement.classList.add('img-missing')"
-              />
-              <div class="main-card__stamp">ADDED</div>
-              <div class="coming-soon-stamp">Coming<br />Soon</div>
-            </div>
-            <div class="main-card__body">
-              <h3>Beef Cheese Burger</h3>
-              <p>
-                Juicy beef patty + melted cheese enveloped inna soft bun – our
-                cheeky little rebellion. Try it out.
-              </p>
-              <div class="main-card__foot">
-                <span class="price">₦----</span>
-                <button
-                  class="btn btn--ghost btn--add"
-                  data-base="Beef Cheese Burger"
-                  disabled
-                >
-                  Add to Tray
-                </button>
-              </div>
-            </div>
-          </article>
-        </div>
-        <div class="mains__scroll-hint" id="mainsScrollHint" aria-hidden="true">
-          <span class="mains__scroll-hint__arrow" aria-hidden="true"></span>
-          <span class="mains__scroll-hint__line"></span>
-        </div>
-      </div>
-      <div class="mains__progress" id="mainsProgress" aria-hidden="true">
-        <div class="mains__progress-thumb" id="mainsProgressThumb"></div>
-      </div>
-    </section>
-
-    <!-- ============================================= -->
-    <!-- BUILDER -->
-    <!-- ============================================= -->
-    <section class="builder" id="builder">
-      <div class="section-head reveal">
-        <p class="eyebrow">Build Your Plate</p>
-        <h2>Pick your protein. We'll write the ticket.</h2>
-        <p class="section-lede">
-          Choose a base, protein, and whatever extras you can't do without. Your
-          order fills in live on the ticket — hit
-          <span class="place">PLACE</span> to send your order when you're ready.
-        </p>
-      </div>
-
-      <div class="builder__layout">
-        <!-- LEFT: controls -->
-        <div class="builder__controls reveal">
-          <div class="builder__step" id="baseStep">
-            <h3><span>01</span> Choose your base</h3>
-            <div class="option-grid" id="baseOptions">
-              <button
-                class="option-card"
-                data-group="base"
-                data-name="Jollof Spaghetti"
-                data-price="4500"
-              >
-                <span class="option-card__name">Jollof Spaghetti</span>
-                <span class="option-card__price">₦----</span>
-              </button>
-              <button
-                class="option-card"
-                data-group="base"
-                data-name="Native Jollof Spaghetti"
-                data-price="4500"
-              >
-                <span class="option-card__name"
-                  >Native<br /><span style="white-space: nowrap"
-                    >Jollof-Spaghetti</span
-                  ></span
-                >
-                <span class="option-card__price">₦----</span>
-              </button>
-              <button
-                class="option-card"
-                data-group="base"
-                data-name="Jollof Rice"
-                data-price="4500"
-              >
-                <span class="option-card__name">Jollof Rice</span>
-                <span class="option-card__price">₦----</span>
-              </button>
-              <!-- NEW BASE OPTION: Beef Cheese Burger (Coming Soon) -->
-              <button
-                class="option-card option-card--soon"
-                data-group="base"
-                data-name="Beef Cheese Burger"
-                data-price="5000"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span class="option-card__name">Beef Cheese Burger</span>
-                <span class="option-card__price">₦----</span>
-              </button>
-            </div>
-            <p class="step-error" id="baseStepError">Pick at least one base.</p>
-          </div>
-
-          <div class="builder__step" id="proteinStep">
-            <h3><span>02</span> Choose your protein</h3>
-            <div class="option-grid" id="proteinOptions">
-              <button
-                class="option-card option-card--protein"
-                data-group="protein"
-                data-name="Peppered Turkey"
-                data-price="2700"
-              >
-                <span
-                  class="option-card__thumb"
-                  style="
-                    background-image: url(&quot;images/protein/peppered-turkey-menu.jpg&quot;);
-                  "
-                ></span>
-                <span class="option-card__name">Peppered Turkey</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--protein"
-                data-group="protein"
-                data-name="Peppered Chicken"
-                data-price="2700"
-              >
-                <span
-                  class="option-card__thumb"
-                  style="
-                    background-image: url(&quot;images/protein/peppered-chicken-menu.jpg&quot;);
-                  "
-                ></span>
-                <span class="option-card__name">Peppered Chicken</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--protein option-card--soon"
-                data-group="protein"
-                data-name="Grilled Turkey"
-                data-price="2500"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span
-                  class="option-card__thumb"
-                  style="
-                    background-image: url(&quot;images/protein/grilled-turkey-menu.jpg&quot;);
-                  "
-                ></span>
-                <span class="option-card__name">Grilled Turkey</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--protein option-card--soon"
-                data-group="protein"
-                data-name="Grilled Chicken"
-                data-price="2300"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span
-                  class="option-card__thumb"
-                  style="
-                    background-image: url(&quot;images/protein/grilled-chicken-menu.jpg&quot;);
-                  "
-                ></span>
-                <span class="option-card__name">Grilled Chicken</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--protein option-card--soon"
-                data-group="protein"
-                data-name="Fried Beef"
-                data-price="2200"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span
-                  class="option-card__thumb"
-                  style="
-                    background-image: url(&quot;images/protein/fried-beef-menu.jpg&quot;);
-                  "
-                ></span>
-                <span class="option-card__name">Fried Beef</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--protein option-card--soon"
-                data-group="protein"
-                data-name="Fried Fish"
-                data-price="2800"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span
-                  class="option-card__thumb"
-                  style="
-                    background-image: url(&quot;images/protein/fried-fish-menu.jpg&quot;);
-                  "
-                ></span>
-                <span class="option-card__name">Fried Fish</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--protein option-card--soon"
-                data-group="protein"
-                data-name="Assorted Meat"
-                data-price="3000"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span
-                  class="option-card__thumb"
-                  style="
-                    background-image: url(&quot;images/protein/assorted-menu.jpg&quot;);
-                  "
-                ></span>
-                <span class="option-card__name">Assorted Meat</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-            </div>
-            <p class="step-error" id="proteinStepError">
-              Pick at least one protein.
-            </p>
-          </div>
-
-          <div class="builder__step">
-            <h3><span>03</span> Add extras</h3>
-            <div class="option-grid" id="extraOptions">
-              <button
-                class="option-card option-card--multi"
-                data-group="extra"
-                data-name="Fried Plantain"
-                data-price="800"
-              >
-                <span class="option-card__name">Fried Plantain</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--multi"
-                data-group="extra"
-                data-name="Boiled Egg"
-                data-price="800"
-              >
-                <span class="option-card__name">Boiled Egg</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--multi option-card--soon"
-                data-group="extra"
-                data-name="Coleslaw"
-                data-price="700"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span class="option-card__name">Coleslaw</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--multi option-card--soon"
-                data-group="extra"
-                data-name="Moi Moi"
-                data-price="900"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span class="option-card__name">Moi-moi</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--multi option-card--soon"
-                data-group="extra"
-                data-name="Chilled Drink"
-                data-price="600"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span class="option-card__name">Chilled Drink</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-              <button
-                class="option-card option-card--multi option-card--soon"
-                data-group="extra"
-                data-name="Bottled Water"
-                data-price="600"
-                disabled
-                aria-disabled="true"
-              >
-                <span class="coming-soon-stamp">Coming<br />Soon</span>
-                <span class="option-card__name">Bottled Water</span>
-                <span class="option-card__price">+₦----</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="builder__step">
-            <h3><span>04</span> Your details</h3>
-            <div class="form-grid">
-              <label>
-                Name
-                <input type="text" id="custName" placeholder="Rudy 😡" />
-                <span class="field-error" id="custNameError"
-                  >Please enter your name.</span
-                >
-              </label>
-              <label>
-                Phone
-                <input
-                  type="tel"
-                  id="custPhone"
-                  placeholder="080..."
-                  inputmode="numeric"
-                  maxlength="14"
-                  autocomplete="tel"
-                />
-                <span class="field-error" id="custPhoneError"
-                  >Please enter a phone number.</span
-                >
-              </label>
-              <label class="form-grid__full">
-                Delivery address
-                <input
-                  type="text"
-                  id="custAddress"
-                  placeholder="📍Where should this land?"
-                />
-                <span class="field-error" id="custAddressError"
-                  >Please enter a delivery address.</span
-                >
-              </label>
-              <label class="form-grid__full">
-                Notes for the kitchen
-                <input
-                  type="text"
-                  id="custNotes"
-                  placeholder="Extra pepper, no onions, etc. (optional)"
-                />
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: ticket -->
-        <aside class="ticket reveal" id="ticket">
-          <div class="ticket__perf" aria-hidden="true"></div>
-          <p class="ticket__label">Order Ticket</p>
-          <h3 class="ticket__shop">RUDE TURKEY</h3>
-          <div class="ticket__divider"></div>
-
-          <ul class="ticket__list" id="ticketList">
-            <li class="ticket__empty">Nothing on plate yet.</li>
-          </ul>
-
-          <div class="ticket__divider"></div>
-          <div class="ticket__total">
-            <span>Total</span>
-            <span id="ticketTotal">₦0</span>
-          </div>
-
-          <button class="btn btn--primary btn--full" id="sendOrder">
-            <span class="place">PLACE</span> Order
-          </button>
-          <p class="ticket__note" id="ticketNote">
-            Pick at least one base and one protein.
-          </p>
-          <div class="ticket__stamp" id="ticketStamp" aria-hidden="true">
-            SENT
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- ============================================= -->
-    <!-- LOCATION / FOOTER -->
-    <!-- ============================================= -->
-    <footer class="footer" id="location">
-      <canvas
-        class="footer-canvas"
-        id="footerCanvas"
-        aria-hidden="true"
-      ></canvas>
-      <div class="footer__grid">
-        <div class="reveal">
-          <h3 class="footer__logo">
-            <span class="footer_logo_title">RUDE<span>TURKEY</span></span>
-          </h3>
-          <p>Stubbornly Delicious Jollof + Turkey wey no dey apologize.</p>
-        </div>
-        <div class="reveal">
-          <h4>Find us</h4>
-          <p>Uniben/Ugbowo axis<br />Benin City, Edo State.</p>
-          <p>Tue &amp; Thu, 11am – 2:30pm</p>
-        </div>
-        <div class="reveal">
-          <h4>Order</h4>
-          <div class="rude_contact">
-            <a href="https://wa.me/2348134600671">
-              <img
-                class="rude-whatsapp-img"
-                src="images/extras/rude-whatsapp.png"
-                alt="WhatsApp"
-                loading="lazy"
-              />
-              <span>+234 813 460 0671</span>
-            </a>
-          </div>
-          <p>
-            <a href="#builder">Build a plate <span class="arrow">↑</span></a>
-          </p>
-        </div>
-      </div>
-      <p class="footer__fine">
-        © <span id="year"></span> Rude Turkey. All jollof disputes settled.
-      </p>
-    </footer>
-
-    <!-- Floating order button -->
-    <div class="float-cta-wrap">
-      <a
-        href="#ticket"
-        class="float-cta"
-        id="cartCta"
-        aria-label="View your order ticket"
-      >
-        <span class="float-cta__label">Order</span>
-      </a>
-      <span class="float-cta__badge" id="cartBadge">0</span>
+    <div class="hero__smoke" aria-hidden="true">
+      <span></span><span></span><span></span>
     </div>
 
-    <script type="module" src="site.js"></script>
-    <script type="module" src="script.js"></script>
-  </body>
+    <div class="hero__content">
+      <h1 class="hero__title">
+        <span class="stamp">RUDE<span>TURKEY</span></span>
+      </h1>
+      <p class="hero__eyebrow">
+        Benin's Authentic Smoky Jollof &amp; Peppered Turkey
+      </p>
+      <p class="hero__tagline">Bold flavours. Wicked Turks.</p>
+      <a href="#builder" class="btn btn--primary">Build Your Plate ↓</a>
+    </div>
+
+    <a href="#mains" class="hero__scroll">
+      <span></span>
+      <p>Scroll</p>
+    </a>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- MAINS -->
+  <!-- ============================================= -->
+  <section class="mains" id="mains">
+    <div class="section-head reveal">
+      <p class="eyebrow">The Mains</p>
+      <h2>Four plates. Zero compromise.</h2>
+      <p class="section-lede">
+        Everything on this menu is built to mesh
+        <strong>"pro-pro pra-pra"</strong> with our well seasoned
+        <span class="text-jollof">♨️ mean turkey</span>. Pick your base below,
+        then head to the builder and make it yours!
+      </p>
+    </div>
+
+    <div class="mains__grid-wrap">
+      <div class="mains__grid">
+        <!-- MAIN 1 -->
+        <article class="main-card reveal" data-base="Jollof Spaghetti" data-price="4500">
+          <div class="main-card__img" data-label="jollof-spaghetti.jpg">
+            <img src="images/menu/jollof-menu.jpg" alt="Stir-fried Jollof Spaghetti" loading="lazy"
+              onerror="this.parentElement.classList.add('img-missing')" />
+            <div class="main-card__stamp">ADDED</div>
+          </div>
+          <div class="main-card__body">
+            <h3>Jollof Spaghetti</h3>
+            <p>
+              Pan stir-fried, not boiled and drowned — every strand carries
+              its own share of ehiẹn 🌶️.
+            </p>
+            <div class="main-card__foot">
+              <span class="price">₦----</span>
+              <button class="btn btn--ghost btn--add" data-base="Jollof Spaghetti">
+                Add to Tray
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- MAIN 2 -->
+        <article class="main-card reveal" data-base="Native Jollof Spaghetti" data-price="4500">
+          <div class="main-card__img" data-label="native-jollof-spaghetti.jpg">
+            <img src="images/menu/native-jollof-menu.jpg" alt="Native-style Jollof Spaghetti" loading="lazy"
+              onerror="this.parentElement.classList.add('img-missing')" />
+            <div class="main-card__stamp">ADDED</div>
+          </div>
+          <div class="main-card__body">
+            <h3>Native Jollof Spaghetti</h3>
+            <p>
+              The village twist — palm oil, native spice blend, and cray fish
+              undertones stirred through every strand.
+            </p>
+            <div class="main-card__foot">
+              <span class="price">₦----</span>
+              <button class="btn btn--ghost btn--add" data-base="Native Jollof Spaghetti">
+                Add to Tray
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- MAIN 3 -->
+        <article class="main-card reveal" data-base="Jollof Rice" data-price="4500">
+          <div class="main-card__img" data-label="jollof-rice.jpg">
+            <img src="images/menu/rice-menu.jpg" alt="Smoky party-style Jollof Rice" loading="lazy"
+              onerror="this.parentElement.classList.add('img-missing')" />
+            <div class="main-card__stamp">ADDED</div>
+          </div>
+          <div class="main-card__body">
+            <h3>Jollof Rice</h3>
+            <p>
+              Smoky & red enough to argue about! Recommended with fried
+              plantain on the side.
+            </p>
+            <div class="main-card__foot">
+              <span class="price">₦----</span>
+              <button class="btn btn--ghost btn--add" data-base="Jollof Rice">
+                Add to Tray
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- MAIN 4 – NEW BEEF CHEESE BURGER (Coming Soon) -->
+        <article class="main-card reveal main-card--soon" data-base="Beef Cheese Burger" data-price="5000"
+          data-coming-soon>
+          <div class="main-card__img" data-label="beef-cheese-burger.jpg">
+            <img src="images/menu/beef-burger-menu.jpg" alt="Beef Cheese Burger" loading="lazy"
+              onerror="this.parentElement.classList.add('img-missing')" />
+            <div class="main-card__stamp">ADDED</div>
+            <div class="coming-soon-stamp">Coming<br />Soon</div>
+          </div>
+          <div class="main-card__body">
+            <h3>Beef Cheese Burger</h3>
+            <p>
+              Juicy beef patty + melted cheese enveloped inna soft bun – our
+              cheeky little rebellion. Try it out.
+            </p>
+            <div class="main-card__foot">
+              <span class="price">₦----</span>
+              <button class="btn btn--ghost btn--add" data-base="Beef Cheese Burger" disabled>
+                Add to Tray
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="mains__scroll-hint" id="mainsScrollHint" aria-hidden="true">
+        <span class="mains__scroll-hint__arrow" aria-hidden="true"></span>
+        <span class="mains__scroll-hint__line"></span>
+      </div>
+    </div>
+    <div class="mains__progress" id="mainsProgress" aria-hidden="true">
+      <div class="mains__progress-thumb" id="mainsProgressThumb"></div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- BUILDER -->
+  <!-- ============================================= -->
+  <section class="builder" id="builder">
+    <div class="section-head reveal">
+      <p class="eyebrow">Build Your Plate</p>
+      <h2>Pick your protein. We'll write the ticket.</h2>
+      <p class="section-lede">
+        Choose a base, protein, and whatever extras you can't do without. Your
+        order fills in live on the ticket — hit
+        <span class="place">PLACE</span> to send your order when you're ready.
+      </p>
+    </div>
+
+    <div class="builder__layout">
+      <!-- LEFT: controls -->
+      <div class="builder__controls reveal">
+        <div class="builder__step" id="baseStep">
+          <h3><span>01</span> Choose your base</h3>
+          <div class="option-grid" id="baseOptions">
+            <button class="option-card" data-group="base" data-name="Jollof Spaghetti" data-price="4500">
+              <span class="option-card__name">Jollof Spaghetti</span>
+              <span class="option-card__price">₦----</span>
+            </button>
+            <button class="option-card" data-group="base" data-name="Native Jollof Spaghetti" data-price="4500">
+              <span class="option-card__name">Native<br /><span
+                  style="white-space: nowrap">Jollof-Spaghetti</span></span>
+              <span class="option-card__price">₦----</span>
+            </button>
+            <button class="option-card" data-group="base" data-name="Jollof Rice" data-price="4500">
+              <span class="option-card__name">Jollof Rice</span>
+              <span class="option-card__price">₦----</span>
+            </button>
+            <!-- NEW BASE OPTION: Beef Cheese Burger (Coming Soon) -->
+            <button class="option-card option-card--soon" data-group="base" data-name="Beef Cheese Burger"
+              data-price="5000" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__name">Beef Cheese Burger</span>
+              <span class="option-card__price">₦----</span>
+            </button>
+          </div>
+          <p class="step-error" id="baseStepError">Pick at least one base.</p>
+        </div>
+
+        <div class="builder__step" id="proteinStep">
+          <h3><span>02</span> Choose your protein</h3>
+          <div class="option-grid" id="proteinOptions">
+            <button class="option-card option-card--protein" data-group="protein" data-name="Peppered Turkey"
+              data-price="2700">
+              <span class="option-card__thumb" style="
+                    background-image: url(&quot;images/protein/peppered-turkey-menu.jpg&quot;);
+                  "></span>
+              <span class="option-card__name">Peppered Turkey</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--protein" data-group="protein" data-name="Peppered Chicken"
+              data-price="2700">
+              <span class="option-card__thumb" style="
+                    background-image: url(&quot;images/protein/peppered-chicken-menu.jpg&quot;);
+                  "></span>
+              <span class="option-card__name">Peppered Chicken</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--protein option-card--soon" data-group="protein"
+              data-name="Grilled Turkey" data-price="2500" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__thumb" style="
+                    background-image: url(&quot;images/protein/grilled-turkey-menu.jpg&quot;);
+                  "></span>
+              <span class="option-card__name">Grilled Turkey</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--protein option-card--soon" data-group="protein"
+              data-name="Grilled Chicken" data-price="2300" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__thumb" style="
+                    background-image: url(&quot;images/protein/grilled-chicken-menu.jpg&quot;);
+                  "></span>
+              <span class="option-card__name">Grilled Chicken</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--protein option-card--soon" data-group="protein"
+              data-name="Fried Beef" data-price="2200" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__thumb" style="
+                    background-image: url(&quot;images/protein/fried-beef-menu.jpg&quot;);
+                  "></span>
+              <span class="option-card__name">Fried Beef</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--protein option-card--soon" data-group="protein"
+              data-name="Fried Fish" data-price="2800" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__thumb" style="
+                    background-image: url(&quot;images/protein/fried-fish-menu.jpg&quot;);
+                  "></span>
+              <span class="option-card__name">Fried Fish</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--protein option-card--soon" data-group="protein"
+              data-name="Assorted Meat" data-price="3000" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__thumb" style="
+                    background-image: url(&quot;images/protein/assorted-menu.jpg&quot;);
+                  "></span>
+              <span class="option-card__name">Assorted Meat</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+          </div>
+          <p class="step-error" id="proteinStepError">
+            Pick at least one protein.
+          </p>
+        </div>
+
+        <div class="builder__step">
+          <h3><span>03</span> Add extras</h3>
+          <div class="option-grid" id="extraOptions">
+            <button class="option-card option-card--multi" data-group="extra" data-name="Fried Plantain"
+              data-price="800">
+              <span class="option-card__name">Fried Plantain</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--multi" data-group="extra" data-name="Boiled Egg" data-price="800">
+              <span class="option-card__name">Boiled Egg</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--multi option-card--soon" data-group="extra" data-name="Coleslaw"
+              data-price="700" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__name">Coleslaw</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--multi option-card--soon" data-group="extra" data-name="Moi Moi"
+              data-price="900" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__name">Moi-moi</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--multi option-card--soon" data-group="extra"
+              data-name="Chilled Drink" data-price="600" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__name">Chilled Drink</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+            <button class="option-card option-card--multi option-card--soon" data-group="extra"
+              data-name="Bottled Water" data-price="600" disabled aria-disabled="true">
+              <span class="coming-soon-stamp">Coming<br />Soon</span>
+              <span class="option-card__name">Bottled Water</span>
+              <span class="option-card__price">+₦----</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="builder__step">
+          <h3><span>04</span> Your details</h3>
+          <div class="form-grid">
+            <label>
+              Name
+              <input type="text" id="custName" placeholder="Rudy 😡" />
+              <span class="field-error" id="custNameError">Please enter your name.</span>
+            </label>
+            <label>
+              Phone
+              <input type="tel" id="custPhone" placeholder="080..." inputmode="numeric" maxlength="14"
+                autocomplete="tel" />
+              <span class="field-error" id="custPhoneError">Please enter a phone number.</span>
+            </label>
+            <label class="form-grid__full">
+              Delivery address
+              <input type="text" id="custAddress" placeholder="📍Where should this land?" />
+              <span class="field-error" id="custAddressError">Please enter a delivery address.</span>
+            </label>
+            <label class="form-grid__full">
+              Notes for the kitchen
+              <input type="text" id="custNotes" placeholder="Extra pepper, no onions, etc. (optional)" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: ticket -->
+      <aside class="ticket reveal" id="ticket">
+        <div class="ticket__perf" aria-hidden="true"></div>
+        <p class="ticket__label">Order Ticket</p>
+        <h3 class="ticket__shop">RUDE TURKEY</h3>
+        <div class="ticket__divider"></div>
+
+        <ul class="ticket__list" id="ticketList">
+          <li class="ticket__empty">Nothing on plate yet.</li>
+        </ul>
+
+        <div class="ticket__divider"></div>
+        <div class="ticket__total">
+          <span>Total</span>
+          <span id="ticketTotal">₦0</span>
+        </div>
+
+        <button class="btn btn--primary btn--full" id="sendOrder">
+          <span class="place">PLACE</span> Order
+        </button>
+        <p class="ticket__note" id="ticketNote">
+          Pick at least one base and one protein.
+        </p>
+        <div class="ticket__stamp" id="ticketStamp" aria-hidden="true">
+          SENT
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- LOCATION / FOOTER -->
+  <!-- ============================================= -->
+  <footer class="footer" id="location">
+    <canvas class="footer-canvas" id="footerCanvas" aria-hidden="true"></canvas>
+    <div class="footer__grid">
+      <div class="reveal">
+        <h3 class="footer__logo">
+          <span class="footer_logo_title">RUDE<span>TURKEY</span></span>
+        </h3>
+        <p>Stubbornly Delicious Jollof + Turkey wey no dey apologize.</p>
+      </div>
+      <div class="reveal">
+        <h4>Find us</h4>
+        <p>Uniben/Ugbowo axis<br />Benin City, Edo State.</p>
+        <p>Tue &amp; Thu, 11am – 2:30pm</p>
+      </div>
+      <div class="reveal">
+        <h4>Order</h4>
+        <div class="rude_contact">
+          <a href="https://wa.me/2348134600671">
+            <img class="rude-whatsapp-img" src="images/extras/rude-whatsapp.png" alt="WhatsApp" loading="lazy" />
+            <span>+234 813 460 0671</span>
+          </a>
+        </div>
+        <p>
+          <a href="#builder">Build a plate <span class="arrow">↑</span></a>
+        </p>
+      </div>
+    </div>
+    <p class="footer__fine">
+      © <span id="year"></span> Rude Turkey. All jollof disputes settled.
+    </p>
+  </footer>
+
+  <!-- Floating order button -->
+  <div class="float-cta-wrap">
+    <a href="#ticket" class="float-cta" id="cartCta" aria-label="View your order ticket">
+      <span class="float-cta__label">Order</span>
+    </a>
+    <span class="float-cta__badge" id="cartBadge">0</span>
+  </div>
+
+  <script type="module" src="site.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+
 </html>
