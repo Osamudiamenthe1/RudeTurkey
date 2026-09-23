@@ -16,6 +16,21 @@ const SUPABASE_KEY = "sb_publishable_b0iLHOza4_ZOTEAaKcH-nA_t3nmSxV-";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* -------------------------------------------------------------
+   Fetch timeout — prevents skeletons from spinning forever
+   if the network hangs.
+   ------------------------------------------------------------- */
+const FETCH_TIMEOUT_MS = 8000;
+
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Request timed out")), ms),
+    ),
+  ]);
+}
+
+/* -------------------------------------------------------------
    Fallbacks — used if the network is down or the fetch fails.
    Keeps the site functional even when Supabase is unreachable.
    ------------------------------------------------------------- */
@@ -52,7 +67,10 @@ let menuItems = [];
 
 /* ---- Settings fetch (independent) ---- */
 try {
-  const res = await supabase.from("site_settings").select("key, value");
+  const res = await withTimeout(
+    supabase.from("site_settings").select("key, value"),
+    FETCH_TIMEOUT_MS,
+  );
   if (res.error) throw res.error;
   for (const row of res.data || []) {
     settings[row.key] = row.value ?? "";
@@ -64,11 +82,14 @@ try {
 
 /* ---- Menu fetch (independent) ---- */
 try {
-  const res = await supabase
-    .from("menu_items")
-    .select("*")
-    .order("display_order", { ascending: true })
-    .order("created_at", { ascending: true });
+  const res = await withTimeout(
+    supabase
+      .from("menu_items")
+      .select("*")
+      .order("display_order", { ascending: true })
+      .order("created_at", { ascending: true }),
+    FETCH_TIMEOUT_MS,
+  );
   if (res.error) throw res.error;
   menuItems = (res.data || []).filter((i) => i.is_available);
   console.info(`[site] loaded ${menuItems.length} menu items`);
@@ -125,10 +146,27 @@ document.querySelectorAll(".rude_contact a").forEach((a) => {
    3. RENDER MENU SECTIONS
    ------------------------------------------------------------- */
 
+/* ---- Skeleton/error helper ----------------------------------
+   Replaces a container's contents with a friendly error state
+   and clears the aria-busy flag so screen readers stop waiting.
+   -------------------------------------------------------------- */
+function showLoadError(selectorOrEl) {
+  const el =
+    typeof selectorOrEl === "string"
+      ? document.querySelector(selectorOrEl)
+      : selectorOrEl;
+  if (!el) return;
+  el.removeAttribute("aria-busy");
+  el.innerHTML =
+    '<p class="load-error">Menu is temporarily unavailable. Please refresh.</p>';
+}
+
+/* ---- Mains ---- */
 function renderMains(items) {
   const grid = document.querySelector(".mains__grid");
   if (!grid) return;
   grid.innerHTML = "";
+  grid.removeAttribute("aria-busy");
 
   for (const item of items) {
     const article = document.createElement("article");
@@ -196,6 +234,7 @@ function renderMains(items) {
   }
 }
 
+/* ---- Option card builder ---- */
 function renderOptionCard(item, group) {
   const btn = document.createElement("button");
   btn.className = "option-card";
@@ -242,6 +281,7 @@ function renderOptions(containerId, group, items) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = "";
+  container.removeAttribute("aria-busy");
   for (const item of items) {
     container.appendChild(renderOptionCard(item, group));
   }
@@ -249,10 +289,28 @@ function renderOptions(containerId, group, items) {
 
 const bySection = (section) => menuItems.filter((i) => i.section === section);
 
-renderMains(bySection("mains"));
-renderOptions("baseOptions", "base", bySection("base"));
-renderOptions("proteinOptions", "protein", bySection("protein"));
-renderOptions("extraOptions", "extra", bySection("extra"));
+/* ---- Render everything, with graceful error states ---- */
+try {
+  renderMains(bySection("mains"));
+  renderOptions("baseOptions", "base", bySection("base"));
+  renderOptions("proteinOptions", "protein", bySection("protein"));
+  renderOptions("extraOptions", "extra", bySection("extra"));
+
+  /* If a section has zero items, at least clear the skeleton so
+     users don't see shimmer forever. */
+  ["baseOptions", "proteinOptions", "extraOptions"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el && !el.children.length) {
+      el.innerHTML = '<p class="load-error">No items in this section yet.</p>';
+    }
+  });
+} catch (err) {
+  console.error("[site] render failed:", err);
+  showLoadError(".mains__grid");
+  showLoadError("#baseOptions");
+  showLoadError("#proteinOptions");
+  showLoadError("#extraOptions");
+}
 
 /* -------------------------------------------------------------
    4. EXPOSE DATA FOR script.js
@@ -275,6 +333,9 @@ window.RT_DATA = {
 window.dispatchEvent(
   new CustomEvent("rt:data-ready", { detail: window.RT_DATA }),
 );
+
+/* Hint for CSS / analytics that the menu is done loading */
+document.documentElement.classList.add("menu-ready");
 
 console.info(
   `[site] loaded ${menuItems.length} menu items, ${phrases.length} MOTD phrases`,
