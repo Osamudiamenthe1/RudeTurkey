@@ -238,10 +238,12 @@ function updateCartVisibility() {
 const mainsGrid = document.querySelector(".mains__grid");
 const mainsSection = document.querySelector(".mains");
 const mainsProgress = document.getElementById("mainsProgress");
-const mainsProgressThumb = document.getElementById("mainsProgressThumb");
+/* (the thumb element has been replaced by dynamically-built pills) */
 
 if (mainsGrid && mainsSection) {
   let progressHideTimer = null;
+  let lastScrollLeft = 0;
+  let directionTimer = null;
 
   function updateMainsFade() {
     const atEnd =
@@ -251,19 +253,76 @@ if (mainsGrid && mainsSection) {
     mainsSection.classList.toggle("is-scrolled", !atStart);
   }
 
+  /* ---- Build one pill per scroll position ----
+     Positions = cards - 1 (mobile shows 2 cards per view, so the
+     number of snap stops is one less than the number of cards).
+     Extremes are dots; middle pills are slightly wider. */
+  function buildProgressPills() {
+    if (!mainsProgress) return;
+
+    const cardEls = mainsGrid.querySelectorAll(".main-card");
+    const cardCount = cardEls.length;
+    if (!cardCount) return;
+
+    /* Derive visible count from layout — adapts to 2-per-view
+       (mobile/tablet) and 3-per-view (desktop) automatically. */
+    const cardW = cardEls[0].getBoundingClientRect().width || 1;
+    const visible = Math.max(1, Math.round(mainsGrid.clientWidth / cardW));
+
+    const positions = Math.max(1, cardCount - visible + 1);
+
+    /* Single position = no scroll possible → hide the rail. */
+    if (positions < 2) {
+      mainsProgress.style.display = "none";
+      return;
+    }
+    mainsProgress.style.display = "";
+
+    mainsProgress.innerHTML = "";
+
+    for (let i = 0; i < positions; i++) {
+      const pill = document.createElement("span");
+      pill.className = "mains__progress-pill";
+      if (i > 0 && i < positions - 1) {
+        pill.classList.add("mains__progress-pill--wide");
+      }
+      mainsProgress.appendChild(pill);
+    }
+  }
+
+  /* ---- Direction-aware drop lean ----
+     Called each time the scroll delta is meaningful. The class
+     sticks for 500ms after motion stops, then the pill settles
+     back into a symmetric shape. */
+  function setSwipeDirection(dir) {
+    mainsProgress.classList.remove("is-swipe-left", "is-swipe-right");
+    if (dir === "left") mainsProgress.classList.add("is-swipe-left");
+    if (dir === "right") mainsProgress.classList.add("is-swipe-right");
+    clearTimeout(directionTimer);
+    directionTimer = setTimeout(() => {
+      mainsProgress.classList.remove("is-swipe-left", "is-swipe-right");
+    }, 500);
+  }
+
   function updateMainsProgress() {
-    if (!mainsProgress || !mainsProgressThumb) return;
+    if (!mainsProgress) return;
 
-    const trackWidth = mainsProgress.clientWidth;
-    const visibleRatio = mainsGrid.clientWidth / mainsGrid.scrollWidth;
-    const thumbWidth = Math.max(trackWidth * visibleRatio, 18);
+    const pills = mainsProgress.querySelectorAll(".mains__progress-pill");
+    if (!pills.length) return;
 
+    /* Direction: compare against last known scrollLeft. */
+    const dx = mainsGrid.scrollLeft - lastScrollLeft;
+    if (Math.abs(dx) > 2) {
+      setSwipeDirection(dx > 0 ? "right" : "left");
+    }
+    lastScrollLeft = mainsGrid.scrollLeft;
+
+    /* Active pill index from continuous scroll ratio. */
     const maxScroll = mainsGrid.scrollWidth - mainsGrid.clientWidth;
     const scrollRatio = maxScroll > 0 ? mainsGrid.scrollLeft / maxScroll : 0;
-    const maxThumbTravel = trackWidth - thumbWidth;
+    const activeIdx = Math.round(scrollRatio * (pills.length - 1));
 
-    mainsProgressThumb.style.width = `${thumbWidth}px`;
-    mainsProgressThumb.style.transform = `translateX(${scrollRatio * maxThumbTravel}px)`;
+    pills.forEach((p, i) => p.classList.toggle("is-active", i === activeIdx));
 
     mainsProgress.classList.add("is-visible");
     clearTimeout(progressHideTimer);
@@ -271,6 +330,16 @@ if (mainsGrid && mainsSection) {
       mainsProgress.classList.remove("is-visible");
     }, 1400);
   }
+
+  /* ---- Rebuild pills whenever the grid's children change ----
+     site.js replaces the skeleton cards with real ones after it
+     fetches from Supabase. This observer catches that swap and
+     also any future adds/removes of cards. */
+  const progressPillObserver = new MutationObserver(() => {
+    buildProgressPills();
+    updateMainsProgress();
+  });
+  progressPillObserver.observe(mainsGrid, { childList: true });
 
   mainsGrid.addEventListener(
     "scroll",
@@ -290,8 +359,455 @@ if (mainsGrid && mainsSection) {
     { passive: true },
   );
 
+  buildProgressPills();
   updateMainsFade();
   updateMainsProgress();
+}
+
+/* -------------------------------------------------------------
+   6c. Mobile scroll hint — vertical follow
+   -------------------------------------------------------------
+   The hint (arrow + line) starts at its natural "ceiling" just
+   below the card image. As the page scrolls down and the hint's
+   ceiling crosses the middle of the viewport, the hint locks to
+   that mid-viewport line and slides DOWN through the card body
+   in lockstep with the scroll. It stops when its bottom edge is
+   ~8px above the first card's "Add to Tray" button. Scrolling
+   back up releases it in reverse.
+
+   All motion is expressed as an offset from the CSS `top` value,
+   so the ceiling position (and any future tweak to it) stays the
+   single source of truth in the stylesheet.
+   ------------------------------------------------------------- */
+const scrollHint = document.getElementById("mainsScrollHint");
+const mainsGridWrap = document.querySelector(".mains__grid-wrap");
+
+if (scrollHint && mainsGridWrap && mainsGrid) {
+  // Mobile + tablet: hint is active wherever the carousel is edge-to-edge
+  const MOBILE_MQ = window.matchMedia("(max-width: 899px)");
+
+  /* Anchor point — fraction of viewport height where the hint
+     "grabs" on and stops tracking. 0.5 = exact middle. */
+  const HINT_ANCHOR_RATIO = 0.5;
+
+  /* Gap between the hint's bottom and the Add-to-Tray button. */
+  const HINT_BOTTOM_GAP = 8;
+
+  let hintCeiling = 0; // hint's centre, in grid-wrap coords, at rest
+  let hintBottom = 0; // hint's centre, in grid-wrap coords, at full travel
+  let hintTravel = 0; // hintBottom - hintCeiling (always >= 0)
+
+  function measureHintTravel() {
+    if (!MOBILE_MQ.matches) return;
+
+    const wrapRect = mainsGridWrap.getBoundingClientRect();
+
+    /* ---- Ceiling: gap between image and body of the first card ----
+       Measured from card geometry so it adapts to any image
+       height, any gap, any viewport. */
+    const firstCard = mainsGridWrap.querySelector(".main-card");
+    let ceiling;
+
+    if (firstCard) {
+      const img = firstCard.querySelector(".main-card__img");
+      const body = firstCard.querySelector(".main-card__body");
+      if (img && body) {
+        const imgBottom = img.getBoundingClientRect().bottom - wrapRect.top;
+        const bodyTop = body.getBoundingClientRect().top - wrapRect.top;
+        ceiling = (imgBottom + bodyTop) / 2;
+      }
+    }
+
+    if (ceiling === undefined) {
+      /* Fallback — read whatever the stylesheet produced. */
+      const prevTop = scrollHint.style.top;
+      scrollHint.style.top = "";
+      const r = scrollHint.getBoundingClientRect();
+      ceiling = r.top + r.height / 2 - wrapRect.top;
+      scrollHint.style.top = prevTop;
+    }
+
+    hintCeiling = ceiling;
+
+    /* Set `top` directly — because the transform is
+       translateY(calc(-50% + Xpx)), the hint's centre lands at
+       whatever `top` we write. */
+    scrollHint.style.top = `${ceiling}px`;
+
+    const hintHalf = scrollHint.getBoundingClientRect().height / 2;
+
+    /* Bottom limit — just above the first card's foot. */
+    const firstFoot = mainsGridWrap.querySelector(".main-card__foot");
+    if (firstFoot) {
+      const footRect = firstFoot.getBoundingClientRect();
+      hintBottom = footRect.top - wrapRect.top - HINT_BOTTOM_GAP - hintHalf;
+    } else {
+      /* Fallback if the menu hasn't rendered. */
+      const firstImg = mainsGridWrap.querySelector(".main-card__img");
+      const imgH = firstImg ? firstImg.getBoundingClientRect().height : 200;
+      hintBottom = imgH + 60;
+    }
+
+    hintTravel = Math.max(0, hintBottom - hintCeiling);
+
+    /* Reveal now that positioning is done. */
+    scrollHint.classList.add("is-measured");
+  }
+
+  function updateHintPosition() {
+    if (!MOBILE_MQ.matches) {
+      scrollHint.style.transform = "";
+      return;
+    }
+
+    const wrapRect = mainsGridWrap.getBoundingClientRect();
+    const anchorY = window.innerHeight * HINT_ANCHOR_RATIO;
+
+    const ceilingViewportY = wrapRect.top + hintCeiling;
+    const overshoot = anchorY - ceilingViewportY;
+
+    let offset = 0;
+    if (overshoot > 0) {
+      offset = Math.min(overshoot, hintTravel);
+    }
+
+    scrollHint.style.transform = `translateY(calc(-50% + ${offset}px))`;
+  }
+
+  /* rAF throttle so we only compute once per frame. */
+  let hintRaf = null;
+  function scheduleHintUpdate() {
+    if (hintRaf) return;
+    hintRaf = requestAnimationFrame(() => {
+      hintRaf = null;
+      updateHintPosition();
+    });
+  }
+
+  /* Initial paint */
+  measureHintTravel();
+  updateHintPosition();
+
+  /* Page scroll — the sole trigger for vertical motion. */
+  window.addEventListener("scroll", scheduleHintUpdate, { passive: true });
+
+  /* Viewport resize — recompute geometry then reposition. */
+  window.addEventListener(
+    "resize",
+    () => {
+      measureHintTravel();
+      scheduleHintUpdate();
+    },
+    { passive: true },
+  );
+
+  /* Breakpoint flips — e.g. tablet ↔ phone orientation. */
+  MOBILE_MQ.addEventListener("change", () => {
+    measureHintTravel();
+    scheduleHintUpdate();
+  });
+
+  /* Card heights can shift when menu items render, images load,
+     descriptions reflow, etc. Re-measure on every size change. */
+  const hintResizeObserver = new ResizeObserver(() => {
+    measureHintTravel();
+    scheduleHintUpdate();
+  });
+  hintResizeObserver.observe(mainsGridWrap);
+
+  /* Belt-and-braces: re-measure once the site data has landed. */
+  window.addEventListener("rt:data-ready", () => {
+    requestAnimationFrame(() => {
+      measureHintTravel();
+      scheduleHintUpdate();
+    });
+  });
+}
+
+/* -------------------------------------------------------------
+   6d. Protein carousel — same mechanics as the mains carousel,
+   applied to the "Choose your protein" option grid.
+   Mobile only. 4 cards per view (adapts to any viewport).
+   ------------------------------------------------------------- */
+const proteinGrid = document.getElementById("proteinOptions");
+const proteinStep = document.getElementById("proteinStep");
+const proteinProgress = document.getElementById("proteinProgress");
+
+if (proteinGrid && proteinStep && proteinProgress) {
+  let proteinProgressHideTimer = null;
+  let proteinLastScrollLeft = 0;
+  let proteinDirectionTimer = null;
+
+  function updateProteinFade() {
+    const atEnd =
+      proteinGrid.scrollLeft + proteinGrid.clientWidth >=
+      proteinGrid.scrollWidth - 4;
+    const atStart = proteinGrid.scrollLeft <= 4;
+    proteinStep.classList.toggle("is-end", atEnd);
+    proteinStep.classList.toggle("is-scrolled", !atStart);
+  }
+
+  /* Positions = cards - visible + 1. The visible count is derived
+     from card width vs grid width, so this auto-adjusts if you
+     later change the per-view card count in CSS. Extremes are
+     dots; middles are wide pills. */
+  function buildProteinPills() {
+    const cardCount = proteinGrid.querySelectorAll(".option-card").length;
+    if (!cardCount) return;
+
+    const isMobile = window.matchMedia("(max-width: 599px)").matches;
+    const isDesktop = window.matchMedia("(min-width: 900px)").matches;
+
+    /* Desktop has no carousel — hide the rail entirely. */
+    if (isDesktop) {
+      proteinProgress.innerHTML = "";
+      proteinProgress.style.display = "none";
+      return;
+    }
+
+    /* Cards per swipe-page.
+     Mobile  <600px : 2 cols × 2 rows = 4
+     Tablet 600–899 : 2 cols × 3 rows = 6 */
+    const CARDS_PER_SLIDE = isMobile ? 4 : 6;
+    const positions = Math.max(1, Math.ceil(cardCount / CARDS_PER_SLIDE));
+
+    if (positions < 2) {
+      proteinProgress.style.display = "none";
+      return;
+    }
+    proteinProgress.style.display = "";
+
+    proteinProgress.innerHTML = "";
+    for (let i = 0; i < positions; i++) {
+      const pill = document.createElement("span");
+      pill.className = "protein__progress-pill";
+      if (i > 0 && i < positions - 1) {
+        pill.classList.add("protein__progress-pill--wide");
+      }
+      proteinProgress.appendChild(pill);
+    }
+  }
+  function setProteinSwipeDirection(dir) {
+    proteinProgress.classList.remove("is-swipe-left", "is-swipe-right");
+    if (dir === "left") proteinProgress.classList.add("is-swipe-left");
+    if (dir === "right") proteinProgress.classList.add("is-swipe-right");
+    clearTimeout(proteinDirectionTimer);
+    proteinDirectionTimer = setTimeout(() => {
+      proteinProgress.classList.remove("is-swipe-left", "is-swipe-right");
+    }, 500);
+  }
+
+  function updateProteinProgress() {
+    const pills = proteinProgress.querySelectorAll(".protein__progress-pill");
+    if (!pills.length) return;
+
+    const dx = proteinGrid.scrollLeft - proteinLastScrollLeft;
+    if (Math.abs(dx) > 2) {
+      setProteinSwipeDirection(dx > 0 ? "right" : "left");
+    }
+    proteinLastScrollLeft = proteinGrid.scrollLeft;
+
+    const maxScroll = proteinGrid.scrollWidth - proteinGrid.clientWidth;
+    const scrollRatio = maxScroll > 0 ? proteinGrid.scrollLeft / maxScroll : 0;
+    const activeIdx = Math.round(scrollRatio * (pills.length - 1));
+
+    pills.forEach((p, i) => p.classList.toggle("is-active", i === activeIdx));
+
+    proteinProgress.classList.add("is-visible");
+    clearTimeout(proteinProgressHideTimer);
+    proteinProgressHideTimer = setTimeout(() => {
+      proteinProgress.classList.remove("is-visible");
+    }, 1400);
+  }
+
+  /* Rebuild pills when site.js swaps skeletons for real items,
+     or if the admin later adds/removes proteins. */
+  const proteinPillObserver = new MutationObserver(() => {
+    buildProteinPills();
+    updateProteinProgress();
+  });
+  proteinPillObserver.observe(proteinGrid, { childList: true });
+
+  proteinGrid.addEventListener(
+    "scroll",
+    () => {
+      updateProteinFade();
+      updateProteinProgress();
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      buildProteinPills();
+      updateProteinFade();
+      updateProteinProgress();
+    },
+    { passive: true },
+  );
+
+  buildProteinPills();
+  updateProteinFade();
+  updateProteinProgress();
+}
+
+/* -------------------------------------------------------------
+   6e. Protein scroll hint — vertical follow
+   -------------------------------------------------------------
+   Ceiling: the gap between the two rows of protein cards
+   (measured from the actual card geometry so it adapts to any
+   viewport width). Floor: bottom of the whole 2-row grid, minus
+   an 8px cushion. Scroll locks it to mid-viewport and slides it
+   down through row 2, then releases at the floor. Reverse on
+   scroll up.
+   ------------------------------------------------------------- */
+const proteinScrollHint = document.getElementById("proteinScrollHint");
+const proteinGridWrap = document.querySelector(".protein__grid-wrap");
+
+if (proteinScrollHint && proteinGridWrap && proteinGrid) {
+  // Mobile + tablet: hint is active wherever the protein carousel runs
+  const PROTEIN_MQ = window.matchMedia("(max-width: 899px)");
+
+  const PROTEIN_ANCHOR_RATIO = 0.5; // mid-viewport
+  const PROTEIN_BOTTOM_GAP = 8; // px above the grid's bottom edge
+
+  let proteinHintCeiling = 0; // hint centre at rest, in wrap coords
+  let proteinHintBottom = 0; // hint centre at max travel
+  let proteinHintTravel = 0; // bottom - ceiling, always >= 0
+
+  function measureProteinHintTravel() {
+    if (!PROTEIN_MQ.matches) return;
+
+    /* Clear the transform so rect measurements are clean
+       (position doesn't depend on it, but tidier). */
+    const prevTransform = proteinScrollHint.style.transform;
+    proteinScrollHint.style.transform = "";
+
+    const wrapRect = proteinGridWrap.getBoundingClientRect();
+
+    /* ---- Ceiling: gap between row 1 and row 2 ----
+       With `grid-auto-flow: column` and 2 template rows, cards
+       fill column-by-column. So cards[0] and cards[1] are the
+       top and bottom of the first column — their facing edges
+       straddle the inter-row gap. */
+    const cards = proteinGrid.querySelectorAll(".option-card");
+    let ceiling;
+
+    if (cards.length >= 2) {
+      const firstBottom =
+        cards[0].getBoundingClientRect().bottom - wrapRect.top;
+      const secondTop = cards[1].getBoundingClientRect().top - wrapRect.top;
+      ceiling = (firstBottom + secondTop) / 2;
+
+      /* Nudge up 2px — matches where the eye reads the gap's
+         centre once borders and antialiasing are factored in. */
+      ceiling -= 2;
+    } else {
+      /* Fewer than 2 cards — fall back to whatever position the
+         stylesheet produced, so the hint still lands somewhere
+         reasonable instead of at 0. */
+      const r = proteinScrollHint.getBoundingClientRect();
+      ceiling = r.top + r.height / 2 - wrapRect.top;
+    }
+
+    proteinHintCeiling = ceiling;
+
+    /* Because the transform is translateY(calc(-50% + Xpx)),
+       the hint's CENTRE sits exactly at the CSS `top` value.
+       So we set `top` to the ceiling directly. */
+    proteinScrollHint.style.top = `${ceiling}px`;
+
+    /* ---- Floor: bottom of the LAST CARD, not the scroller ----
+       The scroller has extra vertical padding for glow room, so
+       its own bottom sits lower than the visible content. Using
+       the last card's bottom measures the actual content edge. */
+    const hintHalf = proteinScrollHint.getBoundingClientRect().height / 2;
+
+    const cardsForFloor = proteinGrid.querySelectorAll(".option-card");
+    const lastCard = cardsForFloor[cardsForFloor.length - 1];
+    const gridBottom = lastCard
+      ? lastCard.getBoundingClientRect().bottom - wrapRect.top
+      : proteinGrid.getBoundingClientRect().bottom - wrapRect.top;
+
+    proteinHintBottom = gridBottom - PROTEIN_BOTTOM_GAP - hintHalf;
+    proteinHintTravel = Math.max(0, proteinHintBottom - proteinHintCeiling);
+
+    if (prevTransform) proteinScrollHint.style.transform = prevTransform;
+
+    /* Reveal now that positioning is done. */
+    proteinScrollHint.classList.add("is-measured");
+  }
+
+  function updateProteinHintPosition() {
+    if (!PROTEIN_MQ.matches) {
+      proteinScrollHint.style.transform = "";
+      return;
+    }
+
+    const wrapRect = proteinGridWrap.getBoundingClientRect();
+    const anchorY = window.innerHeight * PROTEIN_ANCHOR_RATIO;
+
+    const ceilingViewportY = wrapRect.top + proteinHintCeiling;
+    const overshoot = anchorY - ceilingViewportY;
+
+    let offset = 0;
+    if (overshoot > 0) {
+      offset = Math.min(overshoot, proteinHintTravel);
+    }
+
+    proteinScrollHint.style.transform = `translateY(calc(-50% + ${offset}px))`;
+  }
+
+  let proteinHintRaf = null;
+  function scheduleProteinHintUpdate() {
+    if (proteinHintRaf) return;
+    proteinHintRaf = requestAnimationFrame(() => {
+      proteinHintRaf = null;
+      updateProteinHintPosition();
+    });
+  }
+
+  /* Initial paint */
+  measureProteinHintTravel();
+  updateProteinHintPosition();
+
+  /* Page scroll */
+  window.addEventListener("scroll", scheduleProteinHintUpdate, {
+    passive: true,
+  });
+
+  /* Viewport resize */
+  window.addEventListener(
+    "resize",
+    () => {
+      measureProteinHintTravel();
+      scheduleProteinHintUpdate();
+    },
+    { passive: true },
+  );
+
+  /* Breakpoint flips (tablet ↔ phone orientation) */
+  PROTEIN_MQ.addEventListener("change", () => {
+    measureProteinHintTravel();
+    scheduleProteinHintUpdate();
+  });
+
+  /* Grid size changes — menu items render, images load, admin
+     adds/removes proteins. */
+  const proteinHintRO = new ResizeObserver(() => {
+    measureProteinHintTravel();
+    scheduleProteinHintUpdate();
+  });
+  proteinHintRO.observe(proteinGridWrap);
+
+  /* Belt-and-braces — re-measure once site data lands. */
+  window.addEventListener("rt:data-ready", () => {
+    requestAnimationFrame(() => {
+      measureProteinHintTravel();
+      scheduleProteinHintUpdate();
+    });
+  });
 }
 
 /* -------------------------------------------------------------
@@ -522,10 +1038,19 @@ document.addEventListener("click", (e) => {
   const matchingCard = document.querySelector(
     `#baseOptions .option-card[data-name="${baseName}"]`,
   );
-  if (matchingCard) {
-    selectOption(matchingCard);
+  if (!matchingCard) return;
+
+  /* Capture the state BEFORE the toggle. If the card is already
+     selected, this tap will deselect it — in that case we do NOT
+     want to scroll the page. If it's unselected, this tap will
+     select it — then we scroll to the builder. */
+  const wasSelected = matchingCard.classList.contains("is-selected");
+
+  selectOption(matchingCard);
+
+  if (!wasSelected) {
+    document.getElementById("builder").scrollIntoView({ behavior: "smooth" });
   }
-  document.getElementById("builder").scrollIntoView({ behavior: "smooth" });
 });
 // There is NO card click handler – only the button triggers selection
 
