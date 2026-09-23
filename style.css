@@ -20,22 +20,18 @@
   --touch-min: 44px;
 }
 
-
-/* ---- SCROLL KILLER (applied to all) ---- */
-/* ---- Prevent scrollbar flicker (reserve space + hide scrollbar) ---- */
+/* ---- SCROLL KILLER ---- */
 html {
   scrollbar-gutter: stable;
   overflow-y: auto;
 }
 
-/* Hide scrollbar for WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
   display: none;
 }
 
-/* Hide scrollbar for Firefox */
 * {
   scrollbar-width: none;
 }
@@ -78,7 +74,6 @@ body {
 
 section[id] {
   scroll-margin-top: 60px;
-  /* anchor links stop below header */
 }
 
 img {
@@ -206,7 +201,6 @@ input {
   justify-content: space-between;
   padding: .7rem 5%;
   min-height: calc(40px + 1.4rem);
-  /* ← add this */
   background: rgba(25, 19, 16, .92);
   backdrop-filter: blur(6px);
   transition: box-shadow .3s var(--ease);
@@ -217,7 +211,6 @@ input {
   will-change: transform;
 }
 
-/* ---- Header doodle background layer ---- */
 .nav__bg {
   position: absolute;
   inset: 0;
@@ -229,7 +222,6 @@ input {
   pointer-events: none;
 }
 
-/* ---- Lift nav content above the doodle layer ---- */
 .nav__brand,
 .nav__right {
   position: relative;
@@ -242,13 +234,11 @@ input {
 
 .nav.is-condensed .nav__mark {
   height: 36px;
-  /* was 40px */
   transition: height .3s var(--ease);
 }
 
 .nav.is-condensed .nav__logo {
   font-size: 1.08rem;
-  /* was 1.2rem */
   transition: font-size .3s var(--ease);
 }
 
@@ -266,7 +256,6 @@ input {
   display: block;
   flex-shrink: 0;
   transition: height .3s var(--ease);
-  /* ← add this */
 }
 
 .nav__logo {
@@ -282,7 +271,6 @@ input {
   animation: stampIn .6s var(--ease) both;
   animation-delay: .15s;
   transition: font-size .3s var(--ease);
-  /* ← add this */
 }
 
 .nav__logo::after {
@@ -405,7 +393,6 @@ input {
   pointer-events: auto;
 }
 
-/* ---- One-time diagonal flash when mobile menu opens ---- */
 .mobile-menu::after {
   content: "";
   position: absolute;
@@ -453,7 +440,6 @@ input {
   text-align: center;
 }
 
-/* ---- Mobile menu doodle background layer ---- */
 .mobile-menu__bg {
   position: absolute;
   inset: 0;
@@ -465,7 +451,6 @@ input {
   pointer-events: none;
 }
 
-/* ---- Lift mobile menu content above the doodle layer ---- */
 .mobile-menu>a {
   position: relative;
   z-index: 1;
@@ -515,14 +500,12 @@ input {
       inset 0 -1px 0 rgba(0, 0, 0, .25),
       0 6px 14px -6px rgba(0, 0, 0, .3);
 
-    /* ---- GPU hints: stop text blur on hover ---- */
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* diagonal flash */
   .nav__cta::before {
     content: "";
     position: absolute;
@@ -539,7 +522,6 @@ input {
 
   .nav__cta:hover,
   .nav__cta:active {
-    /* lift instead of scale — no re-rasterization, no blur */
     transform: translateZ(0) translateY(-1px);
     border-color: rgba(231, 167, 46, .8);
     box-shadow:
@@ -591,13 +573,9 @@ input {
   position: absolute;
   inset: 0;
   overflow: hidden;
-
-  /* transparent glass tint — no blur, image stays sharp underneath */
   background:
     linear-gradient(160deg, rgba(244, 233, 214, .1), rgba(244, 233, 214, 0) 45%),
     linear-gradient(180deg, rgba(25, 19, 16, .35) 0%, rgba(25, 19, 16, .78) 65%, var(--char) 100%);
-
-  /* glass pane edges — bright top rim, dark bottom edge, faint sides */
   box-shadow:
     inset 0 1px 0 rgba(244, 233, 214, .18),
     inset 0 -1px 0 rgba(0, 0, 0, .3),
@@ -605,7 +583,6 @@ input {
     inset -1px 0 0 rgba(244, 233, 214, .06);
 }
 
-/* one-time diagonal shine, plays once on load, then sits still */
 .hero__overlay::after {
   content: "";
   position: absolute;
@@ -839,11 +816,10 @@ input {
   align-items: start;
 }
 
-.mains__scroll-hint {
+.mains__scroll-hint,
+.protein__scroll-hint {
   display: none;
 }
-
-
 
 @media (min-width: 600px) {
   .mains__grid {
@@ -861,8 +837,17 @@ input {
   }
 }
 
-/* Mains cards shrink to protein-card size on mobile (checked at iPhone XS Max, 414px) */
+/* =============================================================
+   MOBILE CAROUSEL — edge-to-edge
+   ============================================================= */
 @media (max-width: 599px) {
+
+  .mains {
+    position: relative;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .mains__grid {
     display: flex;
     grid-template-columns: unset;
@@ -873,6 +858,14 @@ input {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+
+    /* Vertical glow room — pulled back out with the negative
+       margin so layout doesn't shift. */
+    padding: 40px 1.25rem;
+    margin: -40px 0;
+
+    scroll-padding-left: 1.25rem;
+    scroll-padding-right: 1.25rem;
   }
 
   .main-card {
@@ -881,10 +874,6 @@ input {
     flex: 0 0 calc(50% - .45rem);
     min-width: calc(50% - .45rem);
     scroll-snap-align: start;
-  }
-
-  .mains {
-    position: relative;
   }
 
   .mains__grid-wrap {
@@ -927,10 +916,12 @@ input {
     opacity: 1;
   }
 
+  /* ---- Scroll hint (arrow + line) ---- */
   .mains__scroll-hint {
     display: flex;
     position: absolute;
-    top: calc(201px + 0.15rem);
+    /* `top` is written by JS after measuring the gap between the
+       first card's image and its body card. */
     right: .7rem;
     transform: translateY(-50%);
     align-items: center;
@@ -939,6 +930,11 @@ input {
     pointer-events: none;
     opacity: .5;
     transition: opacity .25s var(--ease);
+    visibility: hidden;
+  }
+
+  .mains__scroll-hint.is-measured {
+    visibility: visible;
   }
 
   .mains.is-end .mains__scroll-hint {
@@ -952,31 +948,38 @@ input {
     border-top: 11px solid transparent;
     border-bottom: 11px solid transparent;
     border-right: 14px solid var(--jollof);
-    filter: drop-shadow(0 0 6px rgba(216, 72, 31, .5));
-    animation: scrollHintPulse 1.8s ease-in-out infinite;
+    animation:
+      scrollArrowFollowLine 2.0s ease-in-out infinite,
+      scrollArrowColor 2.0s ease-in-out infinite;
   }
 
   .mains__scroll-hint__line {
-    width: 30px;
+    width: 22px;
     height: 2px;
     border-radius: 1px;
     background: var(--jollof);
     box-shadow: 0 0 8px rgba(216, 72, 31, .4);
+    transform-origin: right center;
     animation: scrollLineHorizontal 1.8s ease-in-out infinite;
   }
 
+  /* ---- Progress rail — pills in a dark groove ---- */
   .mains__progress {
-    width: 56px;
-    height: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: fit-content;
+    height: 18px;
     margin: 1rem auto 0;
-    border-radius: 3px;
-    background: rgba(244, 233, 214, .35);
-    border: 1px solid rgba(244, 233, 214, .3);
+    padding: 0 10px;
+    background: rgba(25, 19, 16, 0.5);
+    border-radius: 999px;
     box-shadow:
-      inset 0 1px 2px rgba(0, 0, 0, .15),
-      0 1px 0 rgba(244, 233, 214, .3);
-    overflow: hidden;
-    opacity: .4;
+      inset 0 1px 2px rgba(0, 0, 0, 0.4),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+      0 1px 0 rgba(244, 233, 214, 0.35);
+    opacity: .55;
     transition: opacity .4s var(--ease);
   }
 
@@ -984,85 +987,63 @@ input {
     opacity: 1;
   }
 
-  .mains__progress-thumb {
-    height: 100%;
-    width: 40%;
-    border-radius: 3px;
-    background: var(--jollof);
-    box-shadow: 0 0 6px rgba(216, 72, 31, .6);
-    transform: translateX(0);
-    transition: transform .1s linear;
+  .mains__progress-pill {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(244, 233, 214, 0.65);
+    transition:
+      width .35s var(--ease),
+      border-radius .35s var(--ease),
+      background .3s var(--ease),
+      box-shadow .3s var(--ease);
   }
 
-  .main-card__img {
-    height: 200px;
+  .mains__progress-pill--wide {
+    width: 14px;
+  }
+
+  .mains__progress-pill.is-active {
+    width: 22px;
+    background: var(--jollof);
+    box-shadow: 0 0 10px rgba(216, 72, 31, 0.75);
+  }
+
+  .mains__progress.is-swipe-right .mains__progress-pill.is-active {
+    border-radius: 2px 999px 999px 2px;
+  }
+
+  .mains__progress.is-swipe-left .mains__progress-pill.is-active {
+    border-radius: 999px 2px 2px 999px;
+  }
+
+  /* ---- Main card image — square on mobile ----
+     Prefixed with `.mains` so it beats the base 4:3 aspect
+     ratio (which sits later in the file). */
+  .mains .main-card__img {
+    aspect-ratio: 1 / 1;
+    height: auto;
     width: 100%;
-    aspect-ratio: auto;
   }
 
   .main-card__img img {
     object-position: center;
   }
 
-  .main-card__body {
-    padding: .7rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  /* Title — no fixed or max height, grows freely to fit any length */
-  .main-card__body h3 {
-    font-size: .92rem;
-    line-height: 1.2;
-    height: 75px;
-    overflow: hidden;
-    margin-bottom: .4rem;
-    -webkit-text-stroke: 0.6px var(--turmeric);
-    flex-shrink: 0;
-    display: flex;
-    /* ← new */
-    align-items: center;
-    /* ← new – vertical center */
-    text-align: left;
-    /* ← keeps text centered if it wraps */
-  }
-
-  /* Description — no fixed or max height either, grows freely */
+  /* Everything else below stays UNPREFIXED — the base rules
+     further down the file still win for most of these, so the
+     bulk of the previous overrides were dead code. Only two
+     declarations actually survive and are kept below. */
   .main-card__body p {
-    font-size: .78rem;
     line-height: 1.35;
-    min-height: 140px;
-    /* minimum height */
-    margin-bottom: .7rem;
-    flex-shrink: 0;
-    /* prevent shrinking */
-  }
-
-  /* Price + button always pinned to the bottom of the card,
-     however tall the title/description above end up being */
-  .main-card__foot {
-    gap: .5rem;
-    margin-top: auto;
-  }
-
-  .price {
-    font-size: .85rem;
   }
 
   .main-card .btn--ghost {
-    padding: .4rem .7rem;
     font-size: .68rem;
   }
 
-  .main-card__stamp {
-    font-size: .7rem;
-    padding: 0.2rem 0.5rem;
-    top: .5rem;
-    right: .5rem;
-  }
-
-  /* ---- Make base option cards equal height on mobile ---- */
+  /* ---- Base option cards equal height on mobile ---- */
   #baseOptions .option-card {
     display: flex;
     flex-direction: column;
@@ -1076,7 +1057,6 @@ input {
     overflow: visible;
   }
 
-  /* Ensure the name and price are properly stacked */
   #baseOptions .option-card .option-card__name {
     font-size: 0.85rem;
     line-height: 1.2;
@@ -1089,17 +1069,41 @@ input {
   }
 }
 
+/* Arrow colour pulse */
+@keyframes scrollArrowColor {
+
+  0%,
+  100% {
+    border-right-color: var(--jollof);
+    filter: drop-shadow(0 0 6px rgba(216, 72, 31, .5));
+  }
+
+  50% {
+    border-right-color: var(--bone);
+    filter: drop-shadow(0 0 6px rgba(244, 233, 214, .55));
+  }
+}
+
+/* Arrow follows the line's receding left edge */
+@keyframes scrollArrowFollowLine {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(6px);
+  }
+}
+
 .main-card {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  /* space between image card and body card */
   background: transparent;
-  /* remove the unified background */
   border: none;
-  /* remove the unified border */
   box-shadow: none;
-  /* remove the unified shadow */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-radius: 0;
@@ -1107,8 +1111,6 @@ input {
   transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
 }
 
-
-/* ---- Image card: stands on its own ---- */
 .main-card__img {
   aspect-ratio: 4/3;
   background: #2c2117;
@@ -1120,7 +1122,6 @@ input {
   border: 1.5px solid rgba(244, 233, 214, 0.14);
 }
 
-/* ---- Shine effect on the image (glass reflection) ---- */
 .main-card__img::before {
   content: "";
   position: absolute;
@@ -1134,10 +1135,8 @@ input {
   transition: transform .9s ease;
   pointer-events: none;
   border-radius: 12px;
-  /* matches the image's border-radius */
 }
 
-/* ---- Shine slides on hover (only when the whole card is hovered) ---- */
 .main-card:hover .main-card__img::before {
   transform: translateX(130%);
 }
@@ -1175,7 +1174,6 @@ input {
   padding: 1rem;
 }
 
-/* ---- Image glow on hover (only the image, not the body) ---- */
 .main-card:hover .main-card__img {
   transform: translateY(-2px);
   border-color: rgba(231, 167, 46, 0.8);
@@ -1184,7 +1182,6 @@ input {
     0 0 0 1px rgba(231, 167, 46, 0.2);
 }
 
-/* ---- Body card: stands on its own ---- */
 .main-card__body {
   padding: 1.2rem 1.2rem 1rem;
   position: relative;
@@ -1198,9 +1195,7 @@ input {
     rgba(36, 26, 20, .55);
   background-size: auto, auto, 300px auto, auto, auto;
   background-position: center, center, top left, center, center;
-  /* ← change */
   background-repeat: no-repeat, no-repeat, repeat, no-repeat, no-repeat;
-  /* ← change */
   background-clip: padding-box;
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
@@ -1237,7 +1232,6 @@ input {
   flex-shrink: 0;
 }
 
-
 .main-card__foot {
   display: flex;
   align-items: center;
@@ -1266,7 +1260,6 @@ input {
   color: var(--ink);
 }
 
-/* ----- MAIN CARD STAMP (matches header logo style) ----- */
 .main-card__stamp {
   position: absolute;
   top: 1rem;
@@ -1291,7 +1284,6 @@ input {
   text-shadow: 0 0 12px rgba(216, 72, 31, .3);
 }
 
-/* ---- Coming Soon badge for main cards (matches ADDED stamp exactly) ---- */
 .main-card .coming-soon-stamp {
   position: absolute;
   top: 1rem;
@@ -1308,14 +1300,12 @@ input {
   border: 3px solid var(--jollof);
   border-radius: 6px;
   transform: rotate(-3deg);
-  /* anti‑clockwise, matches ADDED stamp */
   pointer-events: none;
   backdrop-filter: blur(4px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   text-shadow: 0 0 12px rgba(216, 72, 31, 0.3);
 }
 
-/* ---- Grayed-out coming soon main card ---- */
 .main-card--soon {
   filter: grayscale(85%);
   opacity: 0.45;
@@ -1325,18 +1315,14 @@ input {
 .main-card--soon .btn--add {
   cursor: not-allowed;
   pointer-events: none;
-  /* prevents any accidental click */
   opacity: 0.5;
 }
 
-/* Make sure the "Coming Soon" badge is visible on the grayed card */
 .main-card--soon .coming-soon-stamp {
   opacity: 1;
   filter: none;
-  /* keep the badge colourful */
 }
 
-/* Larger on desktop – exactly matches ADDED stamp scaling */
 @media (min-width: 761px) {
   .main-card .coming-soon-stamp {
     font-size: 1.4rem;
@@ -1373,7 +1359,6 @@ input {
   box-shadow: 0 50px 40px -20px rgba(216, 72, 31, .4);
 }
 
-/* ---- Persistent glow on image when added ---- */
 .main-card.has-added .main-card__img {
   transform: translateY(-2px);
   border-color: rgba(231, 167, 46, 0.8);
@@ -1382,7 +1367,6 @@ input {
     0 0 0 1px rgba(231, 167, 46, 0.2);
 }
 
-/* ---- Persistent "hovered" button state when added ---- */
 .main-card.has-added .btn--ghost {
   background: var(--bone);
   color: var(--ink);
@@ -1396,7 +1380,6 @@ input {
     right: 1.5rem;
   }
 }
-
 
 /* =============================================================
    BUILDER
@@ -1536,7 +1519,6 @@ input {
   margin-top: auto;
 }
 
-/* ---- Doodle texture on base and extras option cards ---- */
 #baseOptions .option-card,
 #extraOptions .option-card {
   background-image:
@@ -1544,12 +1526,10 @@ input {
     url('images/extras/header-art.jpg');
   background-size: auto, 300px auto;
   background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
+  background-repeat: no-repeat, repeat;
   background-color: var(--char-2);
   background-clip: padding-box;
-  /* ← add this */
   background-origin: padding-box;
-  /* ← add this for consistency */
 }
 
 .option-card--protein {
@@ -1561,17 +1541,13 @@ input {
     rgba(36, 26, 20, .5);
   background-size: auto, auto, 300px auto, auto;
   background-position: center, center, center, center;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat;
   background-clip: padding-box;
-  /* ← add this */
   border-color: rgba(244, 233, 214, .14);
   box-shadow:
     inset 0 1px 0 rgba(244, 233, 214, .14),
     inset 0 -1px 0 rgba(0, 0, 0, .3);
-  /* border-radius is inherited from .option-card (8px) */
 }
-
-
 
 .option-card--protein:hover,
 .option-card--protein:active {
@@ -1584,8 +1560,6 @@ input {
     0 0 46px 12px rgba(231, 167, 46, .16);
 }
 
-
-
 .option-card__thumb {
   width: 100%;
   margin: 0;
@@ -1595,12 +1569,9 @@ input {
   background-color: #2c2117;
   border-radius: 8px 8px 8px 8px;
   position: relative;
-  /* needed for absolute pseudo */
   overflow: hidden;
-  /* clips the shine inside the thumb */
 }
 
-/* ---- Shine effect on the protein thumb (slides on hover) ---- */
 .option-card__thumb::before {
   content: "";
   position: absolute;
@@ -1748,7 +1719,7 @@ input {
   display: block;
 }
 
-/* ----- TICKET (FIXED) ----- */
+/* ----- TICKET ----- */
 .ticket {
   background: var(--bone);
   color: var(--ink);
@@ -1759,7 +1730,6 @@ input {
   font-family: var(--mono);
   position: relative;
   overflow: hidden;
-  /* kills stamp overflow */
   max-width: 100%;
 }
 
@@ -1890,6 +1860,7 @@ input {
   padding: 3rem 1.25rem 1.5rem;
   overflow-x: hidden;
   max-width: 100%;
+  position: relative;
 }
 
 .footer__grid {
@@ -1988,7 +1959,7 @@ input {
 }
 
 /* =============================================================
-   FLOATING ORDER BUTTON (with badge, no emoji)
+   FLOATING ORDER BUTTON
    ============================================================= */
 .float-cta-wrap {
   position: fixed;
@@ -2020,12 +1991,7 @@ input {
   font-size: .7rem;
   text-transform: uppercase;
   letter-spacing: .04em;
-
-
   -webkit-tap-highlight-color: transparent;
-  /* ...existing properties stay unchanged... */
-
-
   background: linear-gradient(160deg, rgba(244, 233, 214, .18), rgba(244, 233, 214, .02) 45%),
     rgba(216, 72, 31, .92);
   border: 1.5px solid rgba(244, 233, 214, .3);
@@ -2054,7 +2020,6 @@ input {
 .float-cta:active {
   transform: scale(1.08);
   border-color: rgba(231, 167, 46, .8);
-  /* in .float-cta (base) */
   box-shadow:
     inset 0 1px 0 rgba(244, 233, 214, .35),
     inset 0 -1px 0 rgba(0, 0, 0, .25),
@@ -2110,7 +2075,6 @@ input {
   line-height: 1;
 }
 
-/* ---- Floating animation for the CTA when there are items ---- */
 @keyframes floatPulse {
   0% {
     transform: translateY(0);
@@ -2125,12 +2089,10 @@ input {
   }
 }
 
-/* ---- Floating animation for the CTA + badge when there are items ---- */
 .float-cta-wrap.has-items {
   animation: floatPulse 1.2s ease-in-out infinite;
 }
 
-/* ---- Gold glow on the CTA when items are present ---- */
 .float-cta-wrap.has-items .float-cta {
   box-shadow: 0 0 24px 10px rgba(231, 167, 46, 0.5),
     inset 0 1px 0 rgba(244, 233, 214, 0.35),
@@ -2151,7 +2113,7 @@ input {
 }
 
 /* =============================================================
-   QUANTITY CONTROLS IN TICKET
+   QUANTITY CONTROLS
    ============================================================= */
 .ticket__item {
   display: flex;
@@ -2221,7 +2183,6 @@ input {
   font-size: .9rem;
 }
 
-/* Deselectable cards - add pointer cursor */
 .option-card[data-group="base"],
 .option-card[data-group="protein"] {
   cursor: pointer;
@@ -2249,7 +2210,6 @@ input {
   font-family: var(--mono);
 }
 
-/* ---- Selected protein card: keep the doodle, add the jollof tint ---- */
 .option-card--protein.is-selected,
 .option-card[data-group="protein"].is-selected {
   background:
@@ -2260,13 +2220,12 @@ input {
     rgba(36, 26, 20, .5);
   background-size: auto, auto, auto, 300px auto, auto;
   background-position: center, center, center, center, center;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, no-repeat;
   background-clip: padding-box;
   background-origin: padding-box;
   border-color: var(--jollof);
 }
 
-/* Active nav link highlight */
 .nav__links a.is-active,
 .mobile-menu a.is-active {
   color: var(--turmeric) !important;
@@ -2277,14 +2236,11 @@ input {
   opacity: 1 !important;
 }
 
-/* ---- Only the arrow moves in the footer "Build a plate" link ---- */
 .footer a[href="#builder"] .arrow {
   display: inline-block;
   animation: footerFloat 2s ease-in-out infinite;
   font-size: 1.6rem;
-  /* ← makes it taller */
   line-height: 1;
-  /* ← prevents extra vertical space */
 }
 
 .arrow {
@@ -2305,12 +2261,6 @@ input {
   }
 }
 
-/* ---- Footer pool-text canvas ---- */
-.footer {
-  position: relative;
-  overflow: hidden;
-}
-
 .footer-canvas {
   position: absolute;
   inset: 0;
@@ -2321,7 +2271,6 @@ input {
   display: block;
 }
 
-/* ---- Frosted glass layer ---- */
 .footer::after {
   content: "";
   position: absolute;
@@ -2343,7 +2292,6 @@ input {
     inset 0 -1px 0 rgba(0, 0, 0, .15);
 }
 
-/* ---- Sandy grain overlay ---- */
 .footer::before {
   content: "";
   position: absolute;
@@ -2356,7 +2304,6 @@ input {
   background-size: 220px 220px;
 }
 
-/* ---- Content sits above the frosted layer ---- */
 .footer__grid,
 .footer__fine {
   position: relative;
@@ -2364,7 +2311,7 @@ input {
 }
 
 /* =============================================================
-   MOBILE MENU — GLASS "ORDER NOW" BUTTON (matches float CTA)
+   MOBILE MENU — GLASS "ORDER NOW" BUTTON
    ============================================================= */
 .mobile-menu a.btn--primary {
   display: inline-flex;
@@ -2426,7 +2373,7 @@ input {
   transform: translateX(130%);
 }
 
-/* ---- Hero "Build Your Plate" — glass styling to match header CTA ---- */
+/* Hero "Build Your Plate" */
 .hero .btn.btn--primary {
   position: relative;
   overflow: hidden;
@@ -2478,7 +2425,7 @@ input {
   transform: translateX(130%);
 }
 
-/* ---- Ticket "PLACE Order" — glass styling to match header CTA ---- */
+/* Ticket "PLACE Order" */
 .ticket .btn.btn--primary {
   position: relative;
   overflow: hidden;
@@ -2530,7 +2477,6 @@ input {
   transform: translateX(130%);
 }
 
-/* ---- Disabled state — keep the glass shape but dim it ---- */
 .ticket .btn.btn--primary:disabled {
   background:
     linear-gradient(160deg, rgba(244, 233, 214, .1), rgba(244, 233, 214, .01) 45%),
@@ -2540,4 +2486,801 @@ input {
     inset 0 1px 0 rgba(244, 233, 214, .2),
     inset 0 -1px 0 rgba(0, 0, 0, .2);
   transform: none;
+}
+
+/* =============================================================
+   SKELETON LOADING
+   ============================================================= */
+html:not(.js) .skeleton-card,
+html:not(.js) .skeleton-option {
+  display: none;
+}
+
+.skeleton-line,
+.skeleton-img,
+.skeleton-thumb {
+  background: linear-gradient(90deg,
+      rgba(244, 233, 214, 0.06) 0%,
+      rgba(244, 233, 214, 0.16) 50%,
+      rgba(244, 233, 214, 0.06) 100%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+  will-change: background-position;
+}
+
+.skeleton-line {
+  height: 14px;
+  margin-bottom: 0.7rem;
+}
+
+.skeleton-line--short {
+  width: 45%;
+}
+
+.skeleton-card {
+  pointer-events: none;
+  user-select: none;
+}
+
+.skeleton-card .main-card__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-card .skeleton-line--card-title {
+  height: 75px;
+  width: 75%;
+  margin-bottom: 0.6rem;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.skeleton-card .skeleton-desc {
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+  flex-shrink: 0;
+}
+
+.skeleton-card .skeleton-desc .skeleton-line {
+  height: 16px;
+  margin-bottom: 0;
+}
+
+.skeleton-card .skeleton-line--price {
+  width: 64px;
+  height: 20px;
+  margin-bottom: 0;
+  border-radius: 6px;
+}
+
+.skeleton-card .skeleton-line--btn {
+  width: 110px;
+  height: 36px;
+  margin-bottom: 0;
+  border-radius: 6px;
+}
+
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  border: 1.5px solid rgba(244, 233, 214, 0.10);
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 599px) {
+  .skeleton-img {
+    aspect-ratio: 1 / 1;
+    height: auto;
+  }
+}
+
+.skeleton-option {
+  pointer-events: none;
+  user-select: none;
+}
+
+.skeleton-option .skeleton-line--opt-title {
+  height: 16px;
+  width: 80%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-option .skeleton-line--opt-price {
+  height: 14px;
+  width: 50%;
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+@media (max-width: 599px) {
+  #baseOptions .skeleton-option {
+    height: 80px;
+    justify-content: center;
+  }
+}
+
+.skeleton-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  background-color: #2c2117;
+}
+
+.skeleton-option.option-card--protein .skeleton-line--opt-title,
+.skeleton-option.option-card--protein .skeleton-line--opt-price {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.skeleton-option.option-card--protein .skeleton-line--opt-title {
+  margin-top: 0.4rem;
+}
+
+.skeleton-option.option-card--protein .skeleton-line--opt-price {
+  margin-bottom: 0.8rem;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .skeleton-line,
+  .skeleton-img,
+  .skeleton-thumb {
+    animation: none;
+    background: rgba(244, 233, 214, 0.08);
+  }
+}
+
+.load-error {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: rgba(244, 233, 214, 0.7);
+  background:
+    linear-gradient(160deg, rgba(244, 233, 214, 0.04), rgba(244, 233, 214, 0) 45%),
+    rgba(36, 26, 20, 0.55);
+  border: 1.5px dashed rgba(244, 233, 214, 0.18);
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+.mains__grid .load-error {
+  color: #4b3a2f;
+  background: rgba(36, 26, 20, 0.06);
+  border-color: rgba(36, 26, 20, 0.2);
+}
+
+/* =============================================================
+   MOBILE PERFORMANCE HINTS
+   ============================================================= */
+@media (max-width: 599px) {
+
+  .main-card {
+    contain: layout;
+  }
+
+  .main-card__body {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .mains__scroll-hint,
+  .protein__scroll-hint {
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .mains__grid {
+    will-change: scroll-position;
+  }
+}
+
+/* =============================================================
+   PROTEIN CAROUSEL — 2×2 grid per view, swipe to see more.
+   ============================================================= */
+@media (max-width: 599px) {
+
+  .protein__grid-wrap {
+    position: relative;
+  }
+
+  #proteinOptions {
+    display: grid;
+    grid-template-columns: unset;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: calc(50% - 0.45rem);
+    gap: .9rem;
+    align-items: stretch;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 48px 1.25rem;
+    margin: -48px -1.25rem;
+    max-width: none;
+    width: auto;
+
+    scroll-padding-left: 1.25rem;
+    scroll-padding-right: 1.25rem;
+  }
+
+  #proteinOptions .option-card {
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  /* ---- Force every protein card to identical height ----
+     Thumbnails and prices are already fixed (fixed width +
+     fixed aspect ratio, single-line price). The only variable
+     is the name text, which can wrap to 1 or 2 lines. Reserving
+     2 lines of space for every name makes all cards share the
+     same intrinsic height — so both grid rows end up equal. */
+  #proteinOptions .option-card--protein .option-card__name {
+    line-height: 1.25;
+    min-height: 2.5em;
+    /* 2 lines at 1.25 line-height */
+    display: block;
+  }
+
+  .protein__grid-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -1.25rem;
+    bottom: 0;
+    width: 2.4rem;
+    background: linear-gradient(to right, rgba(25, 19, 16, 0), var(--char));
+    pointer-events: none;
+    z-index: 3;
+    opacity: 1;
+    transition: opacity .25s var(--ease);
+  }
+
+  #proteinStep.is-end .protein__grid-wrap::after {
+    opacity: 0;
+  }
+
+  .protein__grid-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -1.25rem;
+    bottom: 0;
+    width: 2.4rem;
+    background: linear-gradient(to left, rgba(25, 19, 16, 0), var(--char));
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity .25s var(--ease);
+  }
+
+  #proteinStep.is-scrolled .protein__grid-wrap::before {
+    opacity: 1;
+  }
+
+  .protein__scroll-hint {
+    display: flex;
+    position: absolute;
+    right: -0.4rem;
+    transform: translateY(-50%);
+    align-items: center;
+    gap: .5rem;
+    z-index: 4;
+    pointer-events: none;
+    opacity: .55;
+    transition: opacity .25s var(--ease);
+    visibility: hidden;
+  }
+
+  .protein__scroll-hint.is-measured {
+    visibility: visible;
+  }
+
+  #proteinStep.is-end .protein__scroll-hint {
+    opacity: 0;
+  }
+
+  .protein__scroll-hint__arrow {
+    width: 0;
+    height: 0;
+    flex-shrink: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 14px solid var(--jollof);
+    animation:
+      scrollArrowFollowLine 2.0s ease-in-out infinite,
+      scrollArrowColor 2.0s ease-in-out infinite;
+  }
+
+  .protein__scroll-hint__line {
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--jollof);
+    box-shadow: 0 0 8px rgba(216, 72, 31, .4);
+    transform-origin: right center;
+    animation: scrollLineHorizontal 1.8s ease-in-out infinite;
+  }
+
+  .protein__progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: fit-content;
+    height: 18px;
+    margin: 1rem auto 0;
+    padding: 0 10px;
+    background: rgba(25, 19, 16, 0.5);
+    border-radius: 999px;
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.4),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+      0 1px 0 rgba(244, 233, 214, 0.35);
+    opacity: .55;
+    transition: opacity .4s var(--ease);
+  }
+
+  .protein__progress.is-visible {
+    opacity: 1;
+  }
+
+  .protein__progress-pill {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(244, 233, 214, 0.65);
+    transition:
+      width .35s var(--ease),
+      border-radius .35s var(--ease),
+      background .3s var(--ease),
+      box-shadow .3s var(--ease);
+  }
+
+  .protein__progress-pill--wide {
+    width: 14px;
+  }
+
+  .protein__progress-pill.is-active {
+    width: 22px;
+    background: var(--jollof);
+    box-shadow: 0 0 10px rgba(216, 72, 31, 0.75);
+  }
+
+  .protein__progress.is-swipe-right .protein__progress-pill.is-active {
+    border-radius: 2px 999px 999px 2px;
+  }
+
+  .protein__progress.is-swipe-left .protein__progress-pill.is-active {
+    border-radius: 999px 2px 2px 999px;
+  }
+}
+
+/* =============================================================
+   MAINS CAROUSEL — Tablet & Desktop (≥600px)
+   Full-viewport scroller. 2 cards per view by default; 3 cards
+   from ≥900px. Cards slide out the viewport edges exactly like
+   on mobile, and the 40px vertical glow room keeps selection
+   halos from being clipped by the scroller's overflow.
+   ============================================================= */
+@media (min-width: 600px) {
+
+  .mains {
+    position: relative;
+    /* Kill horizontal padding so the track spans the viewport.
+       Top/bottom padding is preserved from the base rules
+       (3.5rem on tablet, 6rem on desktop). */
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mains__grid {
+    display: flex;
+    grid-template-columns: unset;
+    flex-wrap: nowrap;
+    gap: .9rem;
+    align-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    /* Vertical glow room; the negative margin cancels the extra
+       space so section layout is unchanged. Horizontal padding
+       insets the first/last card from the viewport edge. */
+    padding: 40px 1.25rem;
+    margin: -40px 0;
+
+    max-width: none;
+    width: 100%;
+
+    scroll-padding-left: 1.25rem;
+    scroll-padding-right: 1.25rem;
+  }
+
+  .main-card {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 calc(50% - .45rem);
+    min-width: calc(50% - .45rem);
+    scroll-snap-align: start;
+  }
+
+  /* ---- Edge fades, anchored to the section edges ---- */
+  .mains::before,
+  .mains::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2.4rem;
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity .25s var(--ease);
+  }
+
+  .mains::after {
+    right: 0;
+    background: linear-gradient(to right, rgba(244, 233, 214, 0), var(--bone));
+    opacity: 1;
+  }
+
+  .mains::before {
+    left: 0;
+    background: linear-gradient(to left, rgba(244, 233, 214, 0), var(--bone));
+    opacity: 0;
+  }
+
+  .mains.is-scrolled::before {
+    opacity: 1;
+  }
+
+  .mains.is-end::after {
+    opacity: 0;
+  }
+
+  /* ---- Pill progress rail ---- */
+  .mains__progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: fit-content;
+    height: 18px;
+    margin: 1rem auto 0;
+    padding: 0 10px;
+    background: rgba(25, 19, 16, 0.5);
+    border-radius: 999px;
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.4),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+      0 1px 0 rgba(244, 233, 214, 0.35);
+    opacity: .55;
+    transition: opacity .4s var(--ease);
+  }
+
+  .mains__progress.is-visible {
+    opacity: 1;
+  }
+
+  .mains__progress-pill {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(244, 233, 214, 0.65);
+    transition: width .35s var(--ease), border-radius .35s var(--ease),
+      background .3s var(--ease), box-shadow .3s var(--ease);
+  }
+
+  .mains__progress-pill--wide {
+    width: 14px;
+  }
+
+  .mains__progress-pill.is-active {
+    width: 22px;
+    background: var(--jollof);
+    box-shadow: 0 0 10px rgba(216, 72, 31, 0.75);
+  }
+
+  .mains__progress.is-swipe-right .mains__progress-pill.is-active {
+    border-radius: 2px 999px 999px 2px;
+  }
+
+  .mains__progress.is-swipe-left .mains__progress-pill.is-active {
+    border-radius: 999px 2px 2px 999px;
+  }
+}
+
+/* ---- Desktop: 3 mains cards per view, capped at their
+   original size so they don't stretch to fill ultra-wide
+   viewports. ---- */
+@media (min-width: 900px) {
+  .main-card {
+    /* min() picks whichever is smaller: a fluid third of the
+       scroller, OR 345px. On ~1100px scrollers the fluid third
+       is already ≈345px so nothing changes. On a 1600px
+       viewport the card caps at 345px instead of ballooning
+       to ~520px. The scroller itself stays full-width so
+       cards still slide out the viewport edges. */
+    flex: 0 0 min(33.333% - .6rem, 345px);
+    min-width: min(33.333% - .6rem, 345px);
+    max-width: 345px;
+  }
+}
+
+/* =============================================================
+   MAINS SCROLL HINT — Tablet only (600–899px)
+   Same mechanic as mobile: JS measures the gap between the first
+   card's image and body, then slides the hint down as you scroll.
+   ============================================================= */
+@media (min-width: 600px) and (max-width: 899px) {
+
+  .mains__grid-wrap {
+    position: relative;
+  }
+
+  .mains__scroll-hint {
+    display: flex;
+    position: absolute;
+    right: .7rem;
+    transform: translateY(-50%);
+    align-items: center;
+    gap: .5rem;
+    z-index: 3;
+    pointer-events: none;
+    opacity: .5;
+    transition: opacity .25s var(--ease);
+    visibility: hidden;
+  }
+
+  .mains__scroll-hint.is-measured {
+    visibility: visible;
+  }
+
+  .mains.is-end .mains__scroll-hint {
+    opacity: 0;
+  }
+
+  .mains__scroll-hint__arrow {
+    width: 0;
+    height: 0;
+    flex-shrink: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 14px solid var(--jollof);
+    animation:
+      scrollArrowFollowLine 2.0s ease-in-out infinite,
+      scrollArrowColor 2.0s ease-in-out infinite;
+  }
+
+  .mains__scroll-hint__line {
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--jollof);
+    box-shadow: 0 0 8px rgba(216, 72, 31, .4);
+    transform-origin: right center;
+    animation: scrollLineHorizontal 1.8s ease-in-out infinite;
+  }
+}
+
+
+/* =============================================================
+   PROTEIN CAROUSEL — Tablet only (600–899px)
+   Desktop (≥900px) keeps the base auto-fill grid — no carousel,
+   no pills, no fades. Mobile (<600px) has its own 2×2 block.
+   ============================================================= */
+@media (min-width: 600px) and (max-width: 899px) {
+
+  .protein__grid-wrap {
+    position: relative;
+  }
+
+  /* ---- Protein scroll hint (arrow + line) ---- */
+  .protein__scroll-hint {
+    display: flex;
+    position: absolute;
+    right: -0.4rem;
+    transform: translateY(-50%);
+    align-items: center;
+    gap: .5rem;
+    z-index: 4;
+    pointer-events: none;
+    opacity: .55;
+    transition: opacity .25s var(--ease);
+    visibility: hidden;
+  }
+
+  .protein__scroll-hint.is-measured {
+    visibility: visible;
+  }
+
+  #proteinStep.is-end .protein__scroll-hint {
+    opacity: 0;
+  }
+
+  .protein__scroll-hint__arrow {
+    width: 0;
+    height: 0;
+    flex-shrink: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 14px solid var(--jollof);
+    animation:
+      scrollArrowFollowLine 2.0s ease-in-out infinite,
+      scrollArrowColor 2.0s ease-in-out infinite;
+  }
+
+  .protein__scroll-hint__line {
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--jollof);
+    box-shadow: 0 0 8px rgba(216, 72, 31, .4);
+    transform-origin: right center;
+    animation: scrollLineHorizontal 1.8s ease-in-out infinite;
+  }
+
+  #proteinOptions {
+    display: grid;
+    grid-template-columns: unset;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: calc(33.333% - .45rem);
+    gap: .9rem;
+    align-items: stretch;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    /* Glow room — same trick as mobile. */
+    padding: 48px 1.25rem;
+    margin: -48px -1.25rem;
+    max-width: none;
+    width: auto;
+
+    scroll-padding-left: 1.25rem;
+    scroll-padding-right: 1.25rem;
+  }
+
+  #proteinOptions .option-card {
+    scroll-snap-align: none;
+    min-width: 0;
+  }
+
+  /* Only the first card of each 6-card page snaps into place.
+     Cards 1, 7, 13, 19 … → card 7 is the top-left of slide 2. */
+  #proteinOptions .option-card:nth-child(6n + 1) {
+    scroll-snap-align: start;
+  }
+
+  /* Every protein card gets the same height — reserve two lines
+     for the name so short and long names don't produce
+     different card heights. */
+  #proteinOptions .option-card--protein .option-card__name {
+    line-height: 1.25;
+    min-height: 2.5em;
+    display: block;
+  }
+
+  /* ---- Edge fades into the char builder background ---- */
+  .protein__grid-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -1.25rem;
+    bottom: 0;
+    width: 2.4rem;
+    background: linear-gradient(to right, rgba(25, 19, 16, 0), var(--char));
+    pointer-events: none;
+    z-index: 3;
+    opacity: 1;
+    transition: opacity .25s var(--ease);
+  }
+
+  #proteinStep.is-end .protein__grid-wrap::after {
+    opacity: 0;
+  }
+
+  .protein__grid-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -1.25rem;
+    bottom: 0;
+    width: 2.4rem;
+    background: linear-gradient(to left, rgba(25, 19, 16, 0), var(--char));
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity .25s var(--ease);
+  }
+
+  #proteinStep.is-scrolled .protein__grid-wrap::before {
+    opacity: 1;
+  }
+
+  /* ---- Pill progress rail ---- */
+  .protein__progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: fit-content;
+    height: 18px;
+    margin: 1rem auto 0;
+    padding: 0 10px;
+    background: rgba(25, 19, 16, 0.5);
+    border-radius: 999px;
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.4),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+      0 1px 0 rgba(244, 233, 214, 0.35);
+    opacity: .55;
+    transition: opacity .4s var(--ease);
+  }
+
+  .protein__progress.is-visible {
+    opacity: 1;
+  }
+
+  .protein__progress-pill {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(244, 233, 214, 0.65);
+    transition: width .35s var(--ease), border-radius .35s var(--ease),
+      background .3s var(--ease), box-shadow .3s var(--ease);
+  }
+
+  .protein__progress-pill--wide {
+    width: 14px;
+  }
+
+  .protein__progress-pill.is-active {
+    width: 22px;
+    background: var(--jollof);
+    box-shadow: 0 0 10px rgba(216, 72, 31, 0.75);
+  }
+
+  .protein__progress.is-swipe-right .protein__progress-pill.is-active {
+    border-radius: 2px 999px 999px 2px;
+  }
+
+  .protein__progress.is-swipe-left .protein__progress-pill.is-active {
+    border-radius: 999px 2px 2px 999px;
+  }
+}
+
+@media (min-width: 900px) {
+  .protein__progress {
+    display: none;
+  }
 }
