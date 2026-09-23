@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add("js");</script>
   <title>RudeTurkey — Jollof, Done Right</title>
   <meta name="description"
     content="Jollof Rice, Jollof Spaghetti and turkey done properly. Build your plate and order straight to WhatsApp." />
@@ -41,9 +42,6 @@
     rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-    rel="stylesheet" />
   <link rel="preload" as="image" href="images/extras/header-art.jpg" />
   <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg" />
 
@@ -137,96 +135,77 @@
     </div>
 
     <div class="mains__grid-wrap">
-      <div class="mains__grid">
-        <!-- MAIN 1 -->
-        <article class="main-card reveal" data-base="Jollof Spaghetti" data-price="4500">
-          <div class="main-card__img" data-label="jollof-spaghetti.jpg">
-            <img src="images/menu/jollof-menu.jpg" alt="Stir-fried Jollof Spaghetti" loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')" />
-            <div class="main-card__stamp">ADDED</div>
-          </div>
+      <!-- Skeleton placeholders — replaced by site.js on load -->
+      <div class="mains__grid" id="mainsGrid" aria-busy="true">
+
+        <!-- SKELETON MAIN 1 -->
+        <article class="main-card skeleton-card" aria-hidden="true">
+          <div class="main-card__img skeleton-img"></div>
           <div class="main-card__body">
-            <h3>Jollof Spaghetti</h3>
-            <p>
-              Pan stir-fried, not boiled and drowned — every strand carries
-              its own share of ehiẹn 🌶️.
-            </p>
+            <div class="skeleton-line skeleton-line--card-title"></div>
+            <div class="skeleton-desc">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line skeleton-line--short"></div>
+            </div>
             <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button class="btn btn--ghost btn--add" data-base="Jollof Spaghetti">
-                Add to Tray
-              </button>
+              <div class="skeleton-line skeleton-line--price"></div>
+              <div class="skeleton-line skeleton-line--btn"></div>
             </div>
           </div>
         </article>
 
-        <!-- MAIN 2 -->
-        <article class="main-card reveal" data-base="Native Jollof Spaghetti" data-price="4500">
-          <div class="main-card__img" data-label="native-jollof-spaghetti.jpg">
-            <img src="images/menu/native-jollof-menu.jpg" alt="Native-style Jollof Spaghetti" loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')" />
-            <div class="main-card__stamp">ADDED</div>
-          </div>
+        <!-- SKELETON MAIN 2 -->
+        <article class="main-card skeleton-card" aria-hidden="true">
+          <div class="main-card__img skeleton-img"></div>
           <div class="main-card__body">
-            <h3>Native Jollof Spaghetti</h3>
-            <p>
-              The village twist — palm oil, native spice blend, and cray fish
-              undertones stirred through every strand.
-            </p>
+            <div class="skeleton-line skeleton-line--card-title"></div>
+            <div class="skeleton-desc">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line skeleton-line--short"></div>
+            </div>
             <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button class="btn btn--ghost btn--add" data-base="Native Jollof Spaghetti">
-                Add to Tray
-              </button>
+              <div class="skeleton-line skeleton-line--price"></div>
+              <div class="skeleton-line skeleton-line--btn"></div>
             </div>
           </div>
         </article>
 
-        <!-- MAIN 3 -->
-        <article class="main-card reveal" data-base="Jollof Rice" data-price="4500">
-          <div class="main-card__img" data-label="jollof-rice.jpg">
-            <img src="images/menu/rice-menu.jpg" alt="Smoky party-style Jollof Rice" loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')" />
-            <div class="main-card__stamp">ADDED</div>
-          </div>
+        <!-- SKELETON MAIN 3 -->
+        <article class="main-card skeleton-card" aria-hidden="true">
+          <div class="main-card__img skeleton-img"></div>
           <div class="main-card__body">
-            <h3>Jollof Rice</h3>
-            <p>
-              Smoky & red enough to argue about! Recommended with fried
-              plantain on the side.
-            </p>
+            <div class="skeleton-line skeleton-line--card-title"></div>
+            <div class="skeleton-desc">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line skeleton-line--short"></div>
+            </div>
             <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button class="btn btn--ghost btn--add" data-base="Jollof Rice">
-                Add to Tray
-              </button>
+              <div class="skeleton-line skeleton-line--price"></div>
+              <div class="skeleton-line skeleton-line--btn"></div>
             </div>
           </div>
         </article>
 
-        <!-- MAIN 4 – NEW BEEF CHEESE BURGER (Coming Soon) -->
-        <article class="main-card reveal main-card--soon" data-base="Beef Cheese Burger" data-price="5000"
-          data-coming-soon>
-          <div class="main-card__img" data-label="beef-cheese-burger.jpg">
-            <img src="images/menu/beef-burger-menu.jpg" alt="Beef Cheese Burger" loading="lazy"
-              onerror="this.parentElement.classList.add('img-missing')" />
-            <div class="main-card__stamp">ADDED</div>
-            <div class="coming-soon-stamp">Coming<br />Soon</div>
-          </div>
+        <!-- SKELETON MAIN 4 -->
+        <article class="main-card skeleton-card" aria-hidden="true">
+          <div class="main-card__img skeleton-img"></div>
           <div class="main-card__body">
-            <h3>Beef Cheese Burger</h3>
-            <p>
-              Juicy beef patty + melted cheese enveloped inna soft bun – our
-              cheeky little rebellion. Try it out.
-            </p>
+            <div class="skeleton-line skeleton-line--card-title"></div>
+            <div class="skeleton-desc">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line skeleton-line--short"></div>
+            </div>
             <div class="main-card__foot">
-              <span class="price">₦----</span>
-              <button class="btn btn--ghost btn--add" data-base="Beef Cheese Burger" disabled>
-                Add to Tray
-              </button>
+              <div class="skeleton-line skeleton-line--price"></div>
+              <div class="skeleton-line skeleton-line--btn"></div>
             </div>
           </div>
         </article>
+
       </div>
       <div class="mains__scroll-hint" id="mainsScrollHint" aria-hidden="true">
         <span class="mains__scroll-hint__arrow" aria-hidden="true"></span>
@@ -257,96 +236,78 @@
       <div class="builder__controls reveal">
         <div class="builder__step" id="baseStep">
           <h3><span>01</span> Choose your base</h3>
-          <div class="option-grid" id="baseOptions">
-            <button class="option-card" data-group="base" data-name="Jollof Spaghetti" data-price="4500">
-              <span class="option-card__name">Jollof Spaghetti</span>
-              <span class="option-card__price">₦----</span>
-            </button>
-            <button class="option-card" data-group="base" data-name="Native Jollof Spaghetti" data-price="4500">
-              <span class="option-card__name">Native<br /><span
-                  style="white-space: nowrap">Jollof-Spaghetti</span></span>
-              <span class="option-card__price">₦----</span>
-            </button>
-            <button class="option-card" data-group="base" data-name="Jollof Rice" data-price="4500">
-              <span class="option-card__name">Jollof Rice</span>
-              <span class="option-card__price">₦----</span>
-            </button>
-            <!-- NEW BASE OPTION: Beef Cheese Burger (Coming Soon) -->
-            <button class="option-card option-card--soon" data-group="base" data-name="Beef Cheese Burger"
-              data-price="5000" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__name">Beef Cheese Burger</span>
-              <span class="option-card__price">₦----</span>
-            </button>
+          <div class="option-grid" id="baseOptions" aria-busy="true">
+
+            <!-- SKELETON BASE ×4 -->
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+
           </div>
           <p class="step-error" id="baseStepError">Pick at least one base.</p>
         </div>
 
         <div class="builder__step" id="proteinStep">
           <h3><span>02</span> Choose your protein</h3>
-          <div class="option-grid" id="proteinOptions">
-            <button class="option-card option-card--protein" data-group="protein" data-name="Peppered Turkey"
-              data-price="2700">
-              <span class="option-card__thumb" style="
-                    background-image: url(&quot;images/protein/peppered-turkey-menu.jpg&quot;);
-                  "></span>
-              <span class="option-card__name">Peppered Turkey</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--protein" data-group="protein" data-name="Peppered Chicken"
-              data-price="2700">
-              <span class="option-card__thumb" style="
-                    background-image: url(&quot;images/protein/peppered-chicken-menu.jpg&quot;);
-                  "></span>
-              <span class="option-card__name">Peppered Chicken</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--protein option-card--soon" data-group="protein"
-              data-name="Grilled Turkey" data-price="2500" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__thumb" style="
-                    background-image: url(&quot;images/protein/grilled-turkey-menu.jpg&quot;);
-                  "></span>
-              <span class="option-card__name">Grilled Turkey</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--protein option-card--soon" data-group="protein"
-              data-name="Grilled Chicken" data-price="2300" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__thumb" style="
-                    background-image: url(&quot;images/protein/grilled-chicken-menu.jpg&quot;);
-                  "></span>
-              <span class="option-card__name">Grilled Chicken</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--protein option-card--soon" data-group="protein"
-              data-name="Fried Beef" data-price="2200" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__thumb" style="
-                    background-image: url(&quot;images/protein/fried-beef-menu.jpg&quot;);
-                  "></span>
-              <span class="option-card__name">Fried Beef</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--protein option-card--soon" data-group="protein"
-              data-name="Fried Fish" data-price="2800" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__thumb" style="
-                    background-image: url(&quot;images/protein/fried-fish-menu.jpg&quot;);
-                  "></span>
-              <span class="option-card__name">Fried Fish</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--protein option-card--soon" data-group="protein"
-              data-name="Assorted Meat" data-price="3000" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__thumb" style="
-                    background-image: url(&quot;images/protein/assorted-menu.jpg&quot;);
-                  "></span>
-              <span class="option-card__name">Assorted Meat</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
+
+          <div class="protein__grid-wrap">
+            <div class="option-grid" id="proteinOptions" aria-busy="true">
+
+              <!-- SKELETON PROTEIN ×6 -->
+              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
+                <div class="option-card__thumb skeleton-thumb"></div>
+                <div class="skeleton-line skeleton-line--opt-title"></div>
+                <div class="skeleton-line skeleton-line--opt-price"></div>
+              </div>
+              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
+                <div class="option-card__thumb skeleton-thumb"></div>
+                <div class="skeleton-line skeleton-line--opt-title"></div>
+                <div class="skeleton-line skeleton-line--opt-price"></div>
+              </div>
+              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
+                <div class="option-card__thumb skeleton-thumb"></div>
+                <div class="skeleton-line skeleton-line--opt-title"></div>
+                <div class="skeleton-line skeleton-line--opt-price"></div>
+              </div>
+              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
+                <div class="option-card__thumb skeleton-thumb"></div>
+                <div class="skeleton-line skeleton-line--opt-title"></div>
+                <div class="skeleton-line skeleton-line--opt-price"></div>
+              </div>
+              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
+                <div class="option-card__thumb skeleton-thumb"></div>
+                <div class="skeleton-line skeleton-line--opt-title"></div>
+                <div class="skeleton-line skeleton-line--opt-price"></div>
+              </div>
+              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
+                <div class="option-card__thumb skeleton-thumb"></div>
+                <div class="skeleton-line skeleton-line--opt-title"></div>
+                <div class="skeleton-line skeleton-line--opt-price"></div>
+              </div>
+
+            </div>
+
+            <div class="protein__scroll-hint" id="proteinScrollHint" aria-hidden="true">
+              <span class="protein__scroll-hint__arrow" aria-hidden="true"></span>
+              <span class="protein__scroll-hint__line"></span>
+            </div>
           </div>
+
+          <div class="protein__progress" id="proteinProgress" aria-hidden="true"></div>
+
           <p class="step-error" id="proteinStepError">
             Pick at least one protein.
           </p>
@@ -354,40 +315,34 @@
 
         <div class="builder__step">
           <h3><span>03</span> Add extras</h3>
-          <div class="option-grid" id="extraOptions">
-            <button class="option-card option-card--multi" data-group="extra" data-name="Fried Plantain"
-              data-price="800">
-              <span class="option-card__name">Fried Plantain</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--multi" data-group="extra" data-name="Boiled Egg" data-price="800">
-              <span class="option-card__name">Boiled Egg</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--multi option-card--soon" data-group="extra" data-name="Coleslaw"
-              data-price="700" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__name">Coleslaw</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--multi option-card--soon" data-group="extra" data-name="Moi Moi"
-              data-price="900" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__name">Moi-moi</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--multi option-card--soon" data-group="extra"
-              data-name="Chilled Drink" data-price="600" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__name">Chilled Drink</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
-            <button class="option-card option-card--multi option-card--soon" data-group="extra"
-              data-name="Bottled Water" data-price="600" disabled aria-disabled="true">
-              <span class="coming-soon-stamp">Coming<br />Soon</span>
-              <span class="option-card__name">Bottled Water</span>
-              <span class="option-card__price">+₦----</span>
-            </button>
+          <div class="option-grid" id="extraOptions" aria-busy="true">
+
+            <!-- SKELETON EXTRAS ×6 -->
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+            <div class="option-card skeleton-option" aria-hidden="true">
+              <div class="skeleton-line skeleton-line--opt-title"></div>
+              <div class="skeleton-line skeleton-line--opt-price"></div>
+            </div>
+
           </div>
         </div>
 
@@ -490,6 +445,28 @@
     </a>
     <span class="float-cta__badge" id="cartBadge">0</span>
   </div>
+
+  <!-- No-JS fallback -->
+  <noscript>
+    <style>
+      #mainsGrid,
+      #baseOptions,
+      #proteinOptions,
+      #extraOptions {
+        display: none;
+      }
+
+      .nojs-notice {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 2rem 1rem;
+        font-family: 'Space Mono', monospace;
+        font-size: .85rem;
+        color: #4b3a2f;
+      }
+    </style>
+    <p class="nojs-notice">Enable JavaScript to view the live menu.</p>
+  </noscript>
 
   <script type="module" src="site.js"></script>
   <script type="module" src="script.js"></script>
