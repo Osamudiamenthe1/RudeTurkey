@@ -1943,6 +1943,31 @@ input {
   margin-bottom: 8px;
 }
 
+/* ---- TikTok contact row ---- */
+.rude_contact--tiktok a:hover,
+.rude_contact--tiktok a:focus-visible {
+  color: var(--turmeric);
+}
+
+.rude-tiktok-img {
+  width: 30px;
+  height: 30px;
+  display: block;
+  flex-shrink: 0;
+  color: var(--turmeric);
+  transition: color .2s var(--ease);
+}
+
+.rude_contact--tiktok a:hover .rude-tiktok-img,
+.rude_contact--tiktok a:focus-visible .rude-tiktok-img {
+  color: var(--turmeric);
+}
+
+/* Space the "Build a plate" link a bit below the tagline */
+.footer__build {
+  margin-top: .6rem;
+}
+
 .rude_contact a {
   display: flex;
   align-items: center;
@@ -1950,6 +1975,8 @@ input {
   text-decoration: none;
   color: inherit;
 }
+
+
 
 .rude-whatsapp-img {
   width: 30px;
