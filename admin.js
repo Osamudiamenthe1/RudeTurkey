@@ -729,8 +729,17 @@ const SETTINGS_FIELDS = [
   { key: "opening_hours", elId: "setting-hours", label: "Opening hours" },
   { key: "location", elId: "setting-location", label: "Location" },
   { key: "footer_motd", elId: "setting-footer-motd", label: "Footer MOTD" },
+  {
+    key: "tiktok_url",
+    elId: "setting-tiktok",
+    label: "TikTok URL",
+  },
+  {
+    key: "tiktok_username",
+    elId: "setting-tiktok-username",
+    label: "TikTok username",
+  },
 ];
-
 let settingsCache = {};
 
 async function loadSettings() {
@@ -784,6 +793,44 @@ async function saveSettings(e) {
         return;
       }
       el.value = value;
+    }
+
+        if (field.key === "tiktok_url") {
+      if (!value) {
+        showToast("TikTok URL can't be empty.", "error");
+        el.focus();
+        return;
+      }
+      if (!/^https?:\/\//i.test(value)) {
+        showToast("TikTok URL must start with http:// or https://", "error");
+        el.focus();
+        return;
+      }
+      if (!/tiktok\.com/i.test(value)) {
+        showToast("That doesn't look like a TikTok URL.", "error");
+        el.focus();
+        return;
+      }
+    }
+
+    if (field.key === "tiktok_username") {
+      if (!value) {
+        showToast("TikTok username can't be empty.", "error");
+        el.focus();
+        return;
+      }
+      // Normalise: strip any leading @, then re-add exactly one.
+      value = value.replace(/^@+/, "");
+      if (!/^[A-Za-z0-9._]{2,30}$/.test(value)) {
+        showToast(
+          "TikTok username should be 2–30 letters, numbers, dots or underscores.",
+          "error",
+        );
+        el.focus();
+        return;
+      }
+      value = "@" + value;
+      el.value = value; // reflect the normalised value back in the input
     }
 
     if (field.key === "footer_motd") {
