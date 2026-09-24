@@ -926,6 +926,23 @@
             <small class="settings-hint">Digits only, with country code — e.g. 2347069159473</small>
           </label>
 
+          <label class="admin__field">
+            TikTok URL
+            <input type="url" id="setting-tiktok" maxlength="200" placeholder="https://www.tiktok.com/@rudeturkey_"
+              disabled />
+            <small class="settings-hint">
+              Full TikTok profile URL. Shown in the footer's Order column.
+            </small>
+          </label>
+
+          <label class="admin__field">
+            TikTok username
+            <input type="text" id="setting-tiktok-username" maxlength="40" placeholder="@rudeturkey_" disabled />
+            <small class="settings-hint">
+              Display handle — include the @. e.g. @rudeturkey_
+            </small>
+          </label>
+
           <label class="admin__field settings-full">
             Footer MOTD (message of the day)
             <textarea id="setting-footer-motd" rows="4" maxlength="500"
