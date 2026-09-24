@@ -40,6 +40,8 @@ const FALLBACKS = {
   opening_hours: "Tue & Thu, 11am – 2:30pm",
   location: "Uniben/Ugbowo axis, Benin City, Edo State.",
   footer_motd: "RUDE TURKEY\nPatronize us lahor oo, we nor rude 🥺",
+  tiktok_url: "https://www.tiktok.com/@rudeturkey_?_r=1&_t=ZS-99zK1Yvhnnw",
+  tiktok_username: "@rudeturkey_",
 };
 
 /* -------------------------------------------------------------
@@ -136,11 +138,27 @@ if (whatsappNumber.startsWith("0") && whatsappNumber.length === 11) {
 
 const whatsappLink = `https://wa.me/${whatsappNumber}`;
 
-document.querySelectorAll(".rude_contact a").forEach((a) => {
+document.querySelectorAll(".rude_contact--whatsapp a").forEach((a) => {
   a.href = whatsappLink;
   const span = a.querySelector("span");
   if (span) span.textContent = "+" + whatsappNumber;
 });
+
+/* -------------------------------------------------------------
+   TikTok — link + displayed handle (admin-editable)
+   ------------------------------------------------------------- */
+const tiktokLinkEl = document.getElementById("tiktokLink");
+if (tiktokLinkEl) {
+  const url = String(getSetting("tiktok_url") || "").trim();
+  if (url) tiktokLinkEl.href = url;
+}
+
+const tiktokHandleEl = document.getElementById("tiktokHandle");
+if (tiktokHandleEl) {
+  let handle = String(getSetting("tiktok_username") || "").trim();
+  if (handle && !handle.startsWith("@")) handle = "@" + handle;
+  if (handle) tiktokHandleEl.textContent = handle;
+}
 
 /* -------------------------------------------------------------
    3. RENDER MENU SECTIONS
