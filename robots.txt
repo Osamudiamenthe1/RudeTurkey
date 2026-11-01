@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /admin.html
-Disallow: /admin.js
-
-Sitemap: https://rudeturkey.pages.dev/sitemap.xml

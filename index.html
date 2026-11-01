@@ -1,485 +1,323 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>document.documentElement.classList.add("js");</script>
-  <title>RudeTurkey — Jollof, Done Right</title>
-  <meta name="description"
-    content="Jollof Rice, Jollof Spaghetti and turkey done properly. Build your plate and order straight to WhatsApp." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rude Turkey — Jollof, Done Right</title>
+<meta name="description" content="Jollof Rice, Jollof Spaghetti and turkey done properly. Build your plate and order straight to WhatsApp.">
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://rudeturkey.pages.dev/" />
+<!-- Fonts: Anton (stamp-style display), Work Sans (body), Space Mono (ticket/prices) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Open Graph — WhatsApp, Facebook, LinkedIn previews -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://rudeturkey.pages.dev/" />
-  <meta property="og:title" content="Rude Turkey — Jollof Done Right" />
-  <meta property="og:description"
-    content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp." />
-  <meta property="og:image" content="https://rudeturkey.pages.dev/images/og-image.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Rude Turkey — Jollof, Spaghetti, Peppered Turkey" />
-  <meta property="og:site_name" content="RudeTurkey" />
-  <meta property="og:locale" content="en_NG" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rude Turkey — Jollof Done Right" />
-  <meta name="twitter:description"
-    content="Benin's authentic smoky jollof + peppered turkey. Order straight to WhatsApp." />
-  <meta name="twitter:image" content="https://rudeturkey.pages.dev/images/og-image.jpg" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="images/rude-turks-new.png" />
-  <link rel="apple-touch-icon" href="images/rude-turks-new.png" />
-
-  <!-- Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-    rel="stylesheet" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="image" href="images/extras/header-art.jpg" />
-  <link rel="preload" as="image" href="images/hero/spag-turkey-2.jpg" />
-
-  <link rel="stylesheet" href="style.css" />
-
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "RudeTurkey",
-  "url": "https://rudeturkey.pages.dev/",
-  "alternateName": ["RudeTurkey", "RudeTurkey Jollof", "RudeTurkey Benin"]
-}
-</script>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <!-- ============================================= -->
-  <!-- NAV -->
-  <!-- ============================================= -->
-  <header class="nav" id="siteNav">
-    <div class="nav__bg" style="background-image: url(&quot;images/extras/header-art.jpg&quot;)"></div>
-    <a href="#top" class="nav__brand">
-      <img src="images/rude-turks-new.png" alt="Rude Turkey" class="nav__mark" loading="lazy" />
-      <span class="nav__logo">RUDE<span>TURKEY</span></span>
-    </a>
 
-    <div class="nav__right">
-      <nav class="nav__links">
-        <a href="#mains">The Mains</a>
-        <a href="#builder">Build Your Plate</a>
-        <a href="#location">Location</a>
-      </nav>
-      <a href="#builder" class="nav__cta">Order Now</a>
-      <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- mobile menu panel -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu__bg" style="background-image: url(&quot;images/extras/header-art.jpg&quot;)"></div>
+<!-- ============================================= -->
+<!-- STICKY NAV -->
+<!-- ============================================= -->
+<header class="nav" id="siteNav">
+  <div>
+    <img src="images/rude-turks.png">
+    <a href="#top" class="nav__logo">RUDE<span>TURKEY</span></a>
+  </div>
+  <nav class="nav__links">
     <a href="#mains">The Mains</a>
     <a href="#builder">Build Your Plate</a>
     <a href="#location">Location</a>
-    <a href="#builder" class="btn btn--primary">Order Now</a>
+  </nav>
+  <a href="#builder" class="nav__cta">Order Now</a>
+  <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- mobile menu panel, opened by the burger button above 760px and below -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#mains">The Mains</a>
+  <a href="#builder">Build Your Plate</a>
+  <a href="#location">Location</a>
+  <a href="#builder" class="btn btn--primary">Order Now</a>
+</div>
+
+<!-- ============================================= -->
+<!-- HERO -->
+<!-- ============================================= -->
+<section class="hero" id="top">
+  <!--
+    IMAGE TO EDIT: hero background photo.
+    Currently showing an illustrated placeholder (images/hero/hero-bg.svg).
+    Replace with your real photo: save it as images/hero/hero-bg.jpg
+    (recommended: 1920x1200px, landscape, slightly dark/moody works best with
+    this design) then change the path below from .svg to .jpg.
+  -->
+  <div class="hero__bg" style="background-image:url('images/hero/hero-bg.svg')"></div>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__smoke" aria-hidden="true">
+    <span></span><span></span><span></span>
   </div>
 
-  <!-- ============================================= -->
-  <!-- HERO (no glass) -->
-  <!-- ============================================= -->
-  <section class="hero" id="top">
-    <div class="hero__bg" style="background-image: url(&quot;images/hero/spag-turkey-2.jpg&quot;)"></div>
-    <div class="hero__overlay"></div>
-
-    <div class="hero__smoke" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </div>
-
-    <div class="hero__content">
-      <h1 class="hero__title">
-        <span class="stamp">RUDE<span>TURKEY</span></span>
-      </h1>
-      <p class="hero__eyebrow">
-        Benin's NO1🥇 Authentic Smoky Jollof &amp; Peppered Turkey
-      </p>
-      <p class="hero__tagline">Bold flavours. Wicked Turks.</p>
-      <a href="#builder" class="btn btn--primary">Build Your Plate ↓</a>
-    </div>
-
-    <a href="#mains" class="hero__scroll">
-      <span></span>
-      <p>Scroll</p>
-    </a>
-  </section>
-
-  <!-- ============================================= -->
-  <!-- MAINS -->
-  <!-- ============================================= -->
-  <section class="mains" id="mains">
-    <div class="section-head reveal">
-      <p class="eyebrow">The Mains</p>
-      <h2>Four plates. Zero compromise.</h2>
-      <p class="section-lede">
-        Everything on this menu is built to mesh
-        <strong>"pro-pro pra-pra"</strong> with our well seasoned
-        <span class="text-jollof">♨️ mean turkey</span>. Pick your base below,
-        then head to the builder and make it yours!
-      </p>
-    </div>
-
-    <div class="mains__grid-wrap">
-      <!-- Skeleton placeholders — replaced by site.js on load -->
-      <div class="mains__grid" id="mainsGrid" aria-busy="true">
-
-        <!-- SKELETON MAIN 1 -->
-        <article class="main-card skeleton-card" aria-hidden="true">
-          <div class="main-card__img skeleton-img"></div>
-          <div class="main-card__body">
-            <div class="skeleton-line skeleton-line--card-title"></div>
-            <div class="skeleton-desc">
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line skeleton-line--short"></div>
-            </div>
-            <div class="main-card__foot">
-              <div class="skeleton-line skeleton-line--price"></div>
-              <div class="skeleton-line skeleton-line--btn"></div>
-            </div>
-          </div>
-        </article>
-
-        <!-- SKELETON MAIN 2 -->
-        <article class="main-card skeleton-card" aria-hidden="true">
-          <div class="main-card__img skeleton-img"></div>
-          <div class="main-card__body">
-            <div class="skeleton-line skeleton-line--card-title"></div>
-            <div class="skeleton-desc">
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line skeleton-line--short"></div>
-            </div>
-            <div class="main-card__foot">
-              <div class="skeleton-line skeleton-line--price"></div>
-              <div class="skeleton-line skeleton-line--btn"></div>
-            </div>
-          </div>
-        </article>
-
-        <!-- SKELETON MAIN 3 -->
-        <article class="main-card skeleton-card" aria-hidden="true">
-          <div class="main-card__img skeleton-img"></div>
-          <div class="main-card__body">
-            <div class="skeleton-line skeleton-line--card-title"></div>
-            <div class="skeleton-desc">
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line skeleton-line--short"></div>
-            </div>
-            <div class="main-card__foot">
-              <div class="skeleton-line skeleton-line--price"></div>
-              <div class="skeleton-line skeleton-line--btn"></div>
-            </div>
-          </div>
-        </article>
-
-        <!-- SKELETON MAIN 4 -->
-        <article class="main-card skeleton-card" aria-hidden="true">
-          <div class="main-card__img skeleton-img"></div>
-          <div class="main-card__body">
-            <div class="skeleton-line skeleton-line--card-title"></div>
-            <div class="skeleton-desc">
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line skeleton-line--short"></div>
-            </div>
-            <div class="main-card__foot">
-              <div class="skeleton-line skeleton-line--price"></div>
-              <div class="skeleton-line skeleton-line--btn"></div>
-            </div>
-          </div>
-        </article>
-
-      </div>
-      <div class="mains__scroll-hint" id="mainsScrollHint" aria-hidden="true">
-        <span class="mains__scroll-hint__arrow" aria-hidden="true"></span>
-        <span class="mains__scroll-hint__line"></span>
-      </div>
-    </div>
-    <div class="mains__progress" id="mainsProgress" aria-hidden="true">
-      <div class="mains__progress-thumb" id="mainsProgressThumb"></div>
-    </div>
-  </section>
-
-  <!-- ============================================= -->
-  <!-- BUILDER -->
-  <!-- ============================================= -->
-  <section class="builder" id="builder">
-    <div class="section-head reveal">
-      <p class="eyebrow">Build Your Plate</p>
-      <h2>Pick your protein. We'll write the ticket.</h2>
-      <p class="section-lede">
-        Choose a base, protein, and whatever extras you can't do without. Your
-        order fills in live on the ticket — hit
-        <span class="place">PLACE</span> to send your order when you're ready.
-      </p>
-    </div>
-
-    <div class="builder__layout">
-      <!-- LEFT: controls -->
-      <div class="builder__controls reveal">
-        <div class="builder__step" id="baseStep">
-          <h3><span>01</span> Choose your base</h3>
-          <div class="option-grid" id="baseOptions" aria-busy="true">
-
-            <!-- SKELETON BASE ×4 -->
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-
-          </div>
-          <p class="step-error" id="baseStepError">Pick at least one base.</p>
-        </div>
-
-        <div class="builder__step" id="proteinStep">
-          <h3><span>02</span> Choose your protein</h3>
-
-          <div class="protein__grid-wrap">
-            <div class="option-grid" id="proteinOptions" aria-busy="true">
-
-              <!-- SKELETON PROTEIN ×6 -->
-              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
-                <div class="option-card__thumb skeleton-thumb"></div>
-                <div class="skeleton-line skeleton-line--opt-title"></div>
-                <div class="skeleton-line skeleton-line--opt-price"></div>
-              </div>
-              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
-                <div class="option-card__thumb skeleton-thumb"></div>
-                <div class="skeleton-line skeleton-line--opt-title"></div>
-                <div class="skeleton-line skeleton-line--opt-price"></div>
-              </div>
-              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
-                <div class="option-card__thumb skeleton-thumb"></div>
-                <div class="skeleton-line skeleton-line--opt-title"></div>
-                <div class="skeleton-line skeleton-line--opt-price"></div>
-              </div>
-              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
-                <div class="option-card__thumb skeleton-thumb"></div>
-                <div class="skeleton-line skeleton-line--opt-title"></div>
-                <div class="skeleton-line skeleton-line--opt-price"></div>
-              </div>
-              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
-                <div class="option-card__thumb skeleton-thumb"></div>
-                <div class="skeleton-line skeleton-line--opt-title"></div>
-                <div class="skeleton-line skeleton-line--opt-price"></div>
-              </div>
-              <div class="option-card option-card--protein skeleton-option" aria-hidden="true">
-                <div class="option-card__thumb skeleton-thumb"></div>
-                <div class="skeleton-line skeleton-line--opt-title"></div>
-                <div class="skeleton-line skeleton-line--opt-price"></div>
-              </div>
-
-            </div>
-
-            <div class="protein__scroll-hint" id="proteinScrollHint" aria-hidden="true">
-              <span class="protein__scroll-hint__arrow" aria-hidden="true"></span>
-              <span class="protein__scroll-hint__line"></span>
-            </div>
-          </div>
-
-          <div class="protein__progress" id="proteinProgress" aria-hidden="true"></div>
-
-          <p class="step-error" id="proteinStepError">
-            Pick at least one protein.
-          </p>
-        </div>
-
-        <div class="builder__step">
-          <h3><span>03</span> Add extras</h3>
-          <div class="option-grid" id="extraOptions" aria-busy="true">
-
-            <!-- SKELETON EXTRAS ×6 -->
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-            <div class="option-card skeleton-option" aria-hidden="true">
-              <div class="skeleton-line skeleton-line--opt-title"></div>
-              <div class="skeleton-line skeleton-line--opt-price"></div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="builder__step">
-          <h3><span>04</span> Your details</h3>
-          <div class="form-grid">
-            <label>
-              Name
-              <input type="text" id="custName" placeholder="Rudy 😡" />
-              <span class="field-error" id="custNameError">Please enter your name.</span>
-            </label>
-            <label>
-              Phone
-              <input type="tel" id="custPhone" placeholder="080..." inputmode="numeric" maxlength="14"
-                autocomplete="tel" />
-              <span class="field-error" id="custPhoneError">Please enter a phone number.</span>
-            </label>
-            <label class="form-grid__full">
-              Delivery address
-              <input type="text" id="custAddress" placeholder="📍Where should this land?" />
-              <span class="field-error" id="custAddressError">Please enter a delivery address.</span>
-            </label>
-            <label class="form-grid__full">
-              Notes for the kitchen
-              <input type="text" id="custNotes" placeholder="Extra pepper, no onions, etc. (optional)" />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: ticket -->
-      <aside class="ticket reveal" id="ticket">
-        <div class="ticket__perf" aria-hidden="true"></div>
-        <p class="ticket__label">Order Ticket</p>
-        <h3 class="ticket__shop">RUDE TURKEY</h3>
-        <div class="ticket__divider"></div>
-
-        <ul class="ticket__list" id="ticketList">
-          <li class="ticket__empty">Nothing on plate yet.</li>
-        </ul>
-
-        <div class="ticket__divider"></div>
-        <div class="ticket__total">
-          <span>Total</span>
-          <span id="ticketTotal">₦0</span>
-        </div>
-
-        <button class="btn btn--primary btn--full" id="sendOrder">
-          <span class="place">PLACE</span> Order
-        </button>
-        <p class="ticket__note" id="ticketNote">
-          Pick at least one base and one protein.
-        </p>
-        <div class="ticket__stamp" id="ticketStamp" aria-hidden="true">
-          SENT
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <!-- ============================================= -->
-  <!-- LOCATION / FOOTER -->
-  <!-- ============================================= -->
-  <footer class="footer" id="location">
-    <canvas class="footer-canvas" id="footerCanvas" aria-hidden="true"></canvas>
-    <div class="footer__grid">
-      <div class="reveal">
-        <h3 class="footer__logo">
-          <span class="footer_logo_title">RUDE<span>TURKEY</span></span>
-        </h3>
-        <p>Stubbornly Delicious Jollof + Turkey wey no dey apologize.</p>
-        <p class="footer__build">
-          <a href="#builder">Build a plate <span class="arrow">↑</span></a>
-        </p>
-      </div>
-      <div class="reveal">
-        <h4>Find us</h4>
-        <p>Uniben/Ugbowo axis<br />Benin City, Edo State.</p>
-        <p>Tue &amp; Thu, 11am – 2:30pm</p>
-      </div>
-      <div class="reveal">
-        <h4>Order</h4>
-        <div class="rude_contact rude_contact--whatsapp">
-          <a href="https://wa.me/2348134600671">
-            <img class="rude-whatsapp-img" src="images/extras/rude-whatsapp.png" alt="WhatsApp" loading="lazy" />
-            <span>+234 813 460 0671</span>
-          </a>
-        </div>
-        <div class="rude_contact rude_contact--tiktok">
-          <a id="tiktokLink" href="https://www.tiktok.com/@rudeturkey_?_r=1&_t=ZS-99zK1Yvhnnw" target="_blank"
-            rel="noopener noreferrer">
-            <svg class="rude-tiktok-img" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path fill="currentColor"
-                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-            </svg>
-            <span id="tiktokHandle">@rudeturkey_</span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <p class="footer__fine">
-      © <span id="year"></span> Rude Turkey. All jollof disputes settled.
-    </p>
-  </footer>
-
-  <!-- Floating order button -->
-  <div class="float-cta-wrap">
-    <a href="#ticket" class="float-cta" id="cartCta" aria-label="View your order ticket">
-      <span class="float-cta__label">Order</span>
-    </a>
-    <span class="float-cta__badge" id="cartBadge">0</span>
+  <div class="hero__content">
+    <p class="hero__eyebrow">Lagos-style jollof &amp; grilled turkey</p>
+    <h1 class="hero__title">
+      <span class="stamp">RUDE TURKEY</span>
+    </h1>
+    <p class="hero__tagline">No manners. Just jollof, turkey, and a spoon that means business.</p>
+    <a href="#builder" class="btn btn--primary">Build Your Plate ↓</a>
   </div>
 
-  <!-- No-JS fallback -->
-  <noscript>
-    <style>
-      #mainsGrid,
-      #baseOptions,
-      #proteinOptions,
-      #extraOptions {
-        display: none;
-      }
+  <div class="hero__scroll" aria-hidden="true">
+    <span></span>
+    <p>Scroll</p>
+  </div>
+</section>
 
-      .nojs-notice {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 2rem 1rem;
-        font-family: 'Space Mono', monospace;
-        font-size: .85rem;
-        color: #4b3a2f;
-      }
-    </style>
-    <p class="nojs-notice">Enable JavaScript to view the live menu.</p>
-  </noscript>
+<!-- ============================================= -->
+<!-- THE MAINS (Jollof Rice / Jollof Spaghetti) -->
+<!-- ============================================= -->
+<section class="mains" id="mains">
+  <div class="section-head reveal">
+    <p class="eyebrow">The Mains</p>
+    <h2>Two plates. Zero compromise.</h2>
+    <p class="section-lede">Everything on this menu is built to sit under a pile of properly seasoned turkey. Pick your base below, then head to the builder to make it yours.</p>
+  </div>
 
-  <script type="module" src="site.js"></script>
-  <script type="module" src="script.js"></script>
+  <div class="mains__grid">
+
+    <!-- MAIN 1: Jollof Rice -->
+    <article class="main-card reveal" data-base="Jollof Rice" data-price="4500">
+      <div class="main-card__img" data-label="jollof-rice.jpg">
+        <!--
+          IMAGE TO EDIT: photo of your Jollof Rice plate.
+          Currently showing an illustrated placeholder (images/menu/jollof-rice.svg).
+          Replace with your real photo: save it as images/menu/jollof-rice.jpg
+          (recommended: 1000x1000px, square, top-down or 45° angle shot)
+          then change the src below from .svg to .jpg.
+        -->
+        <img src="images/menu/jollof-rice.svg" alt="Smoky party-style Jollof Rice" onerror="this.parentElement.classList.add('img-missing')">
+      </div>
+      <div class="main-card__body">
+        <h3>Jollof Rice</h3>
+        <p>Smoked on the pot, red enough to argue about, finished with fried plantain on the side.</p>
+        <div class="main-card__foot">
+          <span class="price">₦4,500</span>
+          <button class="btn btn--ghost btn--add" data-base="Jollof Rice">Add to Plate</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- MAIN 2: Jollof Spaghetti -->
+    <article class="main-card reveal" data-base="Jollof Spaghetti" data-price="4500">
+      <div class="main-card__img" data-label="jollof-spaghetti.jpg">
+        <!--
+          IMAGE TO EDIT: photo of your Jollof Spaghetti plate.
+          Currently showing an illustrated placeholder (images/menu/jollof-spaghetti.svg).
+          Replace with your real photo: save it as images/menu/jollof-spaghetti.jpg
+          (recommended: 1000x1000px, square, top-down or 45° angle shot)
+          then change the src below from .svg to .jpg.
+        -->
+        <img src="images/menu/jollof-spaghetti.svg" alt="Stir-fried Jollof Spaghetti" onerror="this.parentElement.classList.add('img-missing')">
+      </div>
+      <div class="main-card__body">
+        <h3>Jollof Spaghetti</h3>
+        <p>Pan stir-fried, not boiled and drowned — every strand carries its own share of pepper.</p>
+        <div class="main-card__foot">
+          <span class="price">₦4,500</span>
+          <button class="btn btn--ghost btn--add" data-base="Jollof Spaghetti">Add to Plate</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- BUILD YOUR PLATE (protein + extras builder) -->
+<!-- ============================================= -->
+<section class="builder" id="builder">
+  <div class="section-head reveal">
+    <p class="eyebrow">Build Your Plate</p>
+    <h2>Pick your protein. We'll write the ticket.</h2>
+    <p class="section-lede">Choose a base, a protein, and whatever extras you can't do without. Your order fills in live on the ticket — send it to us on WhatsApp when you're ready.</p>
+  </div>
+
+  <div class="builder__layout">
+
+    <!-- LEFT: the actual builder controls -->
+    <div class="builder__controls reveal">
+
+      <div class="builder__step">
+        <h3><span>01</span> Choose your base</h3>
+        <div class="option-grid" id="baseOptions">
+          <button class="option-card" data-group="base" data-name="Jollof Rice" data-price="4500">
+            <span class="option-card__name">Jollof Rice</span>
+            <span class="option-card__price">₦4,500</span>
+          </button>
+          <button class="option-card" data-group="base" data-name="Jollof Spaghetti" data-price="4500">
+            <span class="option-card__name">Jollof Spaghetti</span>
+            <span class="option-card__price">₦4,500</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="builder__step">
+        <h3><span>02</span> Choose your protein</h3>
+        <div class="option-grid" id="proteinOptions">
+
+          <!--
+            IMAGE TO EDIT: currently an illustrated placeholder (images/protein/turkey-grilled.svg).
+            Replace with your real photo saved as images/protein/turkey-grilled.jpg
+            (recommended 600x400px), then change the path below from .svg to .jpg.
+          -->
+          <button class="option-card option-card--protein" data-group="protein" data-name="Grilled Turkey" data-price="2500">
+            <span class="option-card__thumb" style="background-image:url('images/protein/turkey-grilled.svg')"></span>
+            <span class="option-card__name">Grilled Turkey</span>
+            <span class="option-card__price">+₦2,500</span>
+          </button>
+
+          <!-- IMAGE TO EDIT: currently an illustrated placeholder (images/protein/turkey-peppered.svg). Replace with your real photo saved as images/protein/turkey-peppered.jpg (recommended 600x400px), then change the path below from .svg to .jpg. -->
+          <button class="option-card option-card--protein" data-group="protein" data-name="Peppered Turkey" data-price="2700">
+            <span class="option-card__thumb" style="background-image:url('images/protein/turkey-peppered.svg')"></span>
+            <span class="option-card__name">Peppered Turkey</span>
+            <span class="option-card__price">+₦2,700</span>
+          </button>
+
+          <!-- IMAGE TO EDIT: currently an illustrated placeholder (images/protein/chicken.svg). Replace with your real photo saved as images/protein/chicken.jpg (recommended 600x400px), then change the path below from .svg to .jpg. -->
+          <button class="option-card option-card--protein" data-group="protein" data-name="Grilled Chicken" data-price="2300">
+            <span class="option-card__thumb" style="background-image:url('images/protein/chicken.svg')"></span>
+            <span class="option-card__name">Grilled Chicken</span>
+            <span class="option-card__price">+₦2,300</span>
+          </button>
+
+          <!-- IMAGE TO EDIT: currently an illustrated placeholder (images/protein/beef.svg). Replace with your real photo saved as images/protein/beef.jpg (recommended 600x400px), then change the path below from .svg to .jpg. -->
+          <button class="option-card option-card--protein" data-group="protein" data-name="Fried Beef" data-price="2200">
+            <span class="option-card__thumb" style="background-image:url('images/protein/beef.svg')"></span>
+            <span class="option-card__name">Fried Beef</span>
+            <span class="option-card__price">+₦2,200</span>
+          </button>
+
+          <!-- IMAGE TO EDIT: currently an illustrated placeholder (images/protein/fish.svg). Replace with your real photo saved as images/protein/fish.jpg (recommended 600x400px), then change the path below from .svg to .jpg. -->
+          <button class="option-card option-card--protein" data-group="protein" data-name="Fried Fish" data-price="2800">
+            <span class="option-card__thumb" style="background-image:url('images/protein/fish.svg')"></span>
+            <span class="option-card__name">Fried Fish</span>
+            <span class="option-card__price">+₦2,800</span>
+          </button>
+
+          <!-- IMAGE TO EDIT: currently an illustrated placeholder (images/protein/assorted.svg). Replace with your real photo saved as images/protein/assorted.jpg (recommended 600x400px), then change the path below from .svg to .jpg. -->
+          <button class="option-card option-card--protein" data-group="protein" data-name="Assorted Meat" data-price="3000">
+            <span class="option-card__thumb" style="background-image:url('images/protein/assorted.svg')"></span>
+            <span class="option-card__name">Assorted Meat</span>
+            <span class="option-card__price">+₦3,000</span>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="builder__step">
+        <h3><span>03</span> Add extras</h3>
+        <div class="option-grid" id="extraOptions">
+          <button class="option-card option-card--multi" data-group="extra" data-name="Fried Plantain" data-price="800">
+            <span class="option-card__name">Fried Plantain</span>
+            <span class="option-card__price">+₦800</span>
+          </button>
+          <button class="option-card option-card--multi" data-group="extra" data-name="Coleslaw" data-price="700">
+            <span class="option-card__name">Coleslaw</span>
+            <span class="option-card__price">+₦700</span>
+          </button>
+          <button class="option-card option-card--multi" data-group="extra" data-name="Moi Moi" data-price="900">
+            <span class="option-card__name">Moi Moi</span>
+            <span class="option-card__price">+₦900</span>
+          </button>
+          <button class="option-card option-card--multi" data-group="extra" data-name="Chilled Drink" data-price="600">
+            <span class="option-card__name">Chilled Drink</span>
+            <span class="option-card__price">+₦600</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="builder__step">
+        <h3><span>04</span> Your details</h3>
+        <div class="form-grid">
+          <label>
+            Name
+            <input type="text" id="custName" placeholder="Your name">
+          </label>
+          <label>
+            Phone
+            <input type="tel" id="custPhone" placeholder="080...">
+          </label>
+          <label class="form-grid__full">
+            Delivery address
+            <input type="text" id="custAddress" placeholder="Where should this land?">
+          </label>
+          <label class="form-grid__full">
+            Notes for the kitchen
+            <input type="text" id="custNotes" placeholder="Extra pepper, no onions, etc. (optional)">
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: the live order ticket (signature element) -->
+    <aside class="ticket reveal" id="ticket">
+      <div class="ticket__perf" aria-hidden="true"></div>
+      <p class="ticket__label">Order Ticket</p>
+      <h3 class="ticket__shop">RUDE TURKEY</h3>
+      <div class="ticket__divider"></div>
+
+      <ul class="ticket__list" id="ticketList">
+        <li class="ticket__empty">Nothing on the plate yet.</li>
+      </ul>
+
+      <div class="ticket__divider"></div>
+      <div class="ticket__total">
+        <span>Total</span>
+        <span id="ticketTotal">₦0</span>
+      </div>
+
+      <button class="btn btn--primary btn--full" id="sendOrder">Send Order on WhatsApp</button>
+      <p class="ticket__note" id="ticketNote">Pick a base and a protein to get started.</p>
+      <div class="ticket__stamp" id="ticketStamp" aria-hidden="true">SENT</div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- LOCATION / FOOTER -->
+<!-- ============================================= -->
+<footer class="footer" id="location">
+  <div class="footer__grid">
+    <div class="reveal">
+      <h3 class="footer__logo">RUDE TURKEY</h3>
+      <p>Jollof rice, jollof spaghetti, and turkey that doesn't apologise for itself.</p>
+    </div>
+    <div class="reveal">
+      <h4>Find us</h4>
+      <!-- EDIT: replace with your real address -->
+      <p>12 Admiralty Way<br>Lekki Phase 1, Lagos</p>
+      <!-- EDIT: replace with your real hours -->
+      <p>Tue–Sun, 10am – 9pm</p>
+    </div>
+    <div class="reveal">
+      <h4>Order</h4>
+      <!-- EDIT: replace with your real WhatsApp number, digits only, country code, no + or spaces -->
+      <p><a href="https://wa.me/2348000000000">+234 800 000 0000</a></p>
+      <p><a href="#builder">Build a plate ↑</a></p>
+    </div>
+  </div>
+  <p class="footer__fine">© <span id="year"></span> Rude Turkey. All jollof disputes settled internally.</p>
+</footer>
+
+<!-- Floating quick-order button -->
+<a href="#builder" class="float-cta" aria-label="Build your plate">
+  <span>Order</span>
+</a>
+
+<script src="script.js"></script>
 </body>
-
 </html>
