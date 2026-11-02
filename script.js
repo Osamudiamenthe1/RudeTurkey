@@ -1160,9 +1160,7 @@ document.addEventListener("click", (e) => {
 });
 
 /* -------------------------------------------------------------
-   Combo "Add" handler — adds one combo to the cart, then
-   scrolls the user to the builder. Removing/dec adding quantity
-   happens in the ticket.
+   Combo "Add" handler — toggles the combo in the cart.
    ------------------------------------------------------------- */
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".btn--add-combo");
@@ -1184,10 +1182,13 @@ document.addEventListener("click", (e) => {
     contents = [];
   }
 
-  const existing = state.combos.find((c) => c.id === comboId);
-  if (existing) {
-    existing.quantity = (existing.quantity || 1) + 1;
+  const existingIdx = state.combos.findIndex((c) => c.id === comboId);
+
+  if (existingIdx > -1) {
+    // It's already in the cart, so remove it
+    state.combos.splice(existingIdx, 1);
   } else {
+    // It's not in the cart, so add it
     state.combos.push({
       id: comboId,
       name,
@@ -1195,14 +1196,14 @@ document.addEventListener("click", (e) => {
       contents,
       quantity: 1,
     });
+
+    // Only scroll to the builder when they ADD it, not when they remove it
+    document.getElementById("builder").scrollIntoView({ behavior: "smooth" });
   }
 
-  card.classList.add("has-added");
-  const stamp = card.querySelector(".main-card__stamp");
-  if (stamp) stamp.classList.add("is-visible");
-
+  /* renderTicket() automatically calls updateMainCardStamps(), 
+     which handles adding/removing the "ADDED" stamp and the green border! */
   renderTicket();
-  document.getElementById("builder").scrollIntoView({ behavior: "smooth" });
 });
 // There is NO card click handler – only the button triggers selection
 
