@@ -1095,10 +1095,13 @@ function renderTicket() {
   );
   totalEl.textContent = formatNaira(total);
 
-  const ready = state.bases.length > 0 && state.proteins.length > 0;
+  const hasCombos = state.combos.length > 0;
+  const ready =
+    (state.bases.length > 0 && state.proteins.length > 0) || hasCombos;
+
   noteEl.textContent = ready
     ? "Fill in your details above, then send it in."
-    : "Pick at least one base and one protein to get started.";
+    : "Pick a combo or build your plate to get started.";
 
   updateCartVisibility();
   updateMainCardStamps();
@@ -1283,8 +1286,13 @@ function validateOrder() {
   const phone = document.getElementById("custPhone").value.trim();
   const address = document.getElementById("custAddress").value.trim();
 
-  const baseMissing = state.bases.length === 0;
-  const proteinMissing = state.proteins.length === 0;
+  const hasCombos = state.combos.length > 0;
+
+  /* If they have a combo, they don't strictly need to pick a standalone base/protein. 
+     The checkAlignment() function will still ensure totals match. */
+  const baseMissing = !hasCombos && state.bases.length === 0;
+  const proteinMissing = !hasCombos && state.proteins.length === 0;
+
   const nameMissing = !name;
   const phoneMissing = !phone;
   const addressMissing = !address;
